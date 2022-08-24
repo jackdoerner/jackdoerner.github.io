@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Linux, Nvidia, and the IBM T221</title>
+<link rel='stylesheet' type='text/css' href='../../../system/css/main.css'/>
+<link rel='stylesheet' type='text/css' href='../../../system/css/styles/twocolumnsf.css'/>
+<script type='text/javascript' src='../../../system/js/articlemain.js'></script>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-GCYY1SD9GT"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-GCYY1SD9GT');
+</script>
+</head>
+<body>
+
+<div id='topmenu' class='header hideOnEmbed'>
+	<div id='leftlinks'><a href='/'>Home</a>&bull;<a href='../../../'>Exposition</a></div>
+	<div id='rightlinks'><a id='toplink' href='#title'>Top of Page</a></div>
+</div>
+
+<div id='menuspacer' class='hideOnEmbed'>&nbsp;</div>
+
+<table class='twoColumnSF pleasantReading' columns='2'>
+	<tr>
+		<td class='leftColumn'></td><td class='rightColumn'>
+			<h1 id='title'>Linux, Nvidia, and the IBM T221</h1>
+		</td>
+	</tr>
+	<tr>
+		<td class='leftColumn' rowspan='3'>
+			<br/>
+			<img src='t221_diagram.jpg'/><br/>
+		</td><td class='rightColumn'>
+			<p>
+				In the year 2000, IBM developed the prototype for a new monitor; with 204 pixels per inch in a 22-inch frame, it was almost certainly the first of what we now know as "retina" displays. A year later, it was released as the <a href="https://en.wikipedia.org/wiki/IBM_T220/T221_LCD_monitors">IBM T220/T221</a>, with the sort of price tag you might expect for such a monitor in an era with XGA was still considered the standard. Not long afterward, someone hit upon the magic letters, "HD", and the marketing-fueled stagnation that ensued ensured that no other monitor would surpass the T221 in resolution for over a decade. It was discontinued in 2005.
+			</p>
+			<p>
+				Unfortunately, when IBM designed the T221, there was no display connector (and protocol) capable of carrying anywhere near the amount of data that would be required to drive it. The DVI specification was only a year old, and dual-link DVI was not yet common. Consequently, the monitor is driven via four single-link DVI connectors, bundled into a pair of proprietary and mechanically-incompatible LFH-60 connectors, with the option to use dual-link DVI via a very rare converter box. Some time after the monitor was discontinued, a fellow who goes by <a href="https://github.com/cirthix">cirthix</a> on the internet produced a custom dual-link adapter which fit inside the monitor's housing, allowing dual-link DVI to be used without the original converter box. This means that the monitor presents itself to the computer as a set of two or four tiles, which the computer treats as independent monitors. From this comes the challenge of owning a T221: figuring out how to stitch the tiles together.
+			</p>
+		</td>
+	</tr>
+
+	<tr>
+		<td class='rightColumn'>
+			<h2>A Brief History of Relevant Hacks</h2>
+		</td>
+	</tr>
+
+	<tr><td class='rightColumn'>
+			<p>
+				For Windows users there are a few reasonable solutions for the stitching of tiles. Some graphics drivers driver/card combinations offer such a feature out of the box. Nvidia calls this Mosaic or Surround, depending upon whether the card is a Quadro of Geforce. In my experience, Nvidia's Mosaic mode works perfectly fine on consumer-level <a href="https://en.wikipedia.org/wiki/Nvidia_Fermi">Fermi</a>-based cards that have been <a href="https://www.eevblog.com/forum/chat/hacking-nvidia-cards-into-their-professional-counterparts/">reflashed to masquerade as Quadros</a>, whereas SLI-Mosaic mode does not.
+			</p>
+			<p>
+				For Linux users, things used to be similarly simple. It was enough to enable multi-monitor mode in the nvidia driver, and disable <a href="https://en.wikipedia.org/wiki/Xinerama">Xinerama</a>, preventing the driver from reporting monitor geometry to the windowing system. Better still, the driver provided a way to <em>lie</em> to the X server about the monitor geometry. The introduction of <a href="https://en.wikipedia.org/wiki/RandR">RandR</a> and deprecation of Xinerama brought this to an end. For a little while longer, it was possible to force-disable RandR, but Gnome 3 (and presumably other window managers) have since become dependent upon it. After that, it was necessary to <a href="https://github.com/phillipberndt/fakexrandr">intercept RandR calls</a> and modify the reported geometry on the fly. This solution was fragile however, and for me it no longer works. Fortunately, I have discovered a new method, which I believe to be workable in the long-term.
+			</p>
+		</td>
+	</tr>
+
+	<tr><td class='leftColumn'></td>
+		<td class='rightColumn'>
+			<h2>An EDID-Based Solution for Linux with Nvidia</h2>
+		</td>
+	</tr>
+
+	<tr><td class='leftColumn' rowspan='2'>
+		<pre><code>
+00ffffffffffff00244d1f2500000000
+0010010480181e78ea6492a3574a9c25
+15505421000001010101010101010101
+010101010101b45f80a0706037903020
+2a00f02c0100001a000000fc0049424d
+205432323120484c460A000000100000
+00000000000000000000000000000010
+000000000000000000000000000000c3</code></pre>
+		<div class='imgCaption'>Initial EDID, no tiling</div>
+		<pre><code>
+00ffffffffffff00244d1f2500000000
+0010010480181e78ea6492a3574a9c25
+15505421000001010101010101010101
+010101010101b45f80a0706037903020
+2a00f02c0100001a000000fc0049424d
+205432323120484c460A000000100000
+00000000000000000000000000000010
+000000000000000000000000000001c2
+7012790000120016801000007f075f09
+000000000044454cb640533835380000
+00000000000000000000000000000000
+00000000000000000000000000000000
+00000000000000000000000000000000
+00000000000000000000000000000000
+00000000000000000000000000000000
+00000000000000000000000000000c90</code></pre>
+		<div class='imgCaption'>Complete EDID, left tile</div>
+		<pre><code>
+00ffffffffffff00244d1f2500000000
+0010010480181e78ea6492a3574a9c25
+15505421000001010101010101010101
+010101010101b45f80a0706037903020
+2a00f02c0100001a000000fc0049424d
+205432323120484c460A000000100000
+00000000000000000000000000000010
+000000000000000000000000000001c2
+7012790000120016801010007f075f09
+000000000044454cb640533835380000
+00000000000000000000000000000000
+00000000000000000000000000000000
+00000000000000000000000000000000
+00000000000000000000000000000000
+00000000000000000000000000000000
+0000000000000000000000000000fc90</code></pre>
+		<div class='imgCaption'>Complete EDID, right tile</div>
+		</td><td class='rightColumn'>
+			<p>
+				 In the nearly-two-decades since the T221 was introduced, the connector/protocol situation has not improved much: modern 4K and 5K monitors must typically be driven via a tiled interface as well. Newer monitors, however, have software support for stitching their tiles together, whereas the T221 does not. These monitors must report their tile geometry to the graphics driver via an <a target="_blank" href="https://en.wikipedia.org/wiki/EDID">EDID</a> extension known as <a target="_blank" href="https://en.wikipedia.org/wiki/DisplayID">DisplayID</a>, and, fortunately for us, it is possible to <a target="_blank" href="http://nvidia.custhelp.com/app/answers/detail/a_id/3571/~/managing-a-display-edid-on-linux">instruct the Nvidia driver to use an alternate EDID instead</a>. If we can create a suitable EDID (including extensions which didn't exist when the T221 was new, or when the cirthix adapters were in production), then, for the first time ever, it will be possible to stitch the tiles together using a mechanism that was actually intended for that purpose. What follows will <em>not</em> be a complete step-by-step guide detailing how to do this; instead, it will be an account of the process through which I went, and the resources I found useful, along with the final results. For readers who simply want a working monitor, the latter will suffice; for readers to whom the process itself is valuable, I shall try to include enough information that it is possible to reconstruct the details. Rather than constructing an EDID from scratch, it is easier to start with the one created by cirthix for his adapter. This can easily be extracted from X server logs, or downloaded from his <a target="_blank" href="https://github.com/cirthix/T221_DLDVI_ADAPTER/blob/master/EDIDs/48Hz/HALF_48.dat">git repository</a>. Since I have a 48hz T221 (as opposed to the earlier 41hz variant), I will be using the appropriate 48hz EDID as a starting point.
+			</p>
+			<p>
+				Now we come to the point where we will need to know some things about the EDID specification. Unfortunately, the specification is a commercial product and comes at quite a price. If you wish to avoid violating copyright laws, I recommend that you should definitely not search for the specification by name: <em>VESA Enhanced Extended Display Identification Data Standard, Version 1, Revision 4</em>. If your curiosity gets the better of you, obviously I cannot be held responsible. For the incurious and unpiratical, I will provide edited EDIDs. In addition to our initial EDID and some insider knowledge, it will be useful to have a copy of the <a target="_blank" href="https://cgit.freedesktop.org/xorg/app/edid-decode/"><code>edid-decode</code></a> tool, which will parse EDIDs and generate checksums. A cleaned up version of the cirthix EDID, created using these tools and information, is presented at left. Note that it has a serial number of 0. Anyone who connects two or more T221s to the same machine may find that each monitor needs its own EDID base block with a unique serial number, in order to avoid confusing the graphics driver. To this base block, we will need to append a DisplayID block, and in order to do this we will need to alter the last two bytes, which are, respectively, the extension count and checksum.
+			</p>
+			<p>
+				Unfortunately, the DisplayID specification is separate from EDID, and seems somewhat more difficult to come by. However, there are two other artifacts that we can reverse-engineer to create a valid DisplayID block. The first is the source for the <code>edid-decode</code> tool, which can <a target="_blank" href="https://cgit.freedesktop.org/xorg/app/edid-decode/tree/edid-decode.c#n1379">parse</a> DisplayID blocks. The second is <a target="_blank" href="https://cgit.freedesktop.org/xorg/app/edid-decode/tree/data/dell-up2715k-dp">an EDID</a> from Dell's tiled 5K monitor, which is conveniently packaged with <code>edid-decode</code> (and available elsewhere). We will need to create two versions of the DisplayID Tile block: one for the left tile, with horizontal tile-index 0, and another for the right, with horizontal tile-index 1. Aside from the horizontal index, the two blocks will be identical, specifying two tiles laid out horizontally, each with dimensions 1920x2400. The resulting pair of DisplayID blocks can be found, concatenated to the base EDID block, at left. They are also available as text files, <a target="_blank" href='resources/edid_l.txt'>left</a> and <a target="_blank" href='resources/edid_r.txt'>right</a>.
+			</p>
+			<p>
+				These blocks will need to be converted into binary files, which can be done in the following way:<br/>
+				<code>xxd -r -p edid.txt edid.bin</code><br/>
+				Preconverted binaries are also available: <a target="_blank" href='resources/edid_l.bin'>left</a> and <a target="_blank" href='resources/edid_r.bin'>right</a>.
+			</p>
+			<p>
+				The final piece of the puzzle is an <a target="_blank" href="https://xkcd.com/963/">xorg.conf</a> file to load the EDIDs. You will need to specify them individually, matching them to the monitor IDs reported in <code>nvidia-settings</code>. My configuration file is <a target="_blank" href="resources/xorg.conf">here</a>. With all of this in place, it should be the case that the tiles are stitched automatically, and you are presented with a unified monitor (while additional monitors should behave as usual).
+			</p>
+		</td>
+	</tr>
+
+</table>
+
+<div id='copyright'>&copy; 2017</div>
+
+</body>
+</html>

@@ -1,0 +1,135 @@
+\usepackage{amsmath, amssymb, amsthm, amsfonts}
+\usepackage{enumerate}
+\usepackage{tikz}
+\usetikzlibrary{positioning,chains,fit,shapes,calc}
+\usepackage[all]{xy}
+
+\newcommand{\coursename}{CS 4501 Cryptographic Protocols}
+\newcommand{\semester}{Spring 2026}
+\newcommand{\webpage}{https://jackdoerner.net/teaching/2026/Spring/CS4501}
+
+\newcommand{\handout}[5]{
+   \renewcommand{\thepage}{Lecture #1, Page \arabic{page}}
+   \noindent
+   \begin{center}
+   \framebox{
+      \vbox{
+    \hbox to 5.78in { {\bf \coursename} \hfill #2 }
+       \vspace{4mm}
+       \hbox to 5.78in { {\Large \hfill #5  \hfill} }
+       \vspace{2mm}
+       \hbox to 5.78in { {\it #3 \hfill #4} }
+      }
+   }
+   \end{center}
+   \vspace*{4mm}
+}
+
+% if someone taking scribe notes
+\newcommand{\lecture}[4]{\handout{#1}{#3}{Lecturer: Jack Doerner}{Scribe: #4}{Lecture #1: #2}}
+%\newcommand{\lecture}[4]{\handout{#1}{#3}{Lecturer: Daniel Wichs}{Scribe: #4}{Lecture #1: #2}}
+%\newcommand{\lecture}[2]{\handout{Lecture #1, page}{#2}{Lecturer: Yevgeniy Dodis}{\semester}{Lecture #1}}
+
+\newtheorem{definition}{Definition}
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{corollary}{Corollary}
+\newtheorem{proposition}{Proposition}
+\newtheorem{question}{Question}
+\newtheorem{exercise}{Exercise}
+\newtheorem{remark}{Remark}
+\newtheorem{construction}{Construction}
+\newtheorem{conjecture}{Conjecture}
+\newtheorem{assumption}{Assumption}
+\newtheorem{claim}{Claim}
+\newtheorem{observation}{Observation}
+\newtheorem{example}{Example}
+\newtheorem{note}{Note}
+\newtheorem{fact}{Fact}
+\newtheorem{protocol}{Protocol}
+\newtheorem{simulator}{Simulator}
+\newtheorem{reduction}{Reduction}
+\newtheorem{algorithm}{Algorithm}
+\newtheorem{functionality}{Functionality}
+
+\newcommand{\entropy}{\mathbf{H}}
+\newcommand{\hinf}{{{\mathbf{H}}_{\infty}}}
+\newcommand{\htwo}{{{\mathbf{H}}_{2}}}
+\newcommand{\hone}{{{\mathbf{H}}_{1}}}
+\newcommand{\hsha}{{{\mathbf{H}}_{sh}}}
+
+\newcommand{\Ext}{\mathsf{Ext}}
+\newcommand{\Cond}{\mathsf{Cond}}
+\newcommand{\Tag}{\mathsf{Tag}}
+\newcommand{\Pred}{\mathsf{Pred}}
+\renewcommand{\Col}{\mathsf{Col}}
+\newcommand{\Adv}{\mathsf{Adv}}
+\newcommand{\Pos}{\mathsf{Pos}}
+
+\def \eps {\varepsilon}
+\def \logeps {\log\left({1}/{\eps}\right)}
+\def \logdel {\log\left({1}/{\delta}\right)}
+
+
+\newcommand{\bydef}{\stackrel{\rm def}{=}}
+\def\eqq{\stackrel{\mbox{{\tiny{?}}}}{=}}
+
+\newcommand{\nin}{\not\in}
+\newcommand{\set}[1]{\{#1\}}
+\newcommand{\bit}{\{0,1\}}
+\newcommand{\zo}{\{0,1\}}
+\newcommand{\ignore}[1]{}
+\newcommand{\half}{\frac{1}{2}}
+
+\newcommand{\st}{\ensuremath{\mathrm{s.t.}}}
+
+\newcommand{\ZZ}{\mathbb Z}
+\newcommand{\GG}{\mathbb G}
+\newcommand{\FF}{\mathbb F}
+
+\def\owf{{\sf OWF}}
+\def\owp{{\sf OWP}}
+\def\tdp{{\sf TDP}}
+\def\negl{{\sf negl}}
+\def\poly{{\sf poly}}
+\def\ppt{{\sf PPT}}
+\def\gen{{\sf Gen}}
+\def\eval{{\sf Eval}}
+\def\sample{{\sf Sample}}
+\def\invert{{\sf Invert}}
+\newcommand{\adv}{{\mathsf{Adv}}}
+\def\prg{{\sf PRG}}
+\def\prf{{\sf PRF}}
+\def\pke{{\sf PKE}}
+\def\ske{{\sf SKE}}
+\def\ind{{\sf IND}}
+\def\cdh{{\sf CDH}}
+\def\ddh{{\sf DDH}}
+\def\cpa{{\sf CPA}}
+\def\cca{{\sf CCA}}
+\def\lsb{{\sf LSB}}
+\def\indcpa{{\sf IND-CPA}}
+\def\keygen{{\sf KeyGen}}
+\def\Env{{\sf Env}}
+
+\def\ctr{{\sf CTR}}
+\def\xor{{\sf XOR}}
+
+\newcommand{\A}{{\cal A}}
+\newcommand{\G}{{\cal G}}
+\newcommand{\F}{{\cal F}}
+\renewcommand{\H}{{\cal H}}
+\newcommand{\M}{\mathcal{M}}
+\newcommand{\R}{\mathcal{R}}
+
+\def\Tag{{\sf Tag}}
+\def\Ver{{\sf Ver}}
+\def\Auth{{\sf Auth}}
+\def\Rec{{\sf Rec}}
+
+\def\Sign{{\sf Sign}}
+\def\crhf{{\sf CRHF}}
+\def\degree{{\sf deg}}
+\def\SD{{\sf SD}}
+\def\Enc{{\sf Enc}}
+\def\Dec{{\sf Dec}}
