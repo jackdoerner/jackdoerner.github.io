@@ -1,0 +1,638 @@
+html, body {
+	margin:0;
+	font-family:'SofiaProLight','Helvetica','Arial',sans-serif;
+}
+
+#master {
+	text-align:center;
+	width:526px;
+	margin:0 auto;
+	position:relative;
+}
+
+.columns {
+	margin:0 auto 40px;
+	column-count:2;
+	column-width:526px;
+	column-gap:40px;
+	column-rule:1px solid #EEEEEE;
+	column-fill:balance;
+	-moz-column-width:526px;
+	-moz-column-gap:40px;
+	-moz-column-rule:1px solid #EEEEEE;
+	-moz-column-fill:balance;
+	-webkit-column-width:526px;
+	-webkit-column-gap:40px;
+	-webkit-column-rule:1px solid #EEEEEE;
+	-webkit-column-fill:balance;
+}
+
+.columns > * {
+	break-inside: avoid;
+	-moz-break-inside: avoid;
+	-webkit-break-inside: avoid;
+	display:block;
+	break-after: avoid;
+	break-before: avoid;
+}
+
+.columns hr {
+	margin:20px auto;
+	width:486px;
+}
+
+.breakAfter {
+	break-after: always !important;
+}
+
+div#title {
+	column-span:all;
+	-moz-column-span:all;
+	-webkit-column-span:all;
+	text-align:left;
+	font-size:48px;
+	height:48px;
+	line-height:48px;
+	color:#888888;
+	margin-top:20px;
+	letter-spacing: 1px;
+	display:block;
+	font-weight: 200;
+	text-indent:-0.08em;
+}
+
+div#subtitle {
+	float:right;
+	text-align:right;
+	font-size:48px;
+	height:48px;
+	line-height:48px;
+	color:#888888;
+}
+
+hr.top {
+	display:block;
+	column-span:all;
+	-moz-column-span:all;
+	-webkit-column-span:all;
+	margin:20px auto;
+}
+
+.swatch {
+	width:64px;
+	height:64px;
+	padding:5px;
+	border:2px solid #888888;
+	position:relative;
+	background-clip:content-box;
+	background-position: 5px 5px;
+	background-image: url('../img/transparent_bg.jpg');
+	box-sizing:content-box;
+}
+
+.swatch .mainSwatch {
+	width:64px;
+	height:64px;
+	position:absolute;
+	left:5px;
+	top:5px;
+	box-sizing:content-box;
+}
+
+.swatch .gmSwatch {
+	width:32px;
+	height:32px;
+	position:absolute;
+	left:21px;
+	top:21px;
+	box-sizing:content-box;
+}
+
+#spaceView2D {
+	height:545px;
+}
+
+.SpaceView2D {
+	break-after: column;
+	-moz-break-after: column;
+	-webkit-break-after: column;
+	column-break-after: always;
+	-moz-column-break-after: always;
+	-webkit-column-break-after: always;
+	display:inline-block;
+	width:526px;
+	height:543px;
+	margin:0;
+	position:relative;
+	box-sizing:content-box;
+}
+
+.SpaceView2D .crosshair {
+	position:absolute;
+	z-index:2;
+	background-image: url('../img/crosshair.png');
+	width:1px;
+	height:1px;
+	padding:10px;
+	margin-left:-6px;
+	margin-top:-6px;
+	pointer-events: none;
+	box-sizing:content-box;
+}
+
+.SpaceView2D .canvas {
+	width:512px;
+	height:512px;
+	background-image: url('../img/transparent_bg.jpg');
+	border:2px solid #888888;
+	padding:5px;
+	position:absolute;
+	left:0;
+	top:0;
+	background-position:5px 5px;
+	background-clip:content-box;
+	background-repeat:repeat;
+	overflow: hidden;
+	box-sizing:content-box;
+}
+
+.SpaceView2D canvas {
+	margin:0;
+	width:100%;
+	height:100%;
+	position:relative;
+	cursor:pointer;
+}
+
+.SpaceView2D .xAxis {
+	cursor:default;
+	width:512px;
+	height:12px;
+	left:7px;
+	bottom:0px;
+	position: absolute;
+	color:rgba(0,0,0,0);
+}
+
+.SpaceView2D .xAxis svg {
+	position:absolute;
+	left:0px;
+	top:0px;
+}
+
+.SpaceView2D .xAxis line {
+	stroke:#888888;
+	stroke-width:2px;
+	stroke-linecap:round;
+}
+
+.SpaceView2D .xAxis .axislabel {
+	height:12px;
+	width:12px;
+	line-height: 12px;
+	position:absolute;
+	left:250px;
+	top:0px;
+	text-align:center;
+	color:#666666;
+}
+
+.SpaceView2D .yAxis {
+	cursor:default;
+	width:12px;
+	height:512px;
+	left:-17px;
+	top:7px;
+	position:absolute;
+	color:rgba(0,0,0,0);
+}
+
+.SpaceView2D .yAxis svg {
+	position:absolute;
+	left:0px;
+	top:0px;
+}
+
+.SpaceView2D .yAxis line {
+	stroke:#888888;
+	stroke-width:2px;
+	stroke-linecap:round;
+}
+
+.SpaceView2D .yAxis .axislabel {
+	height:12px;
+	line-height: 12px;
+	position:absolute;
+	top:250px;
+	left:0px;
+	text-align:center;
+	color:#666666;
+}
+
+.ControlsView {
+	break-inside: avoid;
+	-moz-break-inside: avoid;
+	-webkit-break-inside: avoid;
+	display:inline-block;
+	margin:0 auto;
+	width:526px;
+	height:78px;
+	position:relative;
+	box-sizing:content-box;
+}
+
+.ControlsView .swatch {
+	position: absolute !important;
+	top:0;
+	left:0;
+}
+
+.ControlsView .fixedDimSlider {
+	position:absolute;
+	top:48px;
+	left:90px;
+	width:436px;
+	text-align:left;
+}
+.ControlsView .fixedDimSlider input {
+	width:410px;
+}
+.ControlsView .slider {
+	width:100%;
+}
+.ControlsView .dimensionControls {
+	position:absolute;
+	width:360px;
+	top:0px;
+	left:90px;
+	text-align:left;
+}
+.ControlsView .dimensionControls > div {
+	vertical-align: top;
+	display: inline-flex !important;
+}
+
+.ControlsView .dimensionControls .hide {
+	display: none !important;
+}
+
+.ControlsView .dimensionText {
+	top:4px;
+	text-align:left;
+	position:absolute;
+	left:325px;
+	color:#888888;
+	font-size:16px;
+	line-height:30px;
+	font-weight: lighter;
+	font-style:italic;
+	width: 200px;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	overflow: hidden;
+}
+
+#numericView {
+	height:auto;
+}
+
+.NumericView {
+	break-inside: avoid;
+	-moz-break-inside: avoid;
+	-webkit-break-inside: avoid;
+	display:inline-flex;
+	margin:0 auto;
+	width:526px;
+	/*height:134px;*/
+	position:relative;
+	box-sizing:content-box;
+	justify-content: space-between;
+}
+
+.NumericView > div {
+	width:138px;
+	margin: 0;
+	border-radius:5px;
+	padding:10px 5px 10px 0;
+	float:left;
+	background-color:#EEEEEE;
+	box-sizing:content-box;
+	height:max-content;
+}
+
+.NumericView .form-inline {
+	text-align:left;
+	margin:0 0 10px;
+}
+
+.NumericView .form-inline label {
+	margin-left:6px;
+	margin-right:5px;
+	text-align:right;
+	width:20px;
+}
+
+.NumericView .form-inline:last-child {
+	margin-bottom:0px;
+}
+
+.HexView {
+	position:relative;
+	margin-bottom:10px;
+	height:30px;
+}
+
+.HexView .form-inline {
+	text-align:left;
+	width:143px;
+}
+
+.HexView .form-inline label {
+	width:25px;
+	margin-right:3px;
+	margin-left:-3px;
+	text-align:left;
+	color:#888888;
+}
+
+.HexView .imaginaryWarning {
+	color:#888888;
+	width:350px;
+	position:absolute;
+	left:180px;
+	top:5px;
+	display:none;
+	text-align:left;
+}
+
+.HexView .gamutMapWarning {
+	color:#888888;
+	width:350px;
+	position:absolute;
+	left:180px;
+	top:5px;
+	display:none;
+	text-align:left;
+}
+
+.HexView a.gamutmapped {
+	cursor:pointer;
+	text-decoration: none;
+	color:#08c;
+}
+
+.HexView a.gamutmapped:hover {
+	border-bottom: 1px solid #08c;
+	color:#08c;
+}
+
+.InterpolatorView {
+	break-inside: avoid;
+	-moz-break-inside: avoid;
+	-webkit-break-inside: avoid;
+	display:inline-block;
+	margin:0 auto;
+	width:526px;
+	height:114px;
+	position:relative;
+}
+
+.InterpolatorView .swatchLabel {
+	display: flex;
+	justify-content: center;
+    width: 100%;
+}
+
+.InterpolatorView .left {
+	position:absolute;
+	top:0px;
+	left:0px;
+	width:78px;
+	height:98px;
+}
+
+.InterpolatorView .right {
+	position:absolute;
+	top:0px;
+	right:0px;
+	width:78px;
+	height:98px;
+}
+
+.InterpolatorView .middle {
+	margin: -4px 95px 0 95px;
+	color:#888888;
+}
+
+.InterpolatorView .interpolationOutput {
+	width:100%;
+	height:32px;
+	margin: 6px 0 18px 0;
+	position:relative;
+	background-image: url('../img/transparent_bg.jpg');
+	background-position:0px 0px;
+	background-clip:content-box;
+	background-repeat:repeat;
+	overflow:visible;
+}
+
+.InterpolatorView .interpolationOutput > div {
+	position:absolute;
+	top:-2px;
+	height:100%;
+	border-left:1px solid #FFFFFF;
+	cursor:pointer;
+	padding-bottom:2px;
+	padding-top:2px;
+	background-clip:content-box;
+	box-sizing:content-box;
+}
+
+.InterpolatorView .interpolationOutput > div:hover {
+	top:-4px;
+	border-top:2px solid #888888;
+	border-bottom:2px solid #888888;
+}
+
+.InterpolatorView .controls {
+	margin-right:5px;
+}
+
+.InterpolatorView .controls > label {
+	display:inline-block;
+	margin-bottom: 0 !important;
+	margin-right:10px;
+	vertical-align:middle;
+	box-sizing:content-box;
+}
+
+.InterpolatorView .controls input {
+	display:inline-block;
+	vertical-align:top;
+	width:42px;
+}
+
+.InterpolatorView .interpolatorMode label > span {
+	position:relative;
+	top:-1px;
+}
+
+.InterpolatorView .interpolatorMode {
+	display:inline;
+	margin-right:20px;
+}
+
+.InterpolatorView .interpolatorSteps {
+	width: 60px;
+	display: inline-block;
+	vertical-align: middle;
+}
+
+.InterpolatorView .left a, .InterpolatorView .right a {
+	cursor:pointer;
+	text-decoration: none;
+	color:#08c;
+}
+
+.InterpolatorView .left a:hover, .InterpolatorView .right a:hover {
+	border-bottom: 1px solid #08c;
+	color:#08c;
+}
+
+.CVDView {
+	break-inside: avoid;
+	-moz-break-inside: avoid;
+	-webkit-break-inside: avoid;
+	display:inline-flex;
+	margin:0 auto;
+	width:526px;
+	height:96px;
+	position:relative;
+	justify-content: space-between;
+}
+
+.CVDView .controls {
+	margin-top:-4px;
+	width:150px !important;
+	text-align:center;
+}
+
+.CVDView .controls > label {
+	color:#888888;
+}
+
+.CVDView .controls .CVDSimMode {
+	justify-content: center !important;
+	margin-top:5px; 
+}
+
+.CVDView > div {
+	width:78px;
+	height:98px;
+	box-sizing:content-box;
+}
+
+.CVDView .swatchLabel {
+	display: flex;
+	justify-content: center;
+    width: 100%;
+    color:#888888;
+}
+
+.BGAdapterView {
+	break-inside: avoid;
+	-moz-break-inside: avoid;
+	-webkit-break-inside: avoid;
+	display:inline-block;
+	margin:0 auto;
+	width:526px;
+	height:270px;
+	background-position: -1px -1px;
+	position:relative;
+	background-clip:content-box;
+	background-image: url('../img/transparent_bg.jpg');
+}
+
+.BGAdapterView .bg {
+	position: absolute;
+	width:100%;
+	height:100%;
+	left: 0;
+	right: 0;
+	background-color: #000000;
+}
+
+.BGAdapterView .title {
+	width:100%;
+	position:absolute;
+	top:10px;
+	left:0px;
+	text-align:center;
+}
+
+.BGAdapterView .adapted {
+	position:absolute;
+	left:224px;
+	top:89px;
+}
+
+.BGAdapterView .swatch {
+	border: 2px solid;
+}
+
+.BGAdapterView .controls {
+	position:absolute;
+	left:0px;
+	right:0px;
+	bottom:15px;
+	justify-content: center;
+}
+
+.BGAdapterView .controls input {
+	width:102px;
+	background: none;
+}
+
+.BGAdapterView .text-con {
+	color:#888888;
+}
+
+.BGAdapterView .text-highcon {
+	color:#CCCCCC;
+}
+
+.BGAdapterView .border-con {
+	border-color:#888888;
+}
+
+@media (max-width:1151px) {
+	.hideNarrow {
+		display:none;
+	}
+
+	#master {
+		width:526px;
+	}
+
+	hr.top {
+		width:486px;
+	}
+}
+
+@media (min-width:1152px) {
+	.hideWide {
+		display:none;
+	}
+
+	#master {
+		width:1092px;
+	}
+
+	.columns {
+		/*height:545px;*/
+	}
+
+	hr.top {
+		width:1052px;
+	}
+}
