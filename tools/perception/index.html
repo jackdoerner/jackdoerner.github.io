@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+	<meta content="utf-8" http-equiv="encoding">
+	<title>Perception</title>
+	<link href="system/lib/necolas-normalize/normalize.css" rel="stylesheet" media="screen">
+	<link href='system/fonts/sofiaprolight/stylesheet.css' rel='stylesheet' media='screen'>
+	<link href="system/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
+	<link href="system/css/main.css" rel="stylesheet" media="screen">
+	<script type='text/javascript' src='system/js/array_extended.js'></script>
+	<script type='text/javascript' src='system/js/PerceptualColor.js'></script>
+	<script type='text/javascript' src='system/lib/jquery/jquery.min.js'></script>
+	<script type='text/javascript' src="system/lib/bootstrap/js/bootstrap.min.js"></script>
+	<script type='text/javascript' src='system/js/Perception.js'></script>
+	<script type='text/javascript' src='system/js/Perception-SpaceView2D.js'></script>
+	<script type='text/javascript' src='system/js/Perception-ControlsView.js'></script>
+	<script type='text/javascript' src='system/js/Perception-NumericView.js'></script>
+	<script type='text/javascript' src='system/js/Perception-InterpolatorView.js'></script>
+	<script type='text/javascript' src='system/js/Perception-GamutMapper.js'></script>
+	<script type='text/javascript' src='system/js/Perception-CVDView.js'></script>
+	<script type='text/javascript' src='system/js/Perception-BGAdapterView.js'></script>
+	<script type='text/javascript'>
+
+		jQuery(function(){
+
+			var InitialColorModel = PerceptualColor.UCSHMJColor;
+
+			new Perception.modules.GamutMapper();
+			new Perception.modules.SpaceView2D($('#spaceView2D')[0], 512, 512);
+			new Perception.modules.ControlsView($('#controlsView')[0]);
+			new Perception.modules.NumericView($('#numericView')[0]);
+			new Perception.modules.InterpolatorView($('#interpolatorView')[0]);
+			new Perception.modules.CVDView($('#CVDView')[0]);
+			new Perception.modules.BGAdapterView($('#BGAdapterView')[0]);
+			Perception.setState({
+				colorModel:InitialColorModel,
+				fixedDimension:2,
+				selectedColor: new InitialColorModel(
+					(Math.abs(InitialColorModel.info.dimensions[0].bounds[0]) + Math.abs(InitialColorModel.info.dimensions[0].bounds[1]))/2,
+					(Math.abs(InitialColorModel.info.dimensions[1].bounds[0]) + Math.abs(InitialColorModel.info.dimensions[1].bounds[1]))/2,
+					(Math.abs(InitialColorModel.info.dimensions[2].bounds[0]) + Math.abs(InitialColorModel.info.dimensions[2].bounds[1]))/2
+				)
+			});
+			Perception.beginAnimation();
+
+		});
+	</script>
+	<!-- Google tag (gtag.js) -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=G-GCYY1SD9GT"></script>
+	<script>
+	  window.dataLayer = window.dataLayer || [];
+	  function gtag(){dataLayer.push(arguments);}
+	  gtag('js', new Date());
+	  gtag('config', 'G-GCYY1SD9GT');
+	</script>
+</head>
+<body>
+
+	<div id='master'>
+
+		<div id='title'>Perception<div id='subtitle'><span class='modeName'></span><span class='hideNarrow'>&nbsp;Color Tool</span></div></div>
+
+		<hr class='top'/>
+
+		<div class='columns'>
+
+			<div id='spaceView2D' class='breakAfter'></div>
+
+			<hr />
+
+			<div id='controlsView'></div>
+
+			<hr class='hideWide'/>
+			
+			<div id='numericView'></div>
+
+			<hr />
+
+			<div id='interpolatorView'></div>
+
+			<hr />
+
+			<div id='CVDView'></div>
+
+			<hr />
+
+			<div id='BGAdapterView'></div>
+
+		</div>
+
+	</div>
+</body>
+</html>

@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel='stylesheet' type='text/css' href='../fonts/sofiaprolight/stylesheet.css' />
+<link rel='stylesheet' type='text/css' href='../fonts/linuxlibertine/stylesheet.css' />
+<link rel='stylesheet' type='text/css' href='../fonts/linuxbiolinum/stylesheet.css' />
+<title>Art &amp; Films | Jack Doerner</title>
+
+<style>
+a{ outline: none;}
+
+body, html {
+	background-color: #FFFFFF;
+	color:#000000;
+	font-family:"Linux Libertine", "Times", "Times New Roman", serif;
+	font-weight: 300;
+	font-size:12pt;
+	line-height: 1.2;
+	text-align: center;
+}
+
+em {
+	font-family:"Linux Libertine", "Times", "Times New Roman", serif;
+}
+
+em.serif {
+	font-family:"Linux Libertine", "Times", "Times New Roman", serif;
+}
+
+.center {
+	text-align: center;
+}
+
+#main {
+	column-width:30em;
+	column-count:auto;
+	-moz-column-width:30em;
+	-moz-column-count:auto;
+	-webkit-column-width:30em;
+	-webkit-column-count:auto;
+	column-gap:2em;
+	-moz-column-gap:2em;
+	-webkit-column-gap:2em;
+	margin:60px auto 40px auto;
+	padding:0 2em;
+	text-align:left;
+}
+
+#main > div {
+	display:inline-block;
+	text-align: justify;
+	margin-bottom:2em;
+}
+
+#main a {
+	text-decoration: none;
+	color:#000000;
+	border-bottom:1px solid #222222;
+	outline:0;
+}
+
+#main a:hover, #main a.active {
+	text-decoration: none;
+	border-bottom:2px solid #222222;
+}
+
+#main .titlebox {
+	position:relative;
+	margin-bottom:1em;
+}
+
+#main img {
+	width:100%;
+}
+
+#main .titlebox_inner {
+	position: absolute;
+	height:24%;
+	top:64%;
+	left:0;
+	right:0;
+	z-index: 2;
+	overflow:hidden;
+}
+#main .titlebox_inner > div {
+	border-top: 1px solid rgba(255,255,255,0.4);
+	border-bottom: 1px solid rgba(255,255,255,0.5);
+	background-color: rgba(255,255,255,0.4);
+	position: absolute;
+	top:0;
+	bottom:0;
+	left:0;
+	right:0;
+}
+
+.planned_obsolescence .titlebox_inner::before {
+	background-image: url('planned_obsolescence/banner.jpg');
+}
+
+.unattended_baggage .titlebox_inner::before {
+	background-image: url('unattended_baggage/banner.jpg');
+}
+
+.photography .titlebox_inner::before {
+	background-image: url('photography/banner.jpg');
+}
+
+.caleta_totoralillo_norte .titlebox_inner::before {
+	background-image: url('caleta_totoralillo_norte/banner.jpg');
+}
+
+.twentynineseventyone .titlebox_inner::before {
+	background-image: url('2971/banner.jpg');
+}
+
+.pseudototalities .titlebox_inner::before {
+	background-image: url('pseudototalities/banner.jpg');
+}
+
+.phosphorpersistence .titlebox_inner::before {
+	background-image: url('phosphorpersistence/banner.jpg');
+}
+
+.titlebox_inner::before{
+    background-size: cover;
+    -moz-filter: url('#svgBlur');
+    -moz-filter: blur(20px);
+    -webkit-filter: url('#svgBlur');
+    -webkit-filter: blur(20px);
+    filter: url('#svgBlur');
+    filter: blur(20px);
+	background-position: 50% 101%;
+	top:-50%;
+	left:-50%;
+	background-size: 50%;
+    z-index: -1;
+	display: block;
+	position: absolute;
+	content: ' ';
+	width: 200%;
+	height: 200%;
+  	overflow: visible;
+}
+
+#main > div > .title {
+	font-size:26pt;
+	text-align: left;
+	font-family:"Linux Biolinum", "Times", "Times New Roman", serif;
+}
+
+#main > div > .subtitle {
+	font-size:14pt;
+	margin-top:6pt;
+	font-family:"Linux Libertine", "Times", "Times New Roman", serif;
+}
+
+
+#main .titlebox_inner .title {
+	font-size:26pt;
+	height:26pt;
+	line-height: 26pt;
+	font-family:"Linux Biolinum", "Times", "Times New Roman", sans-serif;
+	text-align: left;
+	text-shadow:0 0 4px rgba(255,255,255,0.4);
+	position: absolute;
+	bottom:50%;
+	margin-bottom: -1pt;
+	width:100%;
+	padding-left:12pt;
+}
+
+#main .titlebox_inner .subtitle {
+	font-family:'Linux Biolinum','Times','Times New Roman',sans-serif;
+	margin-top:7pt;
+	font-size: 14pt;
+	text-align: left;
+	height:16pt;
+	line-height:16pt;
+	text-shadow:0 0 4px rgba(255,255,255,0.4);
+	position: absolute;
+	top:50%;
+	width:100%;
+	padding-left:12pt;
+}
+
+#main .subtitle a {
+	color:#000000;
+}
+
+#main .subtitle a:hover, #main .subtitle a.active {
+	color:#000000;
+}
+
+#main .titlebox a.imglink {
+	border-bottom:0px;
+}
+
+#main .titlebox a.imglink:hover {
+	border-bottom:2px solid #000000;
+}
+
+#main .subtitle .category {
+	font-style: italic;
+}
+
+#blurSvg {
+	position:absolute;
+	height:0;
+	width:0;
+}
+
+</style>
+
+<style>
+#topmenu {
+	position:fixed;
+	top:0px;
+	left:0px;
+	right:0px;
+	padding:10px;
+	text-align: left;
+	background-color: #FFFFFF;
+	font-family:'SofiaProLight','Helvetica','Arial',sans-serif;
+	color:#000000;
+	z-index:1000;
+	box-shadow:0 0 5px rgba(0,0,0,0.2);
+	border-bottom:1px solid #222222;
+	height:20px;
+	line-height: 20px;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+#menuspacer {
+	height:40px;
+}
+
+#topmenu a {
+	margin:0px 10px;
+	color:#888888;
+	text-decoration:none;
+}
+
+#topmenu a:first-child {
+	margin-left:0px;
+}
+
+#topmenu a:hover, #topmenu a.active {
+	color:#000000;
+	border-color: #000000;
+}
+
+#menuspacer {
+	height:40px;
+}
+
+div#copyright {
+		font-family:'SofiaProLight','Helvetica','Arial',sans-serif;
+		color:#000000;
+		position: fixed;
+		bottom:10px;
+		right:12px;
+		z-index:1000;
+	}
+</style>
+
+<script>
+	window.addEventListener('load', (event) => {
+	    if (typeof performance !== 'undefined' && typeof performance.getEntriesByType !== 'undefined'
+			&& performance.getEntriesByType("navigation").length > 0
+			&& typeof performance.getEntriesByType("navigation")[0].type !== 'undefined'
+			&& performance.getEntriesByType("navigation")[0].type == 'reload') {
+	    		var elements = document.querySelectorAll("#main div:not(.no_rot)");
+				for (ii = 0; ii < elements.length; ii ++) {
+					elements[ii].style.transform = "rotate(" + (1.5 * Math.random() - 0.75) + "deg)";
+				}
+		}
+	});
+</script>
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-GCYY1SD9GT"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-GCYY1SD9GT');
+</script>
+
+</head>
+<body>
+	<svg id='blurSvg' height="0" xmlns="http://www.w3.org/2000/svg">
+	  <filter id="svgBlur" x="-50%" y="-50%" width="200%" height="200%">
+	    <feGaussianBlur in="SourceGraphic" stdDeviation="20"/>
+	  </filter>
+	</svg>
+	
+	<div id='topmenu'><a href='../'>Home</a>&bull;<a href='../about'>About</a>&bull;<a href='../research'>Research</a>&bull;<a href='../teaching'>Teaching</a>&bull;<a href='../art' class='active'>Art &amp; Films</a>&bull;<a href='../exposition'>Exposition</a></div>
+
+	<div id='main'>
+		<div class='photography'>
+			<div class='titlebox'>
+				<a class="imglink" href="https://www.flickr.com/photos/jackdoerner/50684295523/" target="_blank"><img src='photography/banner.jpg'/></a>
+				<div class='titlebox_inner no_rot'><div class='no_rot'>
+					<div class='title'>Aimless Photography</div>
+					<div class='subtitle'><span class='category'>Photo Series</span> &bull; <a href="https://www.flickr.com/photos/jackdoerner/" target="_blank">View</a></div>
+				</div></div>
+			</div>
+			<p>
+				Everywhere I go, I point cameras at things.
+			</p>
+			<p>
+				Jack Doerner, forever ongoing
+			</p>
+		</div>
+		<div class='muscle'>
+				<div class='title'>As Crew</div>
+				<div class='subtitle'> <a href="https://www.imdb.com/name/nm7113579/" target="_blank">Information via IMDB</a>  &bull;  <a href="https://mubi.com/en/cast/jack-doerner" target="_blank">Information via Mubi</a></div>
+			<p>
+				In addition to the works you see here, I sometimes participate in the production of short and feature length films as a cinematographer, audio engineer, camera mechanic, and holder of inanimate objects. I am particularly proud to have been involved in many works of <a href="https://en.wikipedia.org/wiki/Kevin_Jerome_Everson" target="_blank">Kevin Jerome Everson</a>.
+			</p>
+			<p>
+				Jack Doerner, forever ongoing
+			</p>
+		</div>
+		<div class='bolextag'>
+			<div class='title'>BO LE XT AG</div>
+			<div class='subtitle'><span class='category'>Multi-Channel Film</span> &bull; <a href="https://www.youtube.com/watch?v=aOm9W_rs0pU" target="_blank">Watch</a> &bull; <a href="bolextag/" target="_blank">Interactive Version</a></div>
+			<p>
+				The Rules: Each participant is given a 16mm Bolex film camera equipped with 100ft of film. The object of the game is to capture your opponents on film, while you try to avoid being captured by anyone else. The game ends when each participant has run out of film.<br/><br/>
+
+				This film was intended to be presented via analog multi-projection from prints of the original negatives. Since it is impossible to replicate this experience on the internet, we provide an alternate, interactive version.
+			</p>
+			<p>
+				<a href="https://www.sandywilliamsiv.com/" target="_blank">Sandy Williams IV</a> and Jack Doerner, 2017
+			</p>
+		</div>
+		<div class='caleta_totoralillo_norte'>
+			<div class='titlebox'>
+				<a class="imglink" href="https://www.flickr.com/photos/jackdoerner/48555476357/" target="_blank"><img src='caleta_totoralillo_norte/banner.jpg'/></a>
+				<div class='titlebox_inner no_rot'><div class='no_rot'>
+					<div class='title'>Caleta Totoralillo Norte</div>
+					<div class='subtitle'><span class='category'>Dome Film</span></div>
+				</div></div>
+			</div>
+			<p>
+				On a rocky beach at the edge of the Atacama Desert, the sun sets all around.
+			</p>
+			<p>
+				Jack Doerner and <a href="https://www.sandywilliamsiv.com/" target="_blank">Sandy Williams IV</a>, 2025
+			</p>
+		</div>
+		<div class='cardinal'>
+			<div class='title'>Cardinal</div>
+			<div class='subtitle'><span class='category'>3D Film</span> &bull; <a href="https://www.youtube.com/watch?v=APX-RNRybrc" target="_blank">Watch</a></div>
+			<p>
+				Wanderers from different worlds come close but never meet. A dual-channel film for the visual cortex.
+			</p>
+			<p>
+				Jack Doerner, 2017
+			</p>
+		</div>
+		<div class='chopsaw_manifold'>
+			<div class='title'>Chopsaw Manifold</div>
+			<div class='subtitle'><span class='category'>Film</span> &bull; <a href="https://www.youtube.com/watch?v=8SzVe44TRIM" target="_blank">Watch</a></div>
+			<p>
+				A complex object, projected onto two dimensions.
+			</p>
+			<p>
+				<a href="https://www.sandywilliamsiv.com/" target="_blank">Sandy Williams IV</a> and Jack Doerner, 2016
+			</p>
+		</div>
+		<div class='come_closer'>
+			<div class='title'>Come Closer</div>
+			<div class='subtitle'><span class='category'>3D Film</span> &bull; <a href="https://www.youtube.com/watch?v=eqgy3B7qsdU" target="_blank">Watch</a></div>
+			<p>
+				Come Closer is an experiment in the perception of space. Two cameras were placed on a mountaintop, 60ft apart.
+				These became the left and right eyes of a 3D image. The interocular distance creates the illusion of a miniature world - mountains, miles away, are brougth within a few feet, and the sky stands just out of reach.<br/><br/>
+
+				This piece was installed in the Second Street Gallery in Charlottesville, Virginia during November 2013, to coincide with the Virginia Film Festival. The two eyes were projected onto opposite walls. A viewing station in the center contained two 45&deg; mirrors, positioned carefully such that when the viewer stood looking into them, the reflected images precisely aligned, creating a natural, comfortable 3D view.
+			</p>
+			<p>
+				Jack Doerner, 2013
+			</p>
+		</div>
+		<!--<div class='moment_13'>
+			<div class='title'>Moment 13</div>
+			<div class='subtitle'><span class='category'>Software-Driven Dual-Channel Film</span> &bull; <a href="moment13/" target="_blank">Watch</a></div>
+			<p>
+				The actions and consequences of two brothers.<br/><br/>
+				Moment 13 is an attempt to divorce narrative structure from temporal sequence. Rather than being presented according to a predetermined order, scenes are played at random by software, two side by side.
+			</p>
+			<p>
+				Jack Doerner, 2014
+			</p>
+		</div>-->
+		<div class='phosphorpersistence'>
+			<div class='titlebox'>
+				<img src='phosphorpersistence/banner.jpg'/>
+				<div class='titlebox_inner no_rot'><div class='no_rot'>
+					<div class='title'>Phosphorpersistence</div>
+					<div class='subtitle'><span class='category'>Film</span> &bull; <a href="https://www.youtube.com/watch?v=yNkcvMCbOGo" target="_blank">Watch</a></div>
+				</div></div>
+			</div>			
+			<p>
+				A traveling salesman must visit 6000 cities.<br/><br/>
+
+				The television is broken; for a few seconds after the channel is changed, the horizontal scan frequency is wrong,
+				and as a result it displays only abstract patterns. By changing channels rapidly, these patterns can be maintained.
+				Each pair of frames is compared using the sum of squared differences, considering only the region inside the television.
+				All frames are then reordered according to a greedy solution to the traveling salesman problem.
+				The effect is that the chaos of the television screen is remapped onto the background, which flickers and jumps, while the screen itself becomes calm.<br/><br/>
+
+				This piece was installed in the Second Street Gallery in Charlottesville, Virginia during November 2014, to coincide with the Virginia Film Festival.
+			</p>
+			<p>
+				Jack Doerner, 2014
+			</p>
+		</div>
+		<div class='pseudototalities'>
+			<div class='titlebox'>
+				<img src='pseudototalities/banner.jpg'/>
+				<div class='titlebox_inner no_rot'><div class='no_rot'>
+					<div class='title'>Pseudototalities</div>
+					<div class='subtitle'><span class='category'>Cyanotype Print Series</span> &bull; <a href="https://www.flickr.com/photos/jackdoerner/albums/72177720322981755" target="_blank">View</a></div>
+				</div></div>
+			</div>
+			<p>
+				Jack Doerner, 2024-2025
+			</p>
+		</div>
+		<div class='sandlance_1'>
+			<div class='title'>Sandlance 1</div>
+			<div class='subtitle'><span class='category'>3D Film</span> &bull; <a href="https://www.youtube.com/watch?v=vtEyrTW_W34" target="_blank">Watch</a></div>
+			<p>
+				A puzzle to be solved by the viewer. Not interactive per se, yet the viewer may learn to interact with it inside their own mind.<br/><br/>
+				This piece was installed in the Second Street Gallery in Charlottesville, Virginia during November 2016, to coincide with the Virginia Film Festival.
+			</p>
+			<p>
+				Jack Doerner, 2016
+			</p>
+		</div>
+
+		<div class='unattended_baggage'>
+			<div class='titlebox'>
+				<a class="imglink" href="unattended_baggage/unattended_baggage_full.jpg" target="_blank"><img src='unattended_baggage/banner.jpg'/></a>
+				<div class='titlebox_inner no_rot'><div class='no_rot'>
+					<div class='title'>Unattended Baggage</div>
+					<div class='subtitle'><span class='category'>Sculpture Series</span> &bull; <a href="https://www.sandywilliamsiv.com/unattended-baggage-1" target="_blank">Details</a></div>
+				</div></div>
+			</div>
+			<p>
+				It counts up the seconds since last it was moved, quantifying for viewers its relationship with them.
+			</p>
+			<p>
+				<em>Suitcase, Microcontroller, LCD; Series of 15</em><br/>
+				<a href="https://www.sandywilliamsiv.com/" target="_blank">Sandy Williams IV</a> and Jack Doerner, 2017-2025
+			</p>
+		</div>
+		<div class='zyklus'>
+			<div class='title'>Zyklus</div>
+			<div class='subtitle'><span class='category'>Film</span> &bull; <a href="https://www.youtube.com/watch?v=-ChJCvALQA0" target="_blank">Watch</a></div>
+			<p>
+				A meditation on the mutability of memory, for the twenty-fifth anniversary of an event I do not remember.
+			</p>
+			<p>
+				Jack Doerner, 2014
+			</p>
+		</div>
+		<div class='twentynineseventyone'>
+			<div class='titlebox'>
+				<img src='2971/banner.jpg'/>
+				<div class='titlebox_inner no_rot'><div class='no_rot'>
+					<div class='title'>29&deg; S, 71&deg; W</div>
+					<div class='subtitle'><span class='category'>Film</span></div>
+				</div></div>
+			</div>
+			<p>
+				Should I tell him the ancient story, or the one about how we became fishermen here?
+			</p>
+			<p>
+				<a href="https://www.sandywilliamsiv.com/" target="_blank">Sandy Williams IV</a> and Jack Doerner, 2024
+			</p>
+		</div>
+	</div>
+
+	<div id='copyright'>&copy;&nbsp;2025</div>
+
+</body>
+</html>
