@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<title>UVa CS4501: Cryptographic Protocols (Spring 2026)</title>
+<link rel='stylesheet' type='text/css' href='../../../system/css/main.css'/>
+<link rel='stylesheet' type='text/css' href='../../../system/css/styles/onecolumn.css'/>
+<script type='text/javascript' src='../../../system/js/articlemain.js'></script>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-GCYY1SD9GT"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-GCYY1SD9GT');
+</script>
+
+<script type='text/javascript'>
+class DualRangeInput {
+    /**
+     * @param {HTMLInputElement} minel - The range input element for the minimum value
+     * @param {HTMLInputElement} maxel - The range input element for the maximum value
+     * @param {number} [precision=3] - The number of decimal places to round the mid value to, defaults to 3
+     */
+    constructor(minel, maxel, precision = 3) {
+        this.updateFloor = () => this.update('floor');
+        this.updateCeil = () => this.update('ceil');
+        this.minel = minel;
+        this.maxel = maxel;
+        this.precision = precision;
+        this.minel.addEventListener('input', this.updateCeil);
+        this.maxel.addEventListener('input', this.updateFloor);
+        this.minel.addEventListener('focus', this.updateCeil);
+        this.maxel.addEventListener('focus', this.updateFloor);
+        // Unfortunately Safari doesn't trigger focus on mousedown or touchstart
+        // like other browsers do, so we have to listen for those events as well
+        this.minel.addEventListener('mousedown', this.updateCeil);
+        this.maxel.addEventListener('mousedown', this.updateFloor);
+        this.minel.addEventListener('touchstart', this.updateCeil);
+        this.maxel.addEventListener('touchstart', this.updateFloor);
+        this.update();
+        this.minel.dataset.ready = 'true';
+        this.maxel.dataset.ready = 'true';
+    }
+    update(method = 'ceil') {
+        const thumbWidthVar = 'var(--dri-thumb-width)';
+        const min = parseFloat(this.minel.min);
+        const max = parseFloat(this.maxel.max);
+        const step = parseFloat(this.minel.step) || 1;
+        const minValue = parseFloat(this.minel.value);
+        const maxValue = parseFloat(this.maxel.value);
+        const midValue = (maxValue - minValue) / 2;
+        const mid = minValue + Math[method](midValue / step) * step;
+        const range = max - min;
+        const leftWidth = (((mid - min) / range) * 100).toFixed(this.precision);
+        const rightWidth = (((max - mid) / range) * 100).toFixed(this.precision);
+        this.minel.style.flexBasis = `calc(${leftWidth}% + ${thumbWidthVar})`;
+        this.maxel.style.flexBasis = `calc(${rightWidth}% + ${thumbWidthVar})`;
+        this.minel.max = mid.toFixed(this.precision);
+        this.maxel.min = mid.toFixed(this.precision);
+        const minFill = (minValue - min) / (mid - min) || 0;
+        const maxFill = (maxValue - mid) / (max - mid) || 0;
+        const minFillPercentage = (minFill * 100).toFixed(this.precision);
+        const maxFillPercentage = (maxFill * 100).toFixed(this.precision);
+        const minFillThumb = (0.5 - minFill).toFixed(this.precision);
+        const maxFillThumb = (0.5 - maxFill).toFixed(this.precision);
+        this.minel.style.setProperty('--dri-gradient-position', `calc(${minFillPercentage}% + (${minFillThumb} * ${thumbWidthVar}))`);
+        this.maxel.style.setProperty('--dri-gradient-position', `calc(${maxFillPercentage}% + (${maxFillThumb} * ${thumbWidthVar}))`);
+    }
+    destroy() {
+        this.minel.removeEventListener('input', this.updateFloor);
+        this.maxel.removeEventListener('input', this.updateCeil);
+        this.minel.removeEventListener('focus', this.updateFloor);
+        this.maxel.removeEventListener('focus', this.updateCeil);
+        this.minel.removeEventListener('mousedown', this.updateCeil);
+        this.maxel.removeEventListener('mousedown', this.updateFloor);
+        this.minel.removeEventListener('touchstart', this.updateCeil);
+        this.maxel.removeEventListener('touchstart', this.updateFloor);
+    }
+}
+</script>
+
+<script type='text/javascript'>
+function setup(imnum){
+  const minel = document.querySelector('#min_'+imnum);
+  const maxel = document.querySelector('#max_'+imnum);
+
+  new DualRangeInput(minel, maxel);
+
+  maxel.addEventListener('input', () => {
+    compareel.style.setProperty("--mask-width-one", maxel.value + "%");
+  });
+
+  minel.addEventListener('input', () => {
+    compareel.style.setProperty("--mask-width-two", minel.value + "%");
+  });
+
+  const compareel = document.querySelector("#compare_"+imnum);
+
+  compareel.style.setProperty("--mask-width-one", maxel.value + "%");
+  compareel.style.setProperty("--mask-width-two", minel.value + "%");
+}
+
+function start(){
+  setup(1)
+  setup(2)
+  setup(3)
+  setup(4)
+}
+
+window.onload = start;
+</script>
+<style>
+  td {
+    padding: 5px 5px;
+  }
+</style>
+</head>
+<body>
+
+<div id='topmenu' class='header hideOnEmbed'>
+  <div id='leftlinks'><a href='/'>Home</a>&bull;<a href='../../../'>Teaching</a></div>
+  <div id='rightlinks'><a id='toplink' href='#title'>Top of Page</a></div>
+</div>
+
+<div id='menuspacer' class='hideOnEmbed'>&nbsp;</div>
+
+<div class='oneColumn pleasantReading'>
+
+<h1 id='title'>UVa CS4501: Cryptographic Protocols (Spring 2026)</h1>
+
+<h2> Status </h2>
+
+<p>Homework 2 is officially released. You have 23 days to complete it. This website was last updated on February 16, 2026.</p>
+
+<h2>Table of Contents</h2>
+
+<ol>
+  <li> <a href="#logistics">People, Places, Materials, Communication</a> </li>
+  <li> <a href="#preamble">Preamble</a> </li>
+  <li> <a href="#prereqscoursework">Prerequisites and Coursework</a></li>
+  <li> <a href="#syllabus">Syllabus</a> </li>
+  <li> <a href="#lectures">Lectures</a> </li>
+  <li> <a href="#policies">Policies</a> </li>
+  <li> <a href="#moreresources">Additional Resources</a> </li>
+</ol>
+
+<h2> <a name="logistics" class="nolinkanchor">People, Places, Materials, Communication</a> </h2>
+
+<ul>
+  <li> <b>Instructor:</b> <a href="https://jackdoerner.net">Jack Doerner</a>. <b>Email:</b> jhd3pa at virgina dot edu. <b>Office:</b> Rice Hall 106. <b>Office Hours:</b> Fr 2:00pm - 3:00pm, immediately after class times, and by appointment.</li>
+  <li> <b>TA:</b> <a href="https://jinye-he.github.io/" target="_blank">Jinye He (Clara)</a>. <b>Email:</b> qfn5bh at virginia dot edu. <b>Office Hours:</b> Fr 4:00PM - 5:00PM in Rice Hall 442.</li>
+  <li> <b>Lecture Location:</b> Olsson Hall 009.</li>
+  <li> <b>Lecture Time:</b> TuTh 3:30pm - 4:45pm.</li>
+  <li> <b>Primary Course Materials:</b> None.</li>
+  <li> <b>Coursework Submissions:</b> <a href="https://canvas.its.virginia.edu/courses/169737" target="_blank">generally via Gradesope (on Canvas)</a>.</li>
+  <li> <b>Online Discussions:</b> <a href="https://piazza.com/virginia/spring2026/cs4501" target="_blank">Piazza</a>.</li>
+  <li> <b>Contact Email:</b> cs4501s26 at jackdoerner dot net. This email forwards to the instructor and the TA(s), who will do their best to respond in a timely fashion. Please try to use descriptive subject lines, and include the assignment number for any email that concerns a specific assignment. Especially urgent messages can be marked as such.</li>
+</ul>
+
+<h2> <a name="preamble" class="nolinkanchor">Preamble</a> </h2>
+
+<p>Suppose that Alice, Bob, and Carol each know a secret, and they want to perform a computation together using their secrets, but they do not trust one another. In this class, we will start from the basic question of how they can communicate securely, and build our way up to a protocol that allows them to jointly compute any function on their secrets without revealing those secrets to one another. Along the way, we will explore how to define 'security' not just for data, but for computations, we will determine when secure computation is possible and when it is impossible, and we will learn all of the cryptographic tools that we need to achieve our goal, including digital signatures, zero-knowledge proofs, and consensus protocols.</p>
+
+<p>This course will be taught at an advanced undergraduate level, and it requires some mathematical maturity: students should be comfortable using mathematical notation, and with reading and writing proofs. The intent of this course is that students will learn how to think about security of computations involving multiple participants and understand a swathe of techniques and results crypographic protocol design and the theory of distributed computing. This course complements a course in the foundations of cryptography, but it does not require any background in cryptography, distributed computing, or networking.</p>
+
+<p><b>New Course Disclaimer:</b> This is the first time this course has been taught at UVa, and it is the second course I have ever taught. The course will be based upon a similar course developed by <a href="https://cs.idc.ac.il/~ran/" target="_blank">Ran Cohen</a>. It is likely that the content and structure of this course will change in minor ways over the semester. Such changes will always be made for the benefit of the students, and I will do my best to make it clear when they occur. Prior versions of this website will be retained for your reference. I am eager to hear your concerns and suggestions, which you may communicate to me via email or office hours, or anonymously by sliding a note under my office door. I will do my best to take them into account as the course proceeds. Most importantly, remember that my goal is to impart to you the joy of cryptography. This will be a challenging course, no matter what, but my hope is that you will also have fun, meet interesting people, and in some small way become enlightened.</p>
+
+<h2> <a name="prereqscoursework" class="nolinkanchor">Prerequisites and Coursework</a> </h2>
+
+<h3>Prerequisites</h3>
+
+<p> This course will make use of basic notions from the theory of computation and complexity theory, such as reductions, decision problems, NP-completeness, computational models (e.g. Turing Machines), and it will make extensive use of basic concepts from probability theory. In the UVa undergraduate program, these concepts are provided by CS3120 and either APMA3100 or MATH3100. Motivated students who have not yet taken these courses are welcome to join, but they may need to fill in the gaps in their background knowledge on their own. No background in cryptography, distributed computing, or abstract algebra is expected. Students taking this course should be mathematically mature and comfortable both reading and writing formal proofs. Mathematical notation (including potentially new or unfamiliar notation) will be used extensively, and all student work-products will be created using the <a href="https://en.wikipedia.org/wiki/LaTeX" target="_blank">LaTeX</a> typesetting system, for which no in-class training will be given.</p>
+
+<h3>Coursework Overview and Grade Breakdown</h3>
+
+<ul>
+  <li> (60%) Homeworks (&le;4). </li>
+  <li> (20%) Scribe notes (1-2). </li>
+  <li> (20%) Final Exam. </li>
+</ul>
+
+<p>See also the <a href="https://uvacsadvising.org/policies.html#cs-department-grading-guidelines" target="_blank">CS department grading guidelines</a>.</p>
+
+<h3>Homework</h3>
+
+<p>Every student must <em>individually</em> write and submit solutions to the homework problems assigned. Students are encouraged to discuss problems with one another and work toward solutions in small groups of their choosing, but everyone should begin by thinking about the problems on thier own. Groups need not be consistent between different homeworks, and they should generally not be bigger than 3-4 students. Whenever any two students discuss a problem in any substantive way, they <em>must</em> include a written acknowledgement in their homework submissions, whether they are working in a group together or not. The point of homework discussions is to help you understand the material: it is not acceptable to simply swap solutions, and every student should be able to orally explain every solution they submit. It is also permitted to discuss homework problems with people who are not currently in the class, provided a similar acknowledgement is made, but please note that discussion with people <em>outside</em> of the class may deprive people <em>inside</em> the class of your collaboration: therefore, discussion among classmates should be prioritized. If you think that the instructor or TA would refuse to answer a particular question, then you should not seek an answer to that question from any external person (on the other hand, you are free to collaboratively find answers to such questions with other students currently in the class). It is forbidden to seek direct answers to the problems from any person, whether they are in the class or not.</p>
+
+<p>Students are also welcome to read published literature or textbooks (or blog posts, or wikipedia, etc...) beyond what is presented or referenced in class, or read lecture notes or watch lecture recordings from other courses, but if this is done in the context of solving specific homework problems, then the sources <em>must</em> be cited in the submitted homework. Lectures, lecture notes, and scribe notes for <em>this</em> course do not need to be cited, nor do discussions that occur during lectures or office hours. Again, the point is to help you understand the material: please do not attempt to find ready-made solutions to the problems online.</p>
+
+<p>For information on the use of AI tools, please see the <a href="#policies">policies</a> section, below.
+
+<p><b>Formatting:</b> Homeworks are to be typeset using LaTeX and submitted as compiled PDFs. For each homework, a LaTeX template will be provided below. </p>
+
+<table style="width:100%;border:1px solid black; padding:5px; margin:0.5em 0;">
+  <tr>
+    <td> # </td> <td>Topics</td> <td>Problems</td> <td>Answer Template Download</td> <td>Overleaf Project</td> <td>Date Due</td>
+  </tr><tr>
+    <td colspan="6"><hr/></td>
+  </tr><tr>
+    <td> 1 </td> <td>Functionalities, Secret Sharing</td> <td> <a href="resources/homework/hw1/CS4501S26_hw1.pdf"  target="_blank">PDF Download</a> </td> <td> <a href="resources/homework/hw1/CS4501S26_hw1_template.zip"  target="_blank">Zip Download</a> </td> <td> <a href="https://www.overleaf.com/read/nfmktjtjrsyw#a451b2" target="_blank">Here</a></td> <td>02/12 11:59pm</td>
+  </tr><tr>
+    <td> 2 </td> <td>Perfect MPC, Hybrid Models</td> <td> <a href="resources/homework/hw2/CS4501S26_hw2.pdf"  target="_blank">PDF Download</a> </td> <td> <a href="resources/homework/hw2/CS4501S26_hw2_template.zip"  target="_blank">Zip Download</a> </td> <td> <a href="https://www.overleaf.com/read/bmfrbcgknvnq#5714aa" target="_blank">Here</a></td> <td>03/12 11:59pm</td>
+  </tr>
+</table>
+
+
+<h3>Scribe Notes</h3>
+
+<p>Each lecture requires at least one and at most two students to serve as scribes, and all students are required to scribe at least one class. The notes these students (collaboratively) produce will be posted publicly on this website as reference material for the rest of the class. Scribe notes must be typeset using LaTeX, using the template provided below, and the source files must be submitted to the instructor within one lecture week (i.e. at most two lectures) of the date the material was presented. Students are responsible for collaboratively scheduling their own scribing on a first-come-first-served basis, using the google spreadsheet linked in the course's <a href="https://canvas.its.virginia.edu/courses/169737" target="_blank">Canvas site</a>. This includes finding another student to cover if a student misses a class they are scheduled to scribe (obviously this doesn't apply in the case of true emergencies).</p>
+
+<p><b>Formatting:</b> Scribe Notes should be typeset using <a href="resources/scribe_notes_template/lecture1.tex">this LaTeX template</a>, which also requires <a href="resources/scribe_notes_template/preamble.tex">this preamble</a> in order to compile. When the template and the preamble are compiled correctly, the result should be <a href="resources/scribe_notes_template/lecture1.pdf">this PDF</a>. This template is also available as a read-only <a href="https://www.overleaf.com/read/ndvsnnjqgthv#0a6277" target="_blank">overleaf project</a>.</p>
+
+<p><b>Learning Latex:</b> there are many excellent resources online. The Overleaf editor has a quick-start guide to Latex <a href="https://www.overleaf.com/learn/latex/Learn_LaTeX_in_30_minutes" target="_blank">here</a>.</p>
+
+<p><b>Example Scribe Notes:</b> please see the <a href="https://jackdoerner.net/teaching/#2025/Fall/CS6222" target="_blank">notes</a> produced by my previous Foundations of Cryptography class in fall 2025.</p>
+
+<h2> <a name="syllabus" class="nolinkanchor">Syllabus (Tentative)</a> </h2>
+
+<h3> Topics (Almost) Certainly Covered: </h3>
+
+<ul>
+  <li> Establishing secure communication over an insecure channel. </li>
+  <li> Secret Sharing. </li>
+  <li> The BGW protocol for securely computing any function in the presence of a passive adversary who can corrupt a minority of participants.</li>
+  <li> Oblivious Transfer. </li>
+  <li> The GMW protocol for securely computing any function in the presence of a passive adversary who can corrupt any subset of participants.</li>
+  <li> Consensus protocols and bounds in the statistical and computational settings, with discussion of the connection to blockchains. </li>
+  <li> Coin tossing protocols and impossibility results. </li>
+  <li> Zero-knowledge Proofs. </li>
+  <li> The GMW compiler for upgrading passively-secure protocols to achieve security in the presence of active adversaries. </li>
+</ul>
+
+<h3> Topics Possibly Covered (Time Dependent): </h3>
+
+<ul>
+  <li> Homomorphic encryption.  </li>
+  <li> Concretely-efficient multi-party computation.</li>
+  <li> Zero-knowledge Proofs from MPC-in-the-Head.</li>
+</ul>
+
+<h2> <a name="lectures" class="nolinkanchor">Lectures</a> </h2>
+
+There will be roughly 27 lectures. The following table will track the content and materials for each, and will be updated regularly as lectures occur and materials become available. The lecture slides linked here are static PDFs. The original animated keynote presentations are available by email request.
+
+<table style="width:100%;border:1px solid black; padding:5px; margin:0.5em 0;">
+  <tr>
+    <td>#</td> <td> Date </td> <td>Topics</td> <td>References</td> <td>Materials</td> <td>Assignments</td>
+  </tr><tr>
+    <td colspan="6"><hr/></td>
+  </tr><tr>
+    <td>1</td> <td> 01/13 </td> <td>Introduction, Scope, Security Intuitions</td> <td></td> <td><a href="resources/slides/CS4501S26L01_intro_logistics.pdf" target="_blank">Slides</a></td> <td></td>
+  </tr><tr>
+    <td>2</td> <td> 01/15 </td> <td>Security Definitions, Adversaries, Simple Example Protocols</td> <td>[<a href="http://www.cs.cornell.edu/courses/cs4830/2010fa/lecnotes.pdf" target="_blank">Ps</a> 1.2], [<a href="https://www.cs.virginia.edu/~evans/pragmaticmpc/pragmaticmpc.pdf" target="_blank">EKR</a> 2.3] [<a href="https://www.wisdom.weizmann.ac.il/~oded/foc-book.html" target="_blank">Goldreich</a> 7.1]</td> <td><a href="resources/slides/CS4501S26L02_adversaries_simulation.pdf" target="_blank">Slides</a></td> <td></td>
+  </tr><tr>
+    <td>3</td> <td> 01/20 </td> <td>More on Simulation, Secure Communication</td> <td>[<a href="https://www.cs.virginia.edu/~evans/pragmaticmpc/pragmaticmpc.pdf" target="_blank">EKR</a> 2.3] [<a href="https://www.wisdom.weizmann.ac.il/~oded/foc-book.html" target="_blank">Goldreich</a> 7.1] [<a href="https://eprint.iacr.org/2016/046.pdf">Lindell</a> 4.2] [<a href="http://www.cs.cornell.edu/courses/cs4830/2010fa/lecnotes.pdf" target="_blank">Ps</a> 1.3]</td> <td><a href="resources/slides/CS4501S26L03_simulation_communication.pdf" target="_blank">Slides</a></td> <td></td>
+  </tr><tr>
+    <td>4</td> <td> 01/22 </td> <td>One-Time Pad and its Limitations</td> <td>[<a href="http://www.cs.cornell.edu/courses/cs4830/2010fa/lecnotes.pdf" target="_blank">Ps</a> 1.3] [<a href="https://www.cs.umd.edu/~jkatz/imc.html" target="_blank">KL</a> 2.1-2.3]</td> <td></td> <td></td>
+  </tr><tr>
+    <td>5</td> <td> 01/27 </td> <td>Secret Sharing, Groups, Fields</td> <td>[<a href="https://people.maths.ox.ac.uk/flynn/genus2/sheets0405/grfnotes1011.pdf" target="_blank">Priestley</a> 1-2] [<a href="http://www.cs.cornell.edu/courses/cs4830/2010fa/lecnotes.pdf" target="_blank">Ps</a> 6.1] [<a href="https://www.youtube.com/watch?v=5tDp_-Nf7nU&list=PL8Vt-7cSFnw1u2tedFU04Z4U-mJUMRtzW&index=3" target="_blank">Asharov (Video)</a>]</td> <td><a href="resources/slides/CS4501S26L05_secret_sharing.pdf" target="_blank">Slides</a></td> <td>HW1 Out</td>
+  </tr><tr>
+    <td>6</td> <td> 01/29 </td> <td>Shamir Secret Sharing in a Field, Lagrange Interpolation</td> <td>[<a href="https://people.maths.ox.ac.uk/flynn/genus2/sheets0405/grfnotes1011.pdf" target="_blank">Priestley</a> 1-2] [<a href="http://www.cs.cornell.edu/courses/cs4830/2010fa/lecnotes.pdf" target="_blank">Ps</a> 6.1] [<a href="https://math.stackexchange.com/a/523922" target="_blank">Math Exchange</a>] [<a href="https://search.lib.virginia.edu/sources/uva_library/items/u8609982" target="_blank">CDN</a> 3.2] [<a href="https://www.youtube.com/watch?v=5tDp_-Nf7nU&list=PL8Vt-7cSFnw1u2tedFU04Z4U-mJUMRtzW&index=3" target="_blank">Asharov (video)</a>]</td> <td><a href="resources/slides/CS4501S26L06_shamir_sharing_interpolation.pdf" target="_blank">Slides</a></td> <td></td>
+  </tr><tr>
+    <td>7</td> <td> 02/03 </td> <td>Lagrange Interpolation, BGW for Linear Functions</td> <td>[<a href="https://www.wisdom.weizmann.ac.il/~oded/foc-book.html" target="_blank">Goldreich</a> 7.6.2] [<a href="http://www.cs.cornell.edu/courses/cs4830/2010fa/lecnotes.pdf" target="_blank">Ps</a> 6.1] [<a href="https://math.stackexchange.com/a/523922" target="_blank">Math Exchange</a>] [<a href="https://search.lib.virginia.edu/sources/uva_library/items/u8609982" target="_blank">CDN</a> 3.2-3.3] [<a href="https://www.cs.virginia.edu/~evans/pragmaticmpc/pragmaticmpc.pdf" target="_blank">EKR</a> 3.3] [<a href="https://www.youtube.com/watch?v=XA_4dzs1Zys&list=PL8Vt-7cSFnw1u2tedFU04Z4U-mJUMRtzW&index=16" target="_blank">Asharov (video)</a>]</td> <td><a href="resources/slides/CS4501S26L07_interpolation_linearity.pdf" target="_blank">Slides</a></td> <td></td>
+  </tr><tr>
+    <td></td> <td> 02/05 </td> <td>Class Canceled</td> <td> </td> <td></td> <td></td>
+  </tr><tr>
+    <td>8</td> <td> 02/10 </td> <td>Hybrid Models, BGW in the Multiplication Hybrid</td> <td> [<a href="https://www.wisdom.weizmann.ac.il/~oded/foc-book.html" target="_blank">Goldreich</a> 7.6.2] [<a href="https://search.lib.virginia.edu/sources/uva_library/items/u8609982" target="_blank">CDN</a> 3.2-3.3] [<a href="https://www.cs.virginia.edu/~evans/pragmaticmpc/pragmaticmpc.pdf" target="_blank">EKR</a> 3.3] [<a href="https://www.youtube.com/watch?v=XA_4dzs1Zys&list=PL8Vt-7cSFnw1u2tedFU04Z4U-mJUMRtzW&index=16" target="_blank">Asharov (video)</a>]</td> <td><a href="resources/slides/CS4501S26L08_hybrid_models_bgw.pdf" target="_blank">Slides</a></td> <td></td>
+  </tr><tr>
+    <td>9</td> <td> 02/12 </td> <td>BGW Worked Example, BGW Multiplication, GRR Multiplication</td> <td> [<a href="https://www.wisdom.weizmann.ac.il/~oded/foc-book.html" target="_blank">Goldreich</a> 7.6.2] [<a href="https://search.lib.virginia.edu/sources/uva_library/items/u8609982" target="_blank">CDN</a> 3.2-3.3] [<a href="https://www.cs.virginia.edu/~evans/pragmaticmpc/pragmaticmpc.pdf" target="_blank">EKR</a> 3.3] [<a href="https://www.youtube.com/watch?v=XA_4dzs1Zys&list=PL8Vt-7cSFnw1u2tedFU04Z4U-mJUMRtzW&index=16" target="_blank">Asharov (video)</a>] </td> <td><a href="resources/slides/CS4501S26L09_bgwexample_bgwmul_grrmul.pdf" target="_blank">Slides</a></td> <td>HW1 Due</td>
+  </tr><tr>
+    <td>10</td> <td> 02/17 </td> <td>GRR Worked Example, Composition in a Perfect World</td> <td> [<a href="https://www.wisdom.weizmann.ac.il/~oded/foc-book.html" target="_blank">Goldreich</a> 7.3.1,7.5.1] [<a href="https://search.lib.virginia.edu/sources/uva_library/items/u8609982" target="_blank">CDN</a> 4.2.7,4.2.8]</td> <td><a href="resources/slides/CS4501S26L10_grrexample_composition.pdf" target="_blank">Slides</a></td> <td>HW2 Out</td>
+  </tr><tr>
+    <td>11</td> <td> 02/19 </td> <td>Beaver Triples, the limits of Perfect MPC</td> <td> [<a href="https://www.cs.virginia.edu/~evans/pragmaticmpc/pragmaticmpc.pdf" target="_blank">EKR</a> 3.4] [<a href="https://search.lib.virginia.edu/sources/uva_library/items/u8609982" target="_blank">CDN</a> 3.4] </td> <td><a href="resources/slides/CS4501S26L11_beaver_perfectimpossible.pdf" target="_blank">Slides</a></td> <td></td>
+  </tr><tr>
+    <td>12</td> <td> 02/24 </td> <td>Bounded Adversaries, One-Way Functions</td> <td> [<a href="http://www.cs.cornell.edu/courses/cs4830/2010fa/lecnotes.pdf" target="_blank">Ps</a> 2.1,2.2] [<a href="https://www.cs.umd.edu/~jkatz/imc.html" target="_blank">KL</a> 3.1,8.1.1,8.1.2] </td> <td><a href="resources/slides/CS4501S26L12_computational_security.pdf" target="_blank">Slides</a></td> <td></td>
+  </tr><tr>
+    <td colspan="6"><hr/></td>
+  </tr><tr>
+    <td></td> <td> 02/26 </td> <td>Class Cancelled.</td> <td> </td> <td></td> <td></td>
+  </tr><tr>
+    <td></td> <td> 03/03 </td> <td>Spring Break. No Class.</td> <td> </td> <td></td> <td></td>
+  </tr><tr>
+    <td></td> <td> 03/05 </td> <td>Spring Break. No Class.</td> <td> </td> <td></td> <td></td>
+  </tr><tr>
+    <td></td> <td> 03/10 </td> <td>Discrete Logarithms, Diffie-Hellman Problems, Key Exchange</td> <td> </td> <td></td> <td></td>
+  </tr><tr>
+    <td colspan="6"><hr/></td>
+  </tr><tr>
+    <td></td> <td> 03/12 </td> <td></td> <td> </td> <td></td> <td>HW2 Due</td>
+  </tr>
+</table>
+
+<h2> <a name="policies" class="nolinkanchor">Policies</a> </h2>
+
+<h3> Honor System </h3>
+
+<p>Students must adhere to <a href="https://honor.virginia.edu/academic-fraud" target="_blank">the UVa honor code</a>. It is considered a violation of the honor code if any of the following occur:</p>
+
+<ul>
+  <li>A student copies text directly from any source. This constitutes <a href="https://honor.virginia.edu/plagiarism-supplement" target="_blank">plagiarism</a>.</li>
+  <li>A student uses external materials in the context of a specific homework problem without citation, or discusses homework problems without acknowledgement (the instructor recognizes that it is sometimes difficult to draw the line with respect to what materials use or discussions are substantive, and expects nothing more or less than a good-faith effort to perform correct and thorough attribution).</li>
+  <li> A student submits work that they are unable to explain orally (the instructor recognizes that oral explanations may be difficult, especially without preparation, and perfection is not expected).</li>
+  <li> A student archives or publishes non-public course materials (e.g. exam questions) without explicit instructor permission.</li>
+</ul>
+
+<h3> Generative AI, LLMs, ChatGPT, etc. </h3>
+
+<p><em>It is always forbidden to input any substantive portion of any assignment into any kind of AI resource, and it is always fobidden to incorporate any substantive portion of an AI resources's output into your answers, even if you paraphrase it or rewrite it in your own words. Inappropriate use of AI is an honor violation, and if you are uncertain, do not use it!</em></p>
+
+<p>As a general principle, if you think that the instructor might refuse to perform a certain task for you or answer a certain question during office hours, then you should definitely not be asking an AI resource to perform the same task or answer the same question. Even if the instructor <em>would</em> answer a particular question, asking an AI might be a bad idea: for example, if you are stuck on a proof, an instructor might give you a hint or suggest a reading, whereas an AI might spit out a full proof (even if you ask it not to do that)!</p>
+
+<p>The above restriction is not an absolute ban on the use of AI resources. You may find them useful for helping you to learn LaTeX (but you should generally be writing the latex code yourself), helping you review the details of a proof you saw in class or understand a concept that we covered, helping you to find additional reading material, etc. In almost every case, it is preferable for you to attend office hours or talk to your peers. Beware of confidently incorrect AI resources! No partial credit will be given because an AI taught you wrong!</p>
+
+<p>In any case, if you use an AI resource in the context of solving a particular homework problem, you must acknowledge the usage as you would any other material and provide a link to the <em>exact</em> transcript it produced. If you cannot provide a transcript, then you may not use the AI tool. Simple search queries (e.g. searching for LaTeX commands or looking up the dictionary-definition of a word) are exempt from this rule. If you are unsure whether your query is exempt, then you should document it!</p>
+
+<p>Sometimes the instructor might use ChatGPT to draw funny pictures for slides. You are also free to use ChatGPT to draw funny pictures for your homework. There probably will not be any bonus points for the funniest picture.</p>
+
+<h3> Recordings and Live Video Feeds </h3>
+
+<p>Lectures will not be recorded by default, nor will a live video feed be available by default. Students are expected to attend lectures in person whenever possible, although attendance will not be tracked. If a student wishes to record a lecture for their own benefit or the benefit of other students currently in the class, this will be considered on a case-by-case basis, but it always requires <em>explicit, advance permission</em>, and public posting of such videos is forbidden.</p>
+
+<h3> Accommodations and Illness </h3>
+
+<p>If a student feels that they need special accommodation (for religious, medical, family, academic travel, or other reasons) or support, they should reach out to the instructor. All good-faith, non-burdensome requests will be considered.</p>
+
+<p>If a student is sick, they are encouraged to stay home and rest, even on days when in-class quizzes are administered. Such absences will never be penalized. If a quiz or assignment is missed or delayed due to illness, the student should contact the instructor as soon as reasonably possible.</p>
+
+<p>In general, if unusual or extenuating circumstances affect a student's ability to participate according to the requirements and schedule laid out here, accomodations can be made. Please contact the instructor if such a situation occurs.</p>
+
+<h3> Late Assignments </h3>
+
+<p> The following policy applies to situations in which there are no extenuating circumstances and no specific alternative policy has been established.</p>
+
+<p> In general, homeworks will be due at the beginning of a particular class. Every student has 14 penalty-free extension days, of which at most 7 can be applied toward any particular assignment. Students can allocate these days as they choose without notifying the instructor in advance, and the total number expended will be calculated according to the time that homeworks are received. 7 days after each homework is due, solutions may be discussed in class by the instructor. If a particular problem is solved in class, then no points will be awarded for that problem afterward.
+Otherwise, homeworks turned in past the automatic extension limit will have their grades scaled by 50%.</p>
+
+<p> If a particular homework due date is excessively burdensome for a large number of students, the instructor should be made aware of this fact in advance so that adjustments can be made.</p>
+
+<h3> Office Hours </h3>
+
+<p>If no students arrive within the first 15 minutes of a session, and no students email in advance to indicate they will arrive later in the scheduled timeframe, then the instructor and TA reserve the right to end office hours early and go home. If more students arrive than will comfortably fit in the room, students may be asked to wait outside and attend office hours in shifts. We ask in the latter case for both patience while you wait, and expedience once it is your turn.</p>
+
+<h2> <a name="moreresources" class="nolinkanchor">Additional Resources</a> </h2>
+
+<p>These extra materials might help you on your way. Note that there may be discrepancies in notation, ordering of concepts, and even definitions! Note that if you consult these in order to solve a specific homework problem, you should cite them.</p>
+
+<h3> Free Online Resources (Basic Level) </h3>
+
+<ul>
+  <li> <a href="https://www.cs.virginia.edu/~evans/pragmaticmpc/pragmaticmpc.pdf" target="_blank">A Pragmatic Introduction to Secure Multi-Party Computation</a>, a textbook by David Evans, Vladimir Kolesnikov, and Mike Rosulek.</li>
+  <li> <a href="https://medium.com/applied-mpc/a-crash-course-on-mpc-part-0-311fae2ce184" target="_blank">A Crash Course on MPC</a>, a blog series by Daniel Escudero.</li>
+  <li> <a href="https://joyofcryptography.com/" target="_blank"> The Joy of Cryptography</a>, a textbook by Mike Rosulek.</li>
+  <li> <a href="https://courses.csail.mit.edu/6.042/spring18/mcs.pdf" target="_blank">Mathematics for Computer Science</a>, a textbook by Eric Lehman, F. Thomson Leighton, and Albert R. Meyer. If you find your math background lacking in some respect, there is a good chance you'll find the information you need in this book.</li>
+  <li> <a href="https://cseweb.ucsd.edu/~gill/CILASite/" target="_blank">A Comprehensive Introduction to Linear Algebra</a>, a textbook by Joel G. Broida and S. Gill Williamson. If you find it challenging to follow the polynomial manipulation we do in the context of Shamir secret sharing, you might find it helpful to read <a href="https://cseweb.ucsd.edu/~gill/CILASite/Resources/10Chap6.pdf" target="_blank">Chapter 6</a>.</li>
+  <li> <a href="https://people.maths.ox.ac.uk/flynn/genus2/sheets0405/grfnotes1011.pdf" target="_blank">Oxford lecture notes on Groups, Rings, and Fields</a> by Hilary Priestley.</li>
+</ul>
+
+<h3> Free Online Resources (Advanced Level) </h3>
+
+<ul>
+  <li> The <a href="https://sites.biu.ac.il/en/biu-cyber-center/page/8714" target="_blank">First</a>, <a href="https://sites.biu.ac.il/en/biu-cyber-center/page/8718" target="_blank">Fifth</a>, <a href="https://sites.biu.ac.il/en/biu-cyber-center/page/8723" target="_blank">Tenth</a>, and <a href="https://sites.biu.ac.il/en/biu-cyber-center/page/8725" target="_blank">Twelfth</a> BIU winter schools dealt with topics in multi-party computation, and the <a href="https://sites.biu.ac.il/en/biu-cyber-center/page/8713" target="_blank">Ninth</a> dealth with Zero-knowledge. Video recordings of these lectures are available online.</li>
+  <li> <a href="https://eprint.iacr.org/2016/046.pdf" target="_blank">How To Simulate It - A Tutorial on the Simulation Proof Technique</a>, by Yehuda Lindell.</li>
+  <li> <a href="http://www.cs.cornell.edu/courses/cs4830/2010fa/lecnotes.pdf" target="_blank">A Course in Cryptography</a> by Rafael Pass and abhi shelat.</li>
+  <li> <a href="https://mit6875.github.io/" target="_blank">MIT Cryptography Course Notes</a> by Vinod Vaikuntanathan. </li>
+  <li> <a href="https://intensecrypto.org/public/index.html" target="_blank">Harvard Cryptography Course Notes</a> by Boaz Barak.</li>
+  <li> <a href="https://toc.cryptobook.us/book.pdf" target="_blank">A Graduate Course in Applied Cryptography</a>, a textbook by Dan Boneh and Victor Shoup.</li>
+  <li> <a href="https://people.seas.harvard.edu/~salil/pseudorandomness/pseudorandomness-published-Dec12.pdf" target="_blank">Pseudorandomness</a>, a textbook by Salil Vadhan.</li>
+</ul>
+
+<h3> Physical Textbooks (Available Online via UVa) </h3>
+
+<ul>
+  <li><a href="https://www.cambridge.org/core/books/secure-multiparty-computation-and-secret-sharing/4C2480B202905CE5370B2609F0C2A67A" target="_blank">Secure Multiparty Computation and Secret Sharing</a> by Ronald Cramer, Ivan Damg&aring;rd, and Jesper Buus Nielsen. The UVa library provides free <a href="https://search.lib.virginia.edu/sources/uva_library/items/u8609982" target="_blank">online access</a>.</li>
+  <li><a href="https://www.cs.umd.edu/~jkatz/imc.html" target="_blank">Introduction to Modern Cryptography</a> by Jonathan Katz and Yehuda Lindell. The UVa Library provies free <a href="https://search.lib.virginia.edu/sources/uva_library/items/u10203454" target="_blank">online access</a>.</li>
+  <li> <a href="https://www.wisdom.weizmann.ac.il/~oded/foc-book.html" target="_blank">Foundations of Cryptography</a> by Oded Goldreich. A very thorough work that takes no shortcuts, considered by many to be the standard among reference materials for cryptography. The UVa library provides online access to Volumes <a href="https://search.lib.virginia.edu/sources/uva_library/items/u8631726" target="_blank">One</a> and <a href="https://search.lib.virginia.edu/sources/uva_library/items/u8631685" target="_blank">Two</a>.</li>
+  <li> <a href="https://www.wisdom.weizmann.ac.il/~oded/MC/219.html" target="_blank">Tutorials on the Foundations of Cryptography</a>, edited by Yehuda Lindell. A gift from eight authors to Oded Goldreich (and the wider community) on the occasion of his 60th birthday. The UVa library provides free <a href="https://search.lib.virginia.edu/sources/uva_library/items/u10873601" target="_blank">online access</a>.</li>
+</ul>
+
+<h3> Interesting Readings of Debatable Relevance to this Course </h3>
+
+<ul>
+  <li> <a href="https://press.uchicago.edu/ucp/books/book/chicago/W/bo3616369.html" target="_blank"> Wittgenstein’s Lectures on the Foundations of Mathematics, Cambridge, 1939</a> by Cora Diamond. Philosophy is like unravelling a ball of wool.</li>
+  <li> <a href="https://pages.cs.wisc.edu/~mkowalcz/628.pdf" target="_blank">How to Explain Zero Knowledge Protocols to Your Children</a>, by the Quisquater and Guillou families, and translated by Tom Berson. A mini-lesson for your inner child.</li>
+  <li> <a href="https://www.wisdom.weizmann.ac.il/~oded/essays.html" target="_blank">Goldreich's Essays</a> on various topics. Of particular note: <a href="https://www.wisdom.weizmann.ac.il/~oded/on-proofs.html" target="_blank">why you should learn to prove theorems in the age of AI theorem provers.</a> </li>
+</ul>
+
+<h3> How to Find Current Research in Cryptography </h3>
+
+<p> Most current research in the field of cryptography is distributed for free online via the <a href="https://eprint.iacr.org/" target="_blank">IACR eprint server</a>. If a particular paper is available in multiple places, then the IACR eprint version will typically be the most complete and up-to-date. In the rare case that a paper is not available on eprint, it may be accessible via some other online archive, or failing that, you can email the authors directly and ask them for a copy.</p>
+
+</div>
+
+<div id='copyright'>&copy; 2026</div>
+</body>
+</html>

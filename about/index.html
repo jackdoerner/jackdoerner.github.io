@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel='stylesheet' type='text/css' href='../fonts/sofiaprolight/stylesheet.css' />
+
+<title>About | Jack Doerner</title>
+<style>
+	a{ outline: none;}
+
+	#moonimg {
+		background-color:#020202;
+		transition: opacity 250ms;
+		opacity:1;
+		position:fixed;
+		left:0;
+		right:0;
+		top:0;
+		bottom:0;
+	}
+
+	html {
+		background-color:#020202;
+		background-image:url('../quarter_moon.jpg');
+		background-attachment: fixed;
+		background-position: center center;
+		background-repeat: no-repeat;
+		background-size:contain;
+		height:100%;
+		overflow-x:hidden;
+		overflow-y:auto;
+	}
+
+	#moonimg.showBG {
+		opacity:0;
+	}
+
+	@media (max-width: 1440px) {
+	    html {
+	        background-size: 1440px auto;
+	    }
+	}
+
+	@media (min-width: 2560px) {
+	    html {
+	        background-size: 2560px auto;
+	    }
+	}
+
+	@media (min-height: 1600px) {
+	    html {
+	        background-size: auto 1600px;
+	    }
+	}
+	
+	body {
+		height:100%;
+	}	
+
+	html, body {
+		margin:0;
+		font-family:'SofiaProLight','Helvetica','Arial',sans-serif;
+		color:#FFFFFF;
+		text-shadow:0px 0px 5px rgba(0,0,0,0.25);
+	}
+
+	div#content {
+		text-align:center;
+		position:absolute;
+		left:0px;
+		width:100%;
+		top: 50%;
+		-webkit-transform:translateY(-250px);
+		transform:translateY(-250px);
+		line-height:1.1;
+		transition: width 500ms;
+	}
+
+	div#content .inner {
+		display:inline-block;
+		text-align:center;
+		padding:0px 22px;
+	}
+
+	div#content #message {
+		width: 220px;
+		text-align: justify;
+		margin: 0px auto 20px;
+		border-bottom: 1px solid white;
+		padding-bottom: 20px;
+		padding-top: 20px;
+		border-top: 1px solid white;
+	}
+
+	div#content #sp {
+		width:220px;
+		margin-bottom:16px;
+		box-shadow: 0 0 5px rgba(0,0,0,0.25);
+		border: 15px solid white;
+	}
+
+	div#content .title {
+		border:2px solid #FFFFFF;
+		background-color:#FFFFFF;
+		color:#000000;
+		box-shadow: 0 0 5px rgba(0,0,0,0.25);
+		padding: 2px;
+		margin-bottom:16px;
+		font-size: 24pt;
+	}
+
+	div#content #about {
+		width:470px;
+		text-align: justify;
+		margin:16px 15px 24px 15px;
+	}
+
+	div#content #extlinks {
+		margin-bottom:16px;
+	}
+
+	div#content #elselinks {
+		margin-top:-4px;
+		padding-bottom:16px;
+	}
+
+	div#content #elselinks img {
+		width:36px;
+		margin:8px 9px;
+		filter: drop-shadow(0 0 3px rgba(0,0,0,0.25));
+	}
+
+	div#content #elselinks img:hover {
+		filter: drop-shadow(0 0 3px #FFFFFF);
+	}
+
+	div#contact {
+		padding-bottom: 48px;
+		font-size: 10pt;
+	}
+
+	div#contact img {
+		filter: drop-shadow(0 0 3px rgba(0,0,0,0.25));
+	}
+
+	div#contact img:hover {
+		filter: drop-shadow(0 0 3px #FFFFFF);
+	}
+
+	div#emailriddle {
+		width: 250px;
+		padding-top: 20px;
+		display: none;
+		margin:0px auto;
+	}
+
+	a {
+		color:#FFFFFF;
+		text-decoration:none;
+		cursor:pointer;
+	}
+
+	a:hover {
+		color:#FFFFFF;
+		text-shadow:0 0 5px #FFFFFF;
+		border-color: #EEEEEE;
+	}
+
+	div#copyright {
+		font-family:'SofiaProLight','Helvetica','Arial',sans-serif;
+		color:#FFFFFF;
+		position: fixed;
+		bottom:10px;
+		right:12px;
+		z-index:1000;
+	}
+</style>
+
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-GCYY1SD9GT"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-GCYY1SD9GT');
+</script>
+
+
+<script>
+	var SPList = ['../vanity/portrait_a2.jpg', '../vanity/portrait_tag.jpg', '../vanity/sp_subway.jpg', '../vanity/sp_double.jpg', '../vanity/sp_sequoia.jpg', '../vanity/portrait_a.jpg', '../vanity/portrait_gjelder.jpg', '../vanity/portrait_r.jpg',];
+  var SPCount = 0;
+</script>
+</head>
+<body>
+	<div id='moonimg' class='showBG'></div>
+	<div id='content' class='accel'>
+		<div class='inner'>
+			<img id='sp' src="../vanity/portrait_a2.jpg" width="220" height="220" alt="Yours Truly" title="Yours Truly" onclick="var x = document.getElementById('sp'); SPCount = (SPCount + 1) % SPList.length; x.src = SPList[SPCount];"/>
+
+			<div id='extlinks'>
+				<a href="../" style="font-size:26pt;">&#x25c4; Homepage</a>
+			</div>
+
+			<div id='about'>
+				<p>I am an assistant professor of computer science at the Univer&shy;sity of Virginia. I study crypto&shy;graphy, with a parti&shy;cular int&shy;erest in the found&shy;ations and applic&shy;ations of secure multi&shy;party compu&shy;tation.</p>
+
+				<p>Previously, I held postdoc positions at Brown Univer&shy;sity, hosted by <a target="_blank" href="https://cs.brown.edu/~alysyans/">Anna Lysyan&shy;skaya</a>, and jointly at the Technion and Reichman Univer&shy;sity, hosted by <a target="_blank" href="https://yuvali.cswp.cs.technion.ac.il/">Yuval Ishai</a> and <a target="_blank" href="https://cs.idc.ac.il/~elette/">Elette Boyle</a>. My PhD was advised by <a target="_blank" href="https://shelat.khoury.northeastern.edu/">abhi shelat</a> at North&shy;eastern Univer&shy;sity.</p>
+
+				<p>I am also an artist. My work spans cinema&shy;tography, photo&shy;graphy, and sculpture. I often spend my free time camping, hiking, sailboat racing, scuba diving, boulder&shy;ing, and repairing mecha&shy;nical cameras.</p>
+
+				<p><em>Office Hours:</em> 2-3PM Fridays, Rice Hall 106</p>
+			</div>
+			
+			<div id='elselinks'>
+				<!--<a href="https://twitter.com/jackdoerner" target="_blank"><img src="icons/twtr400.png" width="36" height="36" alt="Twitter" title="Twitter"/></a>-->
+				<a href="https://dblp.uni-trier.de/pers/hd/d/Doerner:Jack" target="_blank"><img src="../icons/dblp400.png" width="36" height="36" alt="DBLP" title="DBLP"/></a>
+				<a href="https://scholar.google.com/citations?user=QMbCDtEAAAAJ" target="_blank"><img src="../icons/gsch400.png" width="36" height="36" alt="Google Scholar" title="Google Scholar"/></a>
+				<a href="https://www.imdb.com/name/nm7113579/" target="_blank"><img src="../icons/imdb400.png" width="36" height="36" alt="IMDB" title="IMDB"/></a>
+			</div>
+			<div id='contact'>
+				<a onclick="var x = document.getElementById('emailriddle'); x.style.display = x.style.display === 'block' ? 'none' : 'block';"><img src='../icons/sphinx400.png' width="42" height="42" alt="Email Riddle" title="Email Riddle"/></a>
+				<div id='emailriddle'>
+should you desire to contact me<br/>
+by mail sent electronically<br/>
+my name with 'a' replaced by '@'<br/>
+'.net' appended onto that<br/>
+the address that this rhyme implies<br/>
+will guide your message to my eyes
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<div id='copyright'>&copy;&nbsp;2025</div>
+</body>
+</html>

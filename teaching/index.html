@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Teaching | Jack Doerner</title>
+<link rel='stylesheet' type='text/css' href='system/css/main.css'/>
+<script type='text/javascript'>
+
+var styleEl = document.createElement('style'), styleSheet;
+document.head.appendChild(styleEl);
+styleSheet = styleEl.sheet;
+styleSheet.insertRule("#indexraw { display:none; }", styleSheet.cssRules.length);
+
+function createArticle(index, location, title) {
+	var container = document.createElement('div');
+	container.classList.add('article');
+	container.setAttribute('data-slug', location);
+	container.setAttribute('data-location', location);
+	container.setAttribute('data-title', title);
+
+	/*var thumbnail = document.createElement('img');
+	thumbnail.setAttribute('src', location + '/thumbnail.jpg');
+	container.appendChild(thumbnail);*/
+
+	var lsplit = location.split('/',2);
+
+	var text = document.createElement('div');
+	text.classList.add('centerText');
+	text.innerHTML = title + "<br/>";
+	container.appendChild(text);
+
+	var date = document.createElement('span');
+	date.classList.add('date');
+	var datestring = lsplit[1] + " " + lsplit[0];
+	date.innerHTML = datestring;
+	container.setAttribute('data-datestring', datestring);
+	text.appendChild(date);
+
+	container.addEventListener('click', function(){
+		activateArticle(container);
+	});
+
+	document.querySelector('#index').appendChild(container);
+}
+
+function activateArticle(element, dontPush) {
+	var location = element.getAttribute('data-location');
+	var title = element.getAttribute('data-title');
+	var datestring = element.getAttribute('data-datestring');
+	var slug = element.getAttribute('data-slug');
+	document.querySelector('#viewport iframe').contentWindow.location.replace(location);
+	document.querySelector('#viewport').style.display="block";
+	document.querySelector('#rightlinks').style.display="inline";
+	document.querySelector('#index').style.display="none";
+	document.querySelector('#copyright_main').style.display="none";
+	var windowTitle = title + ' (' + datestring + ') | Teaching | Jack Doerner';
+	document.querySelector('title').innerHTML = windowTitle;
+	if (!dontPush) {
+		window.history.pushState(null,windowTitle,window.location.pathname + '#' + slug);
+	}
+}
+
+function closeArticle() {
+	document.querySelector('#viewport iframe').contentWindow.location.replace('system/nullpage.html');
+	document.querySelector('#viewport').style.display="none";
+	document.querySelector('#rightlinks').style.display="none";
+	document.querySelector('#index').style.display="block";
+	document.querySelector('#copyright_main').style.display="block";
+	document.querySelector('title').innerHTML = 'Teaching | Jack Doerner';
+	window.history.pushState(null,'Teaching | Jack Doerner',window.location.pathname);
+}
+
+function readHash(event) {
+	var url = location.hash.slice(1);
+	var linkEls = document.querySelectorAll('#index .article');
+
+	if (url.length == 0) {
+		closeArticle();
+		return;
+	}
+
+	for (var ii = 0; ii < linkEls.length; ii++) {
+		if (linkEls[ii].getAttribute('data-slug') == url) {
+			activateArticle(linkEls[ii], true);
+			return;
+		}
+	}
+
+}
+
+window.addEventListener('load', function(){
+	articles = document.querySelectorAll("#indexraw a");
+	document.querySelector('#toindex').addEventListener('click', function(event){
+		event.preventDefault ? event.preventDefault() : event.returnValue = false;
+		closeArticle();
+		return false;
+	});
+	document.querySelector('#pagetop').addEventListener('click', function(event){
+		event.preventDefault ? event.preventDefault() : event.returnValue = false;
+		document.querySelector('#viewport iframe').contentWindow.scrollTo(0,0);
+		return false;
+	});
+
+	for (var ii = 0; ii < articles.length; ii++) {
+		createArticle(ii, articles[ii].getAttribute('href'),articles[ii].innerHTML);
+	}
+
+	document.querySelector('#indexraw').remove();
+
+	window.addEventListener('popstate', readHash);
+	readHash();
+
+});
+
+</script>
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-GCYY1SD9GT"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-GCYY1SD9GT');
+</script>
+
+<style>
+
+body, html {
+	width:100%;
+	height:100%;
+	overflow:hidden;
+}
+
+#index {
+	position:absolute;
+	top:40px;
+	left:0px;
+	right:0px;
+	bottom:0px;
+	display:block;
+	font-family:'SofiaProLight','Helvetica','Arial',sans-serif;
+	color:#000000;
+	text-align:center;
+	overflow-y:auto;
+}
+
+#index a {
+	margin:0px 10px;
+	color:#888888;
+	text-decoration:none;
+}
+
+#index a:hover, #index a.active {
+	color:#000000;
+	border-color: #000000;
+}
+
+#index ul {
+	list-style: none outside;
+	padding:0;
+	margin:20px auto;
+	text-align: center;
+}
+
+#index li {
+	margin:5px auto;
+}
+
+#rightlinks {
+	display:none;
+}
+
+#viewport {
+	position:absolute;
+	top:40px;
+	left:0px;
+	right:0px;
+	bottom:0px;
+	display:none;
+}
+
+#viewport iframe {
+	border:0px;
+	width:100%;
+	height:100%;
+}
+
+.article:first-child {
+	margin-top:20px;
+	border-top:1px solid #EEEEEE;
+}
+
+.article:last-child {
+	margin-bottom:20px;
+}
+
+.article {
+	position: relative;
+	cursor:pointer;
+	width:600px;
+	border-left:1px solid #EEEEEE;
+	border-right:1px solid #EEEEEE;
+	border-bottom:1px solid #EEEEEE;
+	padding:5px;
+	margin: 0 auto;
+	display:block;
+	height:80px;
+	font-size:24px;
+}
+
+.article .centerText {
+	position: relative;
+	display:block;
+	top: 50%;
+	transform: translateY(-50%);
+	margin:0 10px;
+}
+
+.article .date {
+	font-size: 18px;
+	margin-top:10px;
+	display:inline-block;
+	color:#888888;
+}
+
+.article:nth-child(2n) .centerText {
+	text-align:right;
+}
+
+.article:nth-child(2n+1) .centerText {
+	text-align:left;
+}
+
+.article:nth-child(2n) img {
+	float:right;
+	height:128px;
+	margin-left:20px;
+}
+
+.article:nth-child(2n+1) img {
+	float:left;
+	height:128px;
+	margin-right:20px;
+}
+
+.article:hover {
+	border:2px solid #222222;
+	padding:3px 4px 4px 4px;
+}
+
+.article:first-child:hover {
+	padding-top:4px;
+}
+
+#copyright_main {
+	font-family:'SofiaProLight','Helvetica','Arial',sans-serif;
+	color:#000000;
+	position: fixed;
+	bottom:10px;
+	right:12px;
+	z-index:1000;
+}
+
+</style>
+</head>
+<body>
+
+<div id='topmenu' class='header hideOnEmbed'>
+	<div id='leftlinks'><a href='../'>Home</a>&bull;<a href='../about'>About</a>&bull;<a href='../research'>Research</a>&bull;<a href='../teaching' class='active'>Teaching</a>&bull;<a href='../art'>Art &amp; Films</a>&bull;<a href='../exposition'>Exposition</a></div>
+	<div id='rightlinks'><a href='#' id='toindex'>Back to Index</a>&bull;<a href='#' id='pagetop'>Top of Page</a></div>
+	<div id='menutitle'></div>
+</div>
+
+<div id='index'>
+	<ul id='indexraw'>
+		<li><a href="2026/Spring/CS4501">UVa CS4501: Cryptographic Protocols</a></li>
+		<li><a href="2025/Fall/CS6222">UVa CS6222: Foundations of Cryptography</a></li>
+	</ul>
+</div>
+
+<div id='viewport'><iframe src='system/nullpage.html'></iframe></div>
+
+<div id='copyright_main'>&copy;&nbsp;2025</div>
+
+</body>
+</html>

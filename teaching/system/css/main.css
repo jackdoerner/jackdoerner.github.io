@@ -1,0 +1,104 @@
+@import "../fonts/sofiaprolight/stylesheet.css";
+@import "../fonts/linuxlibertine/stylesheet.css";
+@import "../fonts/linuxbiolinum/stylesheet.css";
+
+html, body {
+	margin:0;
+}
+
+a {
+	border:none;
+}
+
+a.nolinkanchor {
+	border-bottom: 0px !important;
+}
+
+.denominator {font-size: 75%;}
+.numerator {font-size: 75%; vertical-align:.5ex} 
+
+#topmenu {
+	position:fixed;
+	top:0px;
+	left:0px;
+	right:0px;
+	padding:10px;
+	text-align: center;
+	background-color: #FFFFFF;
+	font-family:'SofiaProLight','Helvetica','Arial',sans-serif;
+	color:#000000;
+	z-index:1000;
+	box-shadow:0 0 5px rgba(0,0,0,0.2);
+	border-bottom:1px solid #222222;
+	height:20px;
+	line-height: 20px;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+#menuspacer {
+	height:40px;
+}
+
+#topmenu a {
+	margin:0px 10px;
+	color:#888888;
+	text-decoration:none;
+}
+
+#topmenu a:first-child {
+	margin-left:0px;
+}
+
+#topmenu a:hover, #topmenu a.active {
+	color:#000000;
+	border-color: #000000;
+}
+
+#leftlinks {
+	float:left;
+	height:100%;
+}
+
+#rightlinks {
+	float:right;
+	height:100%;
+}
+
+#copyright {
+	margin:10px auto;
+	text-align: right;
+	padding:0 10px;
+	font-family:'SofiaProLight','Helvetica','Arial',sans-serif;
+	color:#000000;
+}
+
+.pleasantReading {
+	font-family:"Linux Libertine", "Times", "Times New Roman", serif;
+	text-align: justify;
+}
+
+.pleasantReading a, .pleasantReading a:visited {
+	text-decoration: none;
+	color:#000000;
+	border-bottom:1px solid #222222;
+	outline:0;
+}
+
+.pleasantReading a:hover {
+	text-decoration: none;
+	border-bottom:2px solid #222222;
+}
+
+.pleasantReading h1, .pleasantReading h2, .pleasantReading h3, .pleasantReading h4, .pleasantReading h5, .pleasantReading h6 {
+	font-family:"Linux Biolinum", sans-serif;
+	text-align:left;
+}
+
+.pleasantReading sup {
+	line-height:1.0;
+}
+
+.pleasantReading table {
+	text-align: left;
+}

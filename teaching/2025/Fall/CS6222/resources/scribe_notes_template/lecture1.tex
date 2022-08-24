@@ -1,0 +1,49 @@
+\iffalse
+
+INSTRUCTIONS: (if this is not lecture1.tex, use the right file name)
+
+Once you are done with your file, run
+
+  ``latexmk lecture1.tex -pdf''
+
+from a UNIX prompt.  If your LaTeX code is clean, the latex will exit
+back to a prompt.
+\fi
+%
+\documentclass[11pt]{article}
+\usepackage{amsfonts}
+\usepackage{latexsym}
+\setlength{\oddsidemargin}{.25in}
+\setlength{\evensidemargin}{.25in}
+\setlength{\textwidth}{6in}
+\setlength{\topmargin}{-0.4in}
+\setlength{\textheight}{8.5in}
+
+
+\input{preamble}
+%end of macros
+
+\begin{document}
+
+\lecture{1}{Lecture Title}{January 1, 1970}{Alan Turing}
+
+\section{Topics Covered}
+
+\begin{itemize}
+	\item Topic 1
+	\item Topic 2
+	\item Topic 3
+\end{itemize}
+\medskip
+
+\section{Section about Topic 1}
+
+
+
+%\begin{thebibliography}{1}
+%\bibitem{DORS04} Yevgeniy Dodis, Rafail Ostrovsky, Leonid Reyzin, and Adam Smith. Fuzzy extractors: how to generate strong keys from biometrics and other noisy data. In {\em EUROCRYPT 2004}.
+%\bibitem{GN93} Peter Gemmell and Moni Naor. Codes for interactive authentication. In {\em CRYPTO 1993}.
+%\end{thebibliography}
+
+
+\end{document}
