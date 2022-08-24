@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel='stylesheet' type='text/css' href='../fonts/sofiaprolight/stylesheet.css' />
+<link rel='stylesheet' type='text/css' href='../fonts/linuxlibertine/stylesheet.css' />
+<link rel='stylesheet' type='text/css' href='../fonts/linuxbiolinum/stylesheet.css' />
+<title>Tools &amp; Artifacts | Jack Doerner</title>
+
+<style>
+a{ outline: none;}
+
+body, html {
+	background-color: #FFFFFF;
+	color:#000000;
+	font-family:"Linux Libertine", "Times", "Times New Roman", serif;
+	font-weight: 300;
+	font-size:12pt;
+	line-height: 1.2;
+	text-align: center;
+}
+
+em {
+	font-family:"Linux Libertine", "Times", "Times New Roman", serif;
+}
+
+em.serif {
+	font-family:"Linux Libertine", "Times", "Times New Roman", serif;
+}
+
+.center {
+	text-align: center;
+}
+
+#main {
+	column-width:30em;
+	column-count:auto;
+	-moz-column-width:30em;
+	-moz-column-count:auto;
+	-webkit-column-width:30em;
+	-webkit-column-count:auto;
+	column-gap:2em;
+	-moz-column-gap:2em;
+	-webkit-column-gap:2em;
+	margin:60px auto 40px auto;
+	padding:0 2em;
+	text-align:left;
+}
+
+#main > div {
+	display:inline-block;
+	text-align: justify;
+	margin-bottom:2em;
+}
+
+#main a {
+	text-decoration: none;
+	color:#000000;
+	border-bottom:1px solid #222222;
+	outline:0;
+}
+
+#main a:hover, #main a.active {
+	text-decoration: none;
+	border-bottom:2px solid #222222;
+}
+
+#main .titlebox {
+	position:relative;
+	margin-bottom:1em;
+}
+
+#main img {
+	width:100%;
+}
+
+#main .titlebox_inner {
+	position: absolute;
+	height:24%;
+	top:64%;
+	left:0;
+	right:0;
+	z-index: 2;
+	overflow:hidden;
+}
+#main .titlebox_inner > div {
+	border-top: 1px solid rgba(255,255,255,0.4);
+	border-bottom: 1px solid rgba(255,255,255,0.5);
+	background-color: rgba(255,255,255,0.4);
+	position: absolute;
+	top:0;
+	bottom:0;
+	left:0;
+	right:0;
+}
+
+.sunray_repronar_adapter .titlebox_inner::before {
+	background-image: url('sunray_repronar_adapter/banner.jpg');
+}
+
+.perception .titlebox_inner::before {
+	background-image: url('/tools/perception/banner.jpg');
+}
+
+.titlebox_inner::before{
+    background-size: cover;
+    -moz-filter: url('#svgBlur');
+    -moz-filter: blur(20px);
+    -webkit-filter: url('#svgBlur');
+    -webkit-filter: blur(20px);
+    filter: url('#svgBlur');
+    filter: blur(20px);
+	background-position: 50% 101%;
+	top:-50%;
+	left:-50%;
+	background-size: 50%;
+    z-index: -1;
+	display: block;
+	position: absolute;
+	content: ' ';
+	width: 200%;
+	height: 200%;
+  	overflow: visible;
+}
+
+#main > div > .title {
+	font-size:26pt;
+	text-align: left;
+	font-family:"Linux Biolinum", "Times", "Times New Roman", serif;
+}
+
+#main > div > .subtitle {
+	font-size:14pt;
+	margin-top:6pt;
+	font-family:"Linux Libertine", "Times", "Times New Roman", serif;
+}
+
+
+#main .titlebox_inner .title {
+	font-size:26pt;
+	height:26pt;
+	line-height: 26pt;
+	font-family:"Linux Biolinum", "Times", "Times New Roman", sans-serif;
+	text-align: left;
+	text-shadow:0 0 4px rgba(255,255,255,0.4);
+	position: absolute;
+	bottom:50%;
+	margin-bottom: -1pt;
+	width:100%;
+	padding-left:12pt;
+}
+
+#main .titlebox_inner .subtitle {
+	font-family:'Linux Biolinum','Times','Times New Roman',sans-serif;
+	margin-top:7pt;
+	font-size: 14pt;
+	text-align: left;
+	height:16pt;
+	line-height:16pt;
+	text-shadow:0 0 4px rgba(255,255,255,0.4);
+	position: absolute;
+	top:50%;
+	width:100%;
+	padding-left:12pt;
+}
+
+#main .subtitle a {
+	color:#000000;
+}
+
+#main .subtitle a:hover, #main .subtitle a.active {
+	color:#000000;
+}
+
+#main .titlebox a.imglink {
+	border-bottom:0px;
+}
+
+#main .titlebox a.imglink:hover {
+	border-bottom:2px solid #000000;
+}
+
+#main .subtitle .category {
+	font-style: italic;
+}
+
+#blurSvg {
+	position:absolute;
+	height:0;
+	width:0;
+}
+
+</style>
+
+<style>
+#topmenu {
+	position:fixed;
+	top:0px;
+	left:0px;
+	right:0px;
+	padding:10px;
+	text-align: left;
+	background-color: #FFFFFF;
+	font-family:'SofiaProLight','Helvetica','Arial',sans-serif;
+	color:#000000;
+	z-index:1000;
+	box-shadow:0 0 5px rgba(0,0,0,0.2);
+	border-bottom:1px solid #222222;
+	height:20px;
+	line-height: 20px;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+#menuspacer {
+	height:40px;
+}
+
+#topmenu a {
+	margin:0px 10px;
+	color:#888888;
+	text-decoration:none;
+}
+
+#topmenu a:first-child {
+	margin-left:0px;
+}
+
+#topmenu a:hover, #topmenu a.active {
+	color:#000000;
+	border-color: #000000;
+}
+
+#menuspacer {
+	height:40px;
+}
+
+div#copyright {
+		font-family:'SofiaProLight','Helvetica','Arial',sans-serif;
+		color:#000000;
+		position: fixed;
+		bottom:10px;
+		right:12px;
+		z-index:1000;
+	}
+</style>
+
+<script>
+	window.addEventListener('load', (event) => {
+	    if (typeof performance !== 'undefined' && typeof performance.getEntriesByType !== 'undefined'
+			&& performance.getEntriesByType("navigation").length > 0
+			&& typeof performance.getEntriesByType("navigation")[0].type !== 'undefined'
+			&& performance.getEntriesByType("navigation")[0].type == 'reload') {
+	    		var elements = document.querySelectorAll("#main div:not(.no_rot)");
+				for (ii = 0; ii < elements.length; ii ++) {
+					elements[ii].style.transform = "rotate(" + (1.5 * Math.random() - 0.75) + "deg)";
+				}
+		}
+	});
+</script>
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-GCYY1SD9GT"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-GCYY1SD9GT');
+</script>
+
+</head>
+<body>
+	<svg id='blurSvg' height="0" xmlns="http://www.w3.org/2000/svg">
+	  <filter id="svgBlur" x="-50%" y="-50%" width="200%" height="200%">
+	    <feGaussianBlur in="SourceGraphic" stdDeviation="20"/>
+	  </filter>
+	</svg>
+	
+	<div id='topmenu'><a href='../'>Home</a>&bull;<a href='../about'>About</a>&bull;<a href='../research'>Research</a>&bull;<a href='../teaching'>Teaching</a>&bull;<a href='../art'>Art &amp; Films</a>&bull;<a href='../exposition'>Exposition</a></div>
+
+	<div id='main'>
+		<div class='cryptonomicon'>
+			<div class='title'>Cryptonomicon</div>
+			<div class='subtitle'><span class='category'>Document</span> &bull; <a href="https://bitbucket.org/jackdoerner/cryptonomicon/raw/master/cryptonomicon.pdf" target="_blank">PDF</a> &bull; <a href="https://bitbucket.org/jackdoerner/cryptonomicon" target="_blank">Code</a></div>
+			<p>
+				The Cryptonomicon (named with apologies to Neil Stephenson) is a cryptographic dictionary: a compendium of basic, rigorously defined cryptographic concepts. I created it for my own benefit during the course of a cryptography class taught by <a href="http://www.ccs.neu.edu/home/wichs/" target="_blank">Daniel Wichs</a>, and provide it here for the benefit of other students who, like myself, have a hard time keeping their definitions straight.
+			</p>
+		</div>
+		<div class='bolex_stroboscope'>
+			<div class='title'>Bolex Stroboscope</div>
+			<div class='subtitle'><span class='category'>Document</span> &bull; <a href="/resources/pdf/bolex_stroboscope.pdf" target="_blank">PDF</a></div>
+			<p>
+				A stroboscope disc for calibrating the framerate of Bolex H16 cameras. It has bands for 12, 16, and 24fps, and is meant to be used with the 8:1 drive shaft under 60hz light. If printed at 2 inches diameter, a small notch can be cut in the outermost band, and then it can be taped onto a rewind crank.
+			</p>
+		</div>
+		<div class='perception'>
+			<div class='titlebox'>
+				<img src='/tools/perception/banner.jpg'/>
+				<div class='titlebox_inner no_rot'><div class='no_rot'>
+					<div class='title'>Perception</div>
+					<div class='subtitle'><span class='category'>Software</span> &bull;  <a href="/tools/perception" target='_blank'>Try it Online</a> &bull; <a href="https://bitbucket.org/jackdoerner/perception" target='_blank'>Code</a></div>
+				</div></div>
+			</div>
+			<p>
+				Perception is a standalone tool for working in the CIECAM16-UCS and CIELCHab colorspaces, which are (close to) perceptually uniform. It also includes a gamut mapping function, an interpolator, a color vision deficiency simulator, and a tool for finding equivalent colors against varying backgrounds.
+			</p>
+		</div>
+		<div class='snippets'>
+			<div class='title'>Snippets</div>
+			<div class='subtitle'><span class='category'>Software</span> &bull; <a href="https://gist.github.com/jackdoerner" target="_blank">Browse on Github</a></div>
+			<p>
+				A collection of miscellaneous code snippets for solving simple, self-contained problems.
+			</p>
+		</div>
+		<div class='sunray_repronar_adapter'>
+			<div class='titlebox'>
+				<img src='sunray_repronar_adapter/banner.jpg'/>
+				<div class='titlebox_inner no_rot'><div class='no_rot'>
+					<div class='title'>Sunray/Repronar Film Holder Adapter</div>
+					<div class='subtitle'><span class='category'>Object</span> &bull; <a href="/resources/stl/sunray_repronar_adapter.stl">V1 STL</a> &bull; <a href="/resources/dxf/sunray_repronar_adapter_2.dxf">V2 DXF</a></div>
+				</div></div>
+			</div>
+			<p>
+				A adapter that allows the use of Skier Sunray film holders with a Honeywell Universal Repronar slide copier. Version 1 can be 3D-printed and is compatible only with the 35mm film holder. Version 2 can be lasercut from plastic or wood, or waterjet-cut from metal. Relative to the first version, it adds a height adjustment, a tray for a 100x100mm opal glass diffuser (replacing the smaller one ordinarily fitted to the repronar), and compatibility with the 120 film holder. The pattern for Version 2 also includes spacers that fit between the column and main body of the repronar.
+			</p>
+		</div>
+	</div>
+
+	<div id='copyright'>&copy;&nbsp;2022</div>
+
+</body>
+</html>
