@@ -1,0 +1,95 @@
+body {
+	color:white;
+	background-color: black;
+	font-family: "Sofia Pro", Helvetica, Arial, Sans-serif;
+	margin:0px;
+}
+
+#main {
+	position:absolute;
+	top:10%;
+	bottom:10%;
+	left:0;
+	right:0;
+}
+
+#browserwarning {
+	position:absolute;
+	top:0;
+	left:0;
+	right:0;
+	bottom:0;
+	z-index: 10;
+	background-color: rgba(0,0,0,0.7);
+	display:none;
+}
+
+#browserwarning > div {
+	position: absolute;
+	top:50%;
+	left:50%;
+	transform:translate(-50%, -50%);
+	-moz-transform:translate(-50%, -50%);
+	-ms-transform:translate(-50%, -50%);
+	-webkit-transform:translate(-50%, -50%);
+	text-align: center;
+}
+
+#browserwarningclose {
+	position: absolute;
+	right:0px;
+	top:-40px;
+	color:#BBBBBB;
+	font-size: 20px;
+	text-decoration: none;
+}
+
+#browserwarningclose:hover {
+	color:#FFFFFF;
+}
+
+.video {
+	height:100%;
+	width:47%;
+	position:absolute;
+	text-align: center;
+	overflow: hidden;
+	top:0;
+	bottom:0;
+}
+
+#left {
+	left:2%;
+}
+
+#right {
+	right:2%;
+}
+
+.video > * {
+	position:absolute;
+	margin: 0;
+	top:0;
+	left:-25%;
+	right:25%;
+	bottom:0;
+	border:0px;
+	display:block;
+	height:100%;
+	width:150%;
+}
+
+.video::before {
+	content:' ';
+	position:absolute;
+	left:-10px;
+	right:-10px;
+	bottom:-10px;
+	top:-10px;
+	z-index:2;
+	background-color: #000000;
+}
+
+.video.active::before{
+	opacity: 0;
+}
