@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<title>A Simple, Direct Reduction from Circuit SAT to Graph 3-Coloring</title>
+<link rel='stylesheet' type='text/css' href='../../../system/css/main.css'/>
+<link rel='stylesheet' type='text/css' href='../../../system/css/styles/onecolumn.css'/>
+<script type='text/javascript' src='../../../system/js/articlemain.js'></script>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-GCYY1SD9GT"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-GCYY1SD9GT');
+</script>
+
+
+<style>
+.dual-range-input {
+  --dri-height: 1.5rem;
+  --dri-thumb-width: 1.25rem;
+  --dri-thumb-height: 1.25rem;
+  --dri-thumb-color: #ddd;
+  --dri-thumb-hover-color: #a8d5ff;
+  --dri-thumb-active-color: #4eaaff;
+  --dri-thumb-border-color: rgba(0, 0, 0, 0.1);
+  --dri-thumb-border-hover-color: var(--dri-thumb-border-color);
+  --dri-thumb-border-active-color: var(--dri-thumb-border-color);
+  --dri-thumb-border-radius: 1rem;
+  --dri-thumb-border-width: 1px;
+  --dri-track-height: 0.25rem;
+  --dri-track-border-radius: 1rem;
+  --dri-track-color: #ccc;
+  --dri-track-filled-color: #0084ff;
+  display: flex;
+  height: var(--dri-height);
+  max-width: 100%;
+  width: 100%;
+  box-sizing: border-box;
+  padding-inline-end: calc(var(--dri-thumb-width) * 2);
+}
+.dual-range-input:has(input:focus-visible) {
+  outline: 2px solid var(--dri-thumb-active-color);
+  outline-offset: 4px;
+  border-radius: 2px;
+}
+.dual-range-input input {
+  -webkit-tap-highlight-color: transparent;
+  -webkit-appearance: none;
+  appearance: none;
+  background: none;
+  border-radius: 0;
+  flex-basis: calc(50% + var(--dri-thumb-width));
+  flex-shrink: 0;
+  font-size: inherit;
+  height: 100%;
+  margin: 0;
+  min-width: var(--dri-thumb-width);
+  outline: none;
+}
+.dual-range-input input::-moz-range-track {
+  background-color: var(--dri-track-color);
+  background-repeat: no-repeat;
+  box-sizing: border-box;
+  height: var(--dri-track-height);
+}
+.dual-range-input input:first-child::-moz-range-track {
+  border-start-start-radius: var(--dri-track-border-radius);
+  border-end-start-radius: var(--dri-track-border-radius);
+  background-image: linear-gradient(to right, var(--dri-track-color) var(--dri-gradient-position), var(--dri-track-filled-color) var(--dri-gradient-position));
+}
+[dir=rtl] .dual-range-input input:first-child::-moz-range-track {
+  background-image: linear-gradient(to left, var(--dri-track-color) var(--dri-gradient-position), var(--dri-track-filled-color) var(--dri-gradient-position));
+}
+.dual-range-input input:last-child::-moz-range-track {
+  border-start-end-radius: var(--dri-track-border-radius);
+  border-end-end-radius: var(--dri-track-border-radius);
+  background-image: linear-gradient(to right, var(--dri-track-filled-color) var(--dri-gradient-position), var(--dri-track-color) var(--dri-gradient-position));
+}
+[dir=rtl] .dual-range-input input:last-child::-moz-range-track {
+  background-image: linear-gradient(to left, var(--dri-track-filled-color) var(--dri-gradient-position), var(--dri-track-color) var(--dri-gradient-position));
+}
+.dual-range-input input::-moz-range-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  background-color: var(--dri-thumb-color);
+  border-radius: var(--dri-thumb-border-radius);
+  border: var(--dri-thumb-border-width) solid var(--dri-thumb-border-color);
+  box-shadow: none;
+  box-sizing: border-box;
+  height: var(--dri-thumb-height);
+  width: var(--dri-thumb-width);
+  max-width: 99.99%;
+}
+.dual-range-input input:not([data-ready=true])::-moz-range-thumb {
+  opacity: 0;
+}
+.dual-range-input input:hover::-moz-range-thumb {
+  background-color: var(--dri-thumb-hover-color);
+  border-color: var(--dri-thumb-border-hover-color);
+}
+.dual-range-input input:active::-moz-range-thumb {
+  background-color: var(--dri-thumb-active-color);
+  border-color: var(--dri-thumb-border-active-color);
+}
+.dual-range-input input:focus-visible::-moz-range-thumb {
+  background-color: var(--dri-thumb-active-color);
+  border-color: var(--dri-thumb-border-active-color);
+}
+.dual-range-input input::-webkit-slider-runnable-track {
+  background-color: var(--dri-track-color);
+  background-repeat: no-repeat;
+  box-sizing: border-box;
+  height: var(--dri-track-height);
+}
+.dual-range-input input:first-child::-webkit-slider-runnable-track {
+  border-start-start-radius: var(--dri-track-border-radius);
+  border-end-start-radius: var(--dri-track-border-radius);
+  background-image: linear-gradient(to right, var(--dri-track-color) var(--dri-gradient-position), var(--dri-track-filled-color) var(--dri-gradient-position));
+}
+[dir=rtl] .dual-range-input input:first-child::-webkit-slider-runnable-track {
+  background-image: linear-gradient(to left, var(--dri-track-color) var(--dri-gradient-position), var(--dri-track-filled-color) var(--dri-gradient-position));
+}
+.dual-range-input input:last-child::-webkit-slider-runnable-track {
+  border-start-end-radius: var(--dri-track-border-radius);
+  border-end-end-radius: var(--dri-track-border-radius);
+  background-image: linear-gradient(to right, var(--dri-track-filled-color) var(--dri-gradient-position), var(--dri-track-color) var(--dri-gradient-position));
+}
+[dir=rtl] .dual-range-input input:last-child::-webkit-slider-runnable-track {
+  background-image: linear-gradient(to left, var(--dri-track-filled-color) var(--dri-gradient-position), var(--dri-track-color) var(--dri-gradient-position));
+}
+.dual-range-input input::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  background-color: var(--dri-thumb-color);
+  border-radius: var(--dri-thumb-border-radius);
+  border: var(--dri-thumb-border-width) solid var(--dri-thumb-border-color);
+  box-shadow: none;
+  box-sizing: border-box;
+  height: var(--dri-thumb-height);
+  width: var(--dri-thumb-width);
+  margin-top: calc(var(--dri-track-height) / 2);
+  transform: translateY(-50%);
+}
+.dual-range-input input:not([data-ready=true])::-webkit-slider-thumb {
+  opacity: 0;
+}
+.dual-range-input input:hover::-webkit-slider-thumb {
+  background-color: var(--dri-thumb-hover-color);
+  border-color: var(--dri-thumb-border-hover-color);
+}
+.dual-range-input input:active::-webkit-slider-thumb {
+  background-color: var(--dri-thumb-active-color);
+  border-color: var(--dri-thumb-border-active-color);
+}
+.dual-range-input input:focus-visible::-webkit-slider-thumb {
+  background-color: var(--dri-thumb-active-color);
+  border-color: var(--dri-thumb-border-active-color);
+}
+</style>
+
+<style>
+math {
+  color: #0071bc;
+}
+</style>
+
+<script type='text/javascript'>
+class DualRangeInput {
+    /**
+     * @param {HTMLInputElement} minel - The range input element for the minimum value
+     * @param {HTMLInputElement} maxel - The range input element for the maximum value
+     * @param {number} [precision=3] - The number of decimal places to round the mid value to, defaults to 3
+     */
+    constructor(minel, maxel, precision = 3) {
+        this.updateFloor = () => this.update('floor');
+        this.updateCeil = () => this.update('ceil');
+        this.minel = minel;
+        this.maxel = maxel;
+        this.precision = precision;
+        this.minel.addEventListener('input', this.updateCeil);
+        this.maxel.addEventListener('input', this.updateFloor);
+        this.minel.addEventListener('focus', this.updateCeil);
+        this.maxel.addEventListener('focus', this.updateFloor);
+        // Unfortunately Safari doesn't trigger focus on mousedown or touchstart
+        // like other browsers do, so we have to listen for those events as well
+        this.minel.addEventListener('mousedown', this.updateCeil);
+        this.maxel.addEventListener('mousedown', this.updateFloor);
+        this.minel.addEventListener('touchstart', this.updateCeil);
+        this.maxel.addEventListener('touchstart', this.updateFloor);
+        this.update();
+        this.minel.dataset.ready = 'true';
+        this.maxel.dataset.ready = 'true';
+    }
+    update(method = 'ceil') {
+        const thumbWidthVar = 'var(--dri-thumb-width)';
+        const min = parseFloat(this.minel.min);
+        const max = parseFloat(this.maxel.max);
+        const step = parseFloat(this.minel.step) || 1;
+        const minValue = parseFloat(this.minel.value);
+        const maxValue = parseFloat(this.maxel.value);
+        const midValue = (maxValue - minValue) / 2;
+        const mid = minValue + Math[method](midValue / step) * step;
+        const range = max - min;
+        const leftWidth = (((mid - min) / range) * 100).toFixed(this.precision);
+        const rightWidth = (((max - mid) / range) * 100).toFixed(this.precision);
+        this.minel.style.flexBasis = `calc(${leftWidth}% + ${thumbWidthVar})`;
+        this.maxel.style.flexBasis = `calc(${rightWidth}% + ${thumbWidthVar})`;
+        this.minel.max = mid.toFixed(this.precision);
+        this.maxel.min = mid.toFixed(this.precision);
+        const minFill = (minValue - min) / (mid - min) || 0;
+        const maxFill = (maxValue - mid) / (max - mid) || 0;
+        const minFillPercentage = (minFill * 100).toFixed(this.precision);
+        const maxFillPercentage = (maxFill * 100).toFixed(this.precision);
+        const minFillThumb = (0.5 - minFill).toFixed(this.precision);
+        const maxFillThumb = (0.5 - maxFill).toFixed(this.precision);
+        this.minel.style.setProperty('--dri-gradient-position', `calc(${minFillPercentage}% + (${minFillThumb} * ${thumbWidthVar}))`);
+        this.maxel.style.setProperty('--dri-gradient-position', `calc(${maxFillPercentage}% + (${maxFillThumb} * ${thumbWidthVar}))`);
+    }
+    destroy() {
+        this.minel.removeEventListener('input', this.updateFloor);
+        this.maxel.removeEventListener('input', this.updateCeil);
+        this.minel.removeEventListener('focus', this.updateFloor);
+        this.maxel.removeEventListener('focus', this.updateCeil);
+        this.minel.removeEventListener('mousedown', this.updateCeil);
+        this.maxel.removeEventListener('mousedown', this.updateFloor);
+        this.minel.removeEventListener('touchstart', this.updateCeil);
+        this.maxel.removeEventListener('touchstart', this.updateFloor);
+    }
+}
+</script>
+
+<script type='text/javascript'>
+function setup(imnum){
+  const minel = document.querySelector('#min_'+imnum);
+  const maxel = document.querySelector('#max_'+imnum);
+
+  new DualRangeInput(minel, maxel);
+
+  maxel.addEventListener('input', () => {
+    compareel.style.setProperty("--mask-width-one", maxel.value + "%");
+  });
+
+  minel.addEventListener('input', () => {
+    compareel.style.setProperty("--mask-width-two", minel.value + "%");
+  });
+
+  const compareel = document.querySelector("#compare_"+imnum);
+
+  compareel.style.setProperty("--mask-width-one", maxel.value + "%");
+  compareel.style.setProperty("--mask-width-two", minel.value + "%");
+}
+
+function start(){
+  setup(1)
+  setup(2)
+  setup(3)
+  setup(4)
+}
+
+window.onload = start;
+</script>
+</head>
+<body>
+
+<div id='topmenu' class='header hideOnEmbed'>
+  <div id='leftlinks'><a href='/'>Home</a>&bull;<a href='../../../'>Exposition</a></div>
+  <div id='rightlinks'><a id='toplink' href='#title'>Top of Page</a></div>
+</div>
+
+<div id='menuspacer' class='hideOnEmbed'>&nbsp;</div>
+
+<div class='oneColumn pleasantReading'>
+
+<h1>A Simple, Direct Reduction from Circuit SAT to Graph 3-Coloring</h1>
+
+<h2>Table of Contents</h2>
+
+<ol>
+  <li> <a href="#why">What is the Point?</a> </li>
+  <li> <a href="#structure">Structure of the Reduction</a> </li>
+  <li> <a href="#proof">Proof for the OR Gadget</a></li>
+  <li> <a href="#extension">NOR, AND, NAND. XOR?</a></li>
+  <li> <a href="#comparison">Related Work and Comparison to Other Approaches</a> </li>
+</ol>
+
+<h2> <a name="why" class="nolinkanchor">What is the Point?</a> </h2>
+
+<p>When introducing somebody to zero-knowledge for the first time, it's common to prove that there exists a zero-knowledge proof for the language of <a href="https://en.wikipedia.org/wiki/Graph_coloring" target="_blank">3-colorable graphs</a>, and then use the fact that graph 3-coloring is NP complete to conclude that zero-knowledge proofs exist for all NP languages. For example, both  <a href="https://www.wisdom.weizmann.ac.il/~oded/foc-book.html" target="_blank">Goldreich</a> and <a href="http://www.cs.cornell.edu/courses/cs4830/2010fa/lecnotes.pdf" target="_blank">Pass and shelat</a> take this approach in their cryptography textbooks. The zero-knowledge proof for 3-coloring is so simple that it can be understood by people with no background in computer science at all (physical commitments can easily be constructed using paper and tape, if necessary). The proof that graph 3-coloring is NP complete is much less intuitive, however.</p>
+
+<p> The typical pathway for proving that graph 3-coloring is NP complete involves a reduction from any NP problem to <a href="https://en.wikipedia.org/wiki/Boolean_satisfiability_problem" target="_blank">SAT</a> (i.e. the <a href="https://en.wikipedia.org/wiki/Cook%E2%80%93Levin_theorem" target="_blank">Cook-Levin theorem</a>), then a reduction from SAT to <a href="https://en.wikipedia.org/wiki/Boolean_satisfiability_problem#3-satisfiability" target="_blank">3SAT</a>, and finally a reduction from 3SAT to graph 3-coloring. So far as I can tell, this chain of reductions is not usually taught in introductory cryptography classes, even when the zero-knowledge proof of graph 3-coloring is.</p>
+
+<p>This document describes a direct reduction from <a href="https://en.wikipedia.org/wiki/Circuit_satisfiability_problem" target="_blank">CSAT</a> to graph 3-coloring which is, to my mind, far easier and faster to teach than the traditional reduction chain. The purpose is not to <em>replace</em> the traditional reduction chain (which is often taught in introductory theory of computation courses), but to make it possible to teach zero-knowledge for all of NP without relying too much on prior knowledge. In other words, to make the whole topic accessible to those who have not yet taken (or do not remember) a theory of computation course.</p>
+
+<p>CSAT is useful for this purpose because it captures the notion of computability intuitively even for those who do not yet understand NP completeness. In the real world, computers are made up of boolean circuits, and most people know this (although of course it is a gross oversimplification). It is quite natural to say that if you can prove a statement to a computer, then the computer verifies the proof by evaluating a boolean circuit on it.</p>
+
+<p>I have tried to write the following document in a way that is reasonably understandable to beginners, without getting bogged down in preliminaries. Readers not familiar with CSAT or graph 3-coloring are invited to familiarize themselves with these ideas before continuing.</p>
+
+<h3>A Note on Novelty.</h3>
+
+<p>I do not claim that anything here is novel or surprising. I was unable to find this kind of reduction in the literature, but it may very well exist, and if it does, I would be very happy to know about it.</p>
+
+<h2> <a name="structure" class="nolinkanchor">Structure of the Reduction</a> </h2>
+
+<p>Our reduction will construct a graph 3-coloring problem for <em>any</em> boolean circuit (not just circuits that are valid CSAT instances). It will have the following invariants:</p>
+<ul>
+  <li>For each wire in the circuit (or variable in the corresponding equation) there is exactly one vertex in the graph.</li>
+  <li>For every proper 3-coloring of the graph, there is a valid assignment of the wires in the circuit (or variables in the equation) such that if a set of vertices are colored the same, then their corresponding wires assume the same value.</li>
+  <li>For every valid assignment of the wires in the circuit (or variables in the equation), there is at least one proper 3-coloring of the graph such that if a set of wires assume the same value, then their corresponding vertices are colored the same.</li>
+  <li>It is possible to construct a fixed, injective mapping between wire values and vertex colors.</li>
+</ul>
+
+<p>In addition to the vertices corresponding to wires, our graph will include vertices representing constant values, and a number of additional <em>helper</em> vertices that grows in proportion to the number of gates in the circuit. Helper vertices do not correspond directly to anything in the circuit, and unlike the other vertices they may take on colors that do not correspond to logical values on specfic wires.</p>
+
+<p>We will consider boolean circuits made up of NOT (<math display="inline" style="display:inline math;"><mo form="prefix" stretchy="false" lspace="0em" rspace="0em">¬</mo></math>) an OR (<math display="inline" style="display:inline math;"><mo form="prefix" stretchy="false" lspace="0em" rspace="0em">∨</mo></math>) gates, equality constraints (<math display="inline" style="display:inline math;"><mo lspace="0em" rspace="0em">=</mo></math>), and constants (<math display="inline" style="display:inline math;"><mrow><mo fence="true" form="prefix" stretchy="false">{</mo><mn>0,1</mn><mo fence="true" form="postfix" stretchy="false">}</mo></mrow></math>). This collection of primitives is <a href="https://en.wikipedia.org/wiki/Functional_completeness" target="_blank">complete</a> for boolean computation, and we will represent circuits using equations made up of these primitives. If the final element of a circuit is an equality constraint with the constant 1 (i.e. it can be represented using an equation with 1 on the right hand side of the equals sign), then it is an instance of the CSAT problem, and valid assignments of the input wires (i.e. variables) for such a circuit is a witness that the circuit is satisfiable.</p>
+
+<h3>Establishing a Correspondence between Wire Values and Colors.</h3>
+
+<p>Since we wish to establish one-to-one mapping between the values that wires can assume and the colors of the corresponding vertices, we will begin by creating a set of <em>color reference</em> vertices corresponding to the values. We can then determine which color represents which value by observing the colors that the color-reference vertices assume. The wires of a boolean circuit have two possible values, and there are three possible colors in a 3-coloring problem. Thus, we must have a color that does map to a wire value. We will call this color (and its reference vertex) <em>neither</em>, and denote it <math display="inline" style="display:inline math;"><mrow><mi mathvariant="normal">N</mi><mspace></mspace></mrow></math>. The three reference vertices are connected to one another in a triangle, forcing them to assume three distinct colors, as follows:</p>
+
+<div style="text-align:center;"><img src="img/base_colors.svg" style="width:100px;" /></div>
+
+<p>From now on, the logical value 0 will be represented by the color white, the logical value 1 will be represented by the color black, and the <em>neither</em> color will be blue. This is just a convention; any three colors will do.</p>
+
+<h3>Wires and NOT Gates.</h3>
+
+<p>For every wire in the circuit (without loss of generality, let us consider input wire <math display="inline" style="display:inline math;"><mi>x</mi></math>), we will create exactly one corresponding vertex in the graph. We will also create a vertex <math display="inline" style="display:inline math;"><mover><mi>x</mi><mo stretchy="false" class="chr-sml wbk-sml-acc" style="math-depth:0;">‾</mo></mover></math> representing the <em>complement</em> of <math display="inline" style="display:inline math;"><mi>x</mi></math>. We connect these two new vertices in a triangle with the <math display="inline" style="display:inline math;"><mrow><mi mathvariant="normal">N</mi><mspace></mspace></mrow></math> vertex, as follows:</p>
+
+<div style="text-align:center;"><img src="img/wires_NOT.svg" style="width:170px;" /></div>
+
+<p>Notice that in any valid 3-coloring, the vertices <math display="inline" style="display:inline math;"><mi>x</mi></math> and <math display="inline" style="display:inline math;"><mover><mi>x</mi><mo stretchy="false" class="chr-sml wbk-sml-acc" style="math-depth:0;">‾</mo></mover></math> must assume different colors, neither of which is the color <math display="inline" style="display:inline math;"><mrow><mi mathvariant="normal">N</mi><mspace></mspace></mrow></math>. In other words, we have implemented the simple circuit <math display="inline" style="display:inline math;"><mrow><mover><mi>x</mi><mo stretchy="false" class="chr-sml wbk-sml-acc" style="math-depth:0;">‾</mo></mover><mo>=</mo><mo form="prefix" stretchy="false">¬</mo><mi>x</mi></mrow></math>, which contains only a NOT gate. There are two possible colorings of the above graph, which correspond to the rows in the truth table of a NOT gate:</p>
+
+<div style="text-align:center;"><img src="img/wires_NOT_01.svg" style="width:170px; margin-right:50px;" /><img src="img/wires_NOT_10.svg" style="width:170px;margin-left:50px;" /></div>
+
+<h3>Asserting Equality, or Forcing Wires to Assume Certain Values.</h3>
+
+<p>We can represent an equality constraint between two wires by connecting the vertex that corresponds to one of them to the vertex corresponding to the complement of the other. This also works with constant values. For example, the boolean equation <math display="inline" style="display:inline math;"><mrow><mi>x</mi><mo>=</mo><mn>1</mn></mrow></math> is equivalent to the following 3-coloring problem, in which the 1 vertex must always be colored the same as the <math display="inline" style="display:inline math;"><mi>x</mi></math> vertex in any proper coloring:</p>
+
+<div style="text-align:center;"><img src="img/force_value.svg" style="width:170px;" /></div>
+
+<h3>OR Gates.</h3>
+
+<p>Representing OR gates is somewhat trickier. In order to do so, we must introduce a set of helper vertices and arrange them into a <em>gadget</em>. In the following OR gadget graph, is equivalent to the gate <math display="inline" style="display:inline math;"><mrow><mi>z</mi><mo>=</mo><mi>x</mi><mo>∨</mo><mi>y</mi></mrow></math>. In the <a href="#proof">next section</a>, we prove that the proper colorings of this graph are equivalent to valid assignments of <math display="inline" style="display:inline math;"><mrow><mo fence="true" form="prefix" stretchy="false">{</mo><mi>x</mi><mo separator="true">,</mo><mi>y</mi><mo separator="true">,</mo><mi>z</mi><mo fence="true" form="postfix" stretchy="false">}</mo></mrow></math>.</p>
+
+<div style="text-align:center;"><img src="img/gadget_OR_blank.svg" style="width:270px;" /></div>
+
+<p>The gadget above was found by exhaustive search and is one of 12 graphs with 3 helper vertices and 15 edges that meet the criteria of equivalence to and OR gate. No graph with fewer helper vertices or edges exists.</p>
+
+<h3>Putting it Together.</h3>
+
+<p>We can combine the above ideas to encode any boolean circuit as a graph 3-coloring problem, such that proper colorings correspond to valid assignments of the wires in the original circuit. For example, <math display="inline" style="display:inline math;"><mrow><mi>x</mi><mo>∨</mo><mo form="prefix" stretchy="false">¬</mo><mi>y</mi><mo>=</mo><mn>1</mn></mrow></math> can be encoded as a 3-coloring problem in the following way:</p>
+
+<div style="text-align:center;"><img src="img/not_x_or_y_equals_1.svg" style="width:270px;" /></div>
+
+<p>Since the above equation asserts equality with 1, it is a CSAT instance, which is satisfiable if and only if the above graph is 3-colorable. Indeed, the following coloring corresponds to <math display="inline" style="display:inline math;"><mrow><mi>x</mi><mo>=</mo><mn>0</mn><mo separator="true">,</mo><mi>y</mi><mo>=</mo><mn>0</mn></mrow></math>:</p>
+
+<div style="text-align:center;"><img src="img/not_x_or_y_equals_1_001.svg" style="width:270px;" /></div>
+
+<p>The above example includes only one gate of each type, and no wires beyond the inputs and outputs and their complements. For circuits that have an OR-depth greater than one, we must introduce vertices for the interior wires, in addition to the inputs and outputs. We never introduce more than one vertex per wire (plus one for its complement), however. For example, consider the circuit <math display="inline" style="display:inline math;"><mrow><mi>z</mi><mo>=</mo><mi>w</mi><mo>∨</mo><mrow><mo fence="true" form="prefix" stretchy="false">(</mo><mi>x</mi><mo>∨</mo><mi>y</mi><mo fence="true" form="postfix" stretchy="false">)</mo></mrow></mrow></math>, which has a single interior wire carrying the output of the parenthesized expression. If we name this interior wire <math display="inline" style="display:inline math;"><mi>v</mi></math>, then we can rewrite the circuit as <math display="inline" style="display:inline math;"><mrow><mo fence="true" form="prefix" stretchy="false">{</mo><mi>z</mi><mo>=</mo><mi>w</mi><mo>∨</mo><mi>v</mi><mo separator="true">,</mo><mi>v</mi><mo>=</mo><mi>x</mi><mo>∨</mo><mi>y</mi><mo fence="true" form="postfix" stretchy="false">}</mo></mrow></math>, and encode it as a 3-coloring problem in the following way:</p>
+
+<div style="text-align:center;"><img src="img/two_or.svg" style="width:300px;" /></div>
+
+<p>In the above example, the two distinct OR gadget patterns are individually highlighted. Each has its own helper vertices, and the output vertex <math display="inline" style="display:inline math;"><mi>v</mi></math> of one is also an input vertex of the other. For an additional example including several OR and NOT gates, see the construction of a graph for the XOR gate, <a href="#extension">below</a>.</p>
+
+<h2> <a name="proof" class="nolinkanchor">Proof for the OR Gadget</a> </h2>
+
+<p> For the sake of clarity, we will flatten the OR gadget presented above and label the three helper vertices <math display="inline" style="display:inline math;"><mrow><mo fence="true" form="prefix" stretchy="false">{</mo><mi>a</mi><mo separator="true">,</mo><mi>b</mi><mo separator="true">,</mo><mi>c</mi><mo fence="true" form="postfix" stretchy="false">}</mo></mrow></math>. Thus for the one-gate circuit <math display="inline" style="display:inline math;"><mrow><mi>z</mi><mo>=</mo><mi>x</mi><mo>∨</mo><mi>y</mi></mrow></math>, we have the following graph:</p>
+
+<div style="text-align:center;"><img src="img/gadget_unwrapped_blank.svg" style="width:300px;" /></div>
+
+<p>We will show that for every coloring of the vertices <math display="inline" style="display:inline math;"><mrow><mo fence="true" form="prefix" stretchy="false">{</mo><mi>x</mi><mo separator="true">,</mo><mi>y</mi><mo separator="true">,</mo><mi>z</mi><mo fence="true" form="postfix" stretchy="false">}</mo></mrow></math> that corresponds to a row in the truth table of an OR gate, there exists a proper coloring of the entire gadget, and on the other hand, for every coloring of the vertices <math display="inline" style="display:inline math;"><mrow><mo fence="true" form="prefix" stretchy="false">{</mo><mi>x</mi><mo separator="true">,</mo><mi>y</mi><mo separator="true">,</mo><mi>z</mi><mo fence="true" form="postfix" stretchy="false">}</mo></mrow></math> that does <em>not</em> correspond to a row in the truth table of an OR gate, there must be some vertex in the gadget that is adjacent to vertices of all three colors (and thus not itself properly colorable).</p>
+
+<p>Consider the first row in the truth table of OR; i.e. consider the case that <math display="inline" style="display:inline math;"><mrow><mi>x</mi><mo>=</mo><mi>y</mi><mo>=</mo><mi>z</mi><mo>=</mo><mn>0</mn></mrow></math>. We have the following proper coloring which is consistent with this assignment of wire values:</p>
+
+<div style="text-align:center;"><img src="img/gadget_unwrapped_000.svg" style="width:300px;" /></div>
+
+On the other hand, <math display="inline" style="display:inline math;"><mrow><mi>x</mi><mo>=</mo><mi>y</mi><mo>=</mo><mn>0</mn></mrow></math> and <math display="inline" style="display:inline math;"><mrow><mi>z</mi><mo>=</mo><mn>1</mn></mrow></math> is <em>not</em> a row in the truth table of an OR gate. Notice that if we color the vertices in the corresponding way, then helper vertex <math display="inline" style="display:inline math;"><mi>b</mi></math> is adjacent to both black and white vertices, and must therefore be blue. This implies that helper vertex <math display="inline" style="display:inline math;"><mi>c</mi></math> is adjacent to vertices of all three colors, and the gadget is thus not 3-colorable:</p>
+
+<div style="text-align:center;"><img src="img/gadget_unwrapped_001.svg" style="width:300px;" /></div>
+
+<p>Next, consider the case that <math display="inline" style="display:inline math;"><mrow><mi>x</mi><mo>=</mo><mn>1</mn></mrow></math>. In this case, <math display="inline" style="display:inline math;"><mrow><mi>z</mi><mo>=</mo><mi>x</mi><mo>∨</mo><mi>y</mi></mrow></math> implies <math display="inline" style="display:inline math;"><mrow><mi>z</mi><mo>=</mo><mn>1</mn></mrow></math> regardless of the value of <math display="inline" style="display:inline math;"><mrow><mi>y</mi></mrow></math>. And indeed, the following coloring is proper whether the vertex corresponding to <math display="inline" style="display:inline math;"><mrow><mi>y</mi></mrow></math> is colored black or white.</p>
+
+<div style="text-align:center;"><img src="img/gadget_unwrapped_1X1.svg" style="width:300px;" /></div>
+
+<p>On the other hand, consider <math display="inline" style="display:inline math;"><mrow><mi>x</mi><mo>=</mo><mn>1</mn></mrow></math> and <math display="inline" style="display:inline math;"><mrow><mi>z</mi><mo>=</mo><mn>0</mn></mrow></math>. Since no row in the truth table of OR has this combination of values, there should be no proper 3-coloring consistent with them, regardless of the value of <math display="inline" style="display:inline math;"><mrow><mi>y</mi></mrow></math>. If we color the vertices in the corresponding way, then helper vertex <math display="inline" style="display:inline math;"><mi>b</mi></math> is adjacent to both black and white vertices, and again must be blue, which implies that vertex <math display="inline" style="display:inline math;"><mrow><mi>a</mi></mrow></math> is adjacent to all three colors. This is true independently of the color of <math display="inline" style="display:inline math;"><mrow><mi>y</mi></mrow></math>, as expected.</p>
+
+<div style="text-align:center;"><img src="img/gadget_unwrapped_1X0.svg" style="width:300px;" /></div>
+
+<p>This leaves only one row in the truth table of the OR gate, i.e. <math display="inline" style="display:inline math;"><mrow><mi>y</mi><mo>=</mo><mi>z</mi><mo>=</mo><mn>1</mn></mrow></math> and <math display="inline" style="display:inline math;"><mrow><mi>x</mi><mo>=</mo><mn>0</mn></mrow></math>. And, as expected, we have a proper 3-coloring consistent with this assignment of wire values:</p>
+
+<div style="text-align:center;"><img src="img/gadget_unwrapped_011.svg" style="width:300px;" /></div>
+
+<p>The final <em>invalid</em> assignment of variables is <math display="inline" style="display:inline math;"><mrow><mi>x</mi><mo>=</mo><mi>z</mi><mo>=</mo><mn>0</mn></mrow></math> and <math display="inline" style="display:inline math;"><mrow><mi>y</mi><mo>=</mo><mn>1</mn></mrow></math>. If we color the vertices in the corresponding way, then helper vertex <math display="inline" style="display:inline math;"><mi>b</mi></math> must be blue once again, and vertex <math display="inline" style="display:inline math;"><mi>c</mi></math> is adjacent to vertices of all three colors.</p>
+
+<div style="text-align:center;"><img src="img/gadget_unwrapped_010.svg" style="width:300px;" /></div>
+
+<p>We have now exhausted all of the possible boolean assignments of <math display="inline" style="display:inline math;"><mrow><mo fence="true" form="prefix" stretchy="false">{</mo><mi>x</mi><mo separator="true">,</mo><mi>y</mi><mo separator="true">,</mo><mi>z</mi><mo fence="true" form="postfix" stretchy="false">}</mo></mrow></math> and shown that for each, then there exists a 3-coloring of the gadget consistent with that assignment if and only if <math display="inline" style="display:inline math;"><mrow><mi>z</mi><mo>=</mo><mi>x</mi><mo>∨</mo><mi>y</mi></mrow></math>. It remains to rule out 3-colorings that are not consistent with <em>any</em> boolean assignment of the variables: in particular, we must rule out colorings where a vertex corresponding to a wire (or its complement) is blue. This is trivial, since all vertices that correspond to wires are adjacent to the <math display="inline" style="display:inline math;"><mrow><mi mathvariant="normal">N</mi><mspace></mspace></mrow></math> vertex by construction.</p>
+
+<h2> <a name="extension" class="nolinkanchor">NOR, AND, NAND. XOR?</a> </h2>
+
+<p>We now have a way to represent wires, constants, NOT gates, and OR gates. Since this collection of operations is <a href="https://en.wikipedia.org/wiki/Functional_completeness" target="_blank">complete</a> for boolean computation, we can use it to reduce any boolean circuit to a graph coloring problem. We need not introduce anything more. Nevertheless, we will briefly explore graph gadgets for additional boolean gates. </p>
+
+<p>Let us begin with AND. Because the OR gadget introduced above is exactly equivalent to an OR gate (regardless of the gate's output value), we can easily produce a gadget for the AND gate using <a href="https://en.wikipedia.org/wiki/De_Morgan%27s_laws" target="_blank">De Morgan's Law</a>:</p>
+
+<div style="text-align:center;"><img src="img/gadget_unwrapped_AND.svg" style="width:360px;" /></div>
+
+<p>Similarly efficient gadgets for NOR and NAND can be derived from the OR and AND gadgets respectively by replacing the output vertex with the vertex corresponding to the complement of the output.</p>
+
+<p>Next, consider the circuit <math display="inline" style="display:inline math;"><mrow><mi>z</mi><mo>=</mo><mi>x</mi><mo>⊕︎</mo><mi>y</mi></mrow></math>, which contains a single XOR gate. Unfortunately, exhaustive search did not reveal an XOR gadget with 4 or fewer helper vertices and 17 or fewer edges. Searching any further rapidly becomes too computationally expensive. Instead, we will rewrite XOR in terms of NOT and OR gates, which gives us <math display="inline" style="display:inline math;"><mrow><mi>z</mi><mo>=</mo><mi>x</mi><mo>⊕︎</mo><mi>y</mi><mo>=</mo><mrow><mo fence="true" form="prefix" stretchy="false">(</mo><mover><mi>x</mi><mo stretchy="false" class="chr-sml wbk-sml-acc" style="math-depth:0;">‾</mo></mover><mo>∧</mo><mi>y</mi><mo fence="true" form="postfix" stretchy="false">)</mo></mrow><mo>∨</mo><mrow><mo fence="true" form="prefix" stretchy="false">(</mo><mi>x</mi><mo>∧</mo><mover><mi>y</mi><mo stretchy="false" class="chr-sml wbk-sml-acc" style="math-depth:0;">‾</mo></mover><mo fence="true" form="postfix" stretchy="false">)</mo></mrow><mo>=</mo><mo form="prefix" stretchy="false">¬</mo><mrow><mo fence="true" form="prefix" stretchy="false">(</mo><mi>x</mi><mo>∨</mo><mover><mi>y</mi><mo stretchy="false" class="chr-sml wbk-sml-acc" style="math-depth:0;">‾</mo></mover><mo fence="true" form="postfix" stretchy="false">)</mo></mrow><mo>∨</mo><mo form="prefix" stretchy="false">¬</mo><mrow><mo fence="true" form="prefix" stretchy="false">(</mo><mover><mi>x</mi><mo stretchy="false" class="chr-sml wbk-sml-acc" style="math-depth:0;">‾</mo></mover><mo>∨</mo><mi>y</mi><mo fence="true" form="postfix" stretchy="false">)</mo></mrow></mrow></math>. This rewriting introduces two intermediate wires (for the outputs of parenthesized expressions) and their complements, and when we use the above method to find an equivalent graph, that graph has 21 vertices (3 for the base colors, 1 for the output wire, 8 in total for the other 4 wires and their complements, and 9 helpers in total for 3 OR gates). Here is that graph:</p>
+
+<div style="text-align:center;"><img src="img/circuit_XOR_blank.svg" style="width:300px;" /></div>
+
+<h2> <a name="comparison" class="nolinkanchor">Related Work and Comparison to Other Approaches</a> </h2>
+
+<p>There are (so far as I know) two other approaches to showing the NP-completeness of 3-coloring. The first can be found in various online lecture notes for complexity and theory of computation courses, and <a href="https://cstheory.stackexchange.com/questions/17396/reference-for-np-hardness-of-3-colouring" target="_blank">seems to originate</a> in Stockmeyer's 1973 paper <a href="https://dl.acm.org/doi/10.1145/1008293.1008294" target="_blank"><em>Planar 3-colorability is Polynomial Complete</em></a>, which was the first to prove the NP-completeness of 3-coloring. It relies first on reducing any NP-language to 3SAT, and then demonstrating that the following graph gadget is equivalent to a single 3SAT clause <math display="inline" style="display:inline math;"><mrow><mi>w</mi><mo>∨</mo><mi>x</mi><mo>∨</mo><mi>y</mi><mo>=</mo><mn>1</mn></mrow></math>:</p>
+
+<div style="text-align:center;"><img src="img/trad_red.svg" style="width:450px;" /></div>
+
+<p>Multiple clauses can be constructed by reusing the vertices that correspond to the variables, and the variables can be inverted using the same technique for complements/NOT gates discussed <a href="#structure">above</a>. In this way, an entire 3SAT instance can be converted into an equivalent 3-coloring problem.</p>
+
+<p>It is tempting to think this gadget might be equivalent to a three-input OR gate with five helper vertices, if only we eliminate the edge connecting the output vertex <math display="inline" style="display:inline math;"><mi>z</mi></math> to the 0 vertex. Unfortunately, there is no such equivalence. Consider the case that <math display="inline" style="display:inline math;"><mrow><mi>w</mi><mo>=</mo><mi>z</mi><mo>=</mo><mn>0</mn></mrow></math> and <math display="inline" style="display:inline math;"><mrow><mi>x</mi><mo>=</mo><mi>y</mi><mo>=</mo><mn>1</mn></mrow></math>. Although this is an invalid assignment of variables for three-input OR, there is nevertheless a proper 3-coloring:</p>
+
+<div style="text-align:center;"><img src="img/trad_red_0110.svg" style="width:450px;" /></div>
+
+<p>It seems that the equality constraint between the output and 1 is <em>necessary</em> in Stockmeyer's 3SAT gadget, which means that it cannot be used to directly represent arbitrary circuits as graph-coloring problems. This motivates the OR gadget introduced above.</p>
+
+<p>The second prior approach was introduced recently by Güngör in his paper, <em><a href="https://arxiv.org/abs/2511.06326" target="_blank">A Systematic Study of Single-Anchor Logical Gadgets</a></em>. Whereas in the approach presented here, exactly one color maps to 0 and exactly one color maps to 1 (these are the <em>two</em> anchors), with all other colors mapping to no logical value at all, Güngör's approach maps one color to 0 (the <em>single</em> anchor), and all other colors to 1. Güngör develops gadgets for a many boolean gates, which are, as the author admits, somewhat larger and more complex than they might be in a two-anchor approach. Indeed, Güngör's OR gadget involves four helper vertices, whereas the one presented here requires only three. Moreover, the simplicity of a one-to-one mapping between vertex colors and wire values makes a two-anchor approach easy to teach and understand, even if, as Güngör claims, it is "unnatural from a graph-theoretic perspective."</p>
+
+</div>
+
+<div id='copyright'>&copy; 2026</div>
+</body>
+</html>
