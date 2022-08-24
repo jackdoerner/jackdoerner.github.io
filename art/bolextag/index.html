@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<title>BO&#8197;LE&#8196;XT&#8197;AG</title>
+
+<style>
+html,body {
+	background-color: #000000;
+	color:#FFFFFF;
+}
+
+a, a:visited, a:active, a:hover {
+	color:#FFFFFF;
+	text-decoration: none;
+}
+
+a:hover {
+	text-shadow:0 0 10px rgba(255,255,255,0.8);
+}
+
+.cover {
+	position: absolute;
+	background-color: #000000;
+	top:0;
+	left:0;
+	right:0;
+	bottom:0;
+}
+
+.cover > * {
+	display:block;
+  	position: absolute;
+  	top: 50%; left: 50%;
+  	transform: translate(-50%, -50%);
+  	font-size:48pt;
+  	font-family:"Helvetica Neue", "Helvetica","Arial", sans-serif;
+}
+
+#cover1 {
+	z-index:12;
+}
+
+#cover2 {
+	z-index:10;
+}
+
+#outerstage {
+	position:absolute;
+	left:0;
+	right:0;
+	top:0;
+	bottom:0;
+	overflow:hidden;
+}
+
+#stage {
+	width:100%;
+	position:absolute;
+	top:-200px;
+	bottom:-200px;
+	left:0;
+	right:0;
+	overflow-x:scroll;
+	overflow-y:hidden;
+	white-space: nowrap;
+}
+
+#stage > div {
+	width:45%;
+	height:100%;
+	display:inline-block;
+	position:relative;
+	left:0;
+}
+
+#stage > div::before {
+	content:"&nbsp;";
+	position:absolute;
+	left:0;
+	right:0;
+	top:0;
+	bottom:0;
+	display:block;
+	opacity: 0;
+	z-index: 2;
+}
+
+#stage > div > iframe {
+	height:100%;
+	margin-left: 2%;
+	margin-right: 2%;
+	width:96%;
+}
+</style>
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-GCYY1SD9GT"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-GCYY1SD9GT');
+</script>
+
+</head>
+<body>
+
+<div id='cover1' class='cover'>
+	<div>LOADING</div>
+</div>
+
+<div id='cover2' class='cover'>
+	<a href='#' id='playbutton'>&#9658;</a>
+</div>
+
+<div id="outerstage">
+	<div id="stage">
+		
+		<div>
+			<div id="player1"></div>
+		</div><div>
+			<div id="player2"></div>
+		</div><div>
+			<div id="player3"></div>
+		</div><div>
+			<div id="player4"></div>
+		</div>
+
+	</div>
+</div>
+
+<script>
+
+var videos = [
+	"Y7JxI52_wHI",
+	"2Bci1h9n5dM",
+	"JTlhnKme5iA",
+	"Cl3fp9GmQEg"
+];
+
+var stage = document.getElementById("stage");
+var offsets = [];
+var players = [];
+var readycounter = 0;
+var playingenabled = false;
+for (var ii = 0; ii < stage.children.length; ii++) {
+	offsets[ii] = 0;
+	players[ii] = {playerobj:null};
+}
+
+var apitag = document.createElement('script');
+apitag.src = "//www.youtube.com/iframe_api";
+document.getElementsByTagName('script')[0].parentNode.insertBefore(apitag, document.getElementsByTagName('script')[0]);
+
+function enablePlaying() {
+	document.getElementById('cover1').style.display = "none";
+	playingenabled = true;
+}
+
+function beginPlaying() {
+	for (var ii = 0; ii < players.length; ii++) {
+		players[ii].playerobj.playVideo();
+	}
+	document.getElementById('cover2').style.display = "none";
+	return false;
+}
+
+document.getElementById('playbutton').addEventListener("click", beginPlaying);
+document.getElementById('playbutton').addEventListener("tap", beginPlaying);
+
+function playerinterval() {
+	for (var ii = 0; ii < players.length; ii++) {
+		if (players[ii].playerobj.getDuration() > 0 && players[ii].playerobj.getDuration() - players[ii].playerobj.getCurrentTime() < 0.4) {
+			if (readycounter == players.length - 1) {
+				readycounter = 0;
+				players[ii].playerobj.pauseVideo();
+				players[ii].playerobj.seekTo(0,true);
+				setTimeout(function(){
+					for (var jj = 0; jj < players.length; jj++) players[jj].playerobj.playVideo();
+				}, 100);
+			} else {
+				players[ii].playerobj.pauseVideo();
+				players[ii].playerobj.seekTo(0,true);
+				readycounter += 1;
+			}
+		}
+	}
+}
+
+function onYouTubeIframeAPIReady() {
+	for (var ii = 0; ii < players.length; ii++) {
+		(function() {
+			var playerindex = ii;
+			players[ii].playerobj =  new YT.Player("player" + (ii + 1), {
+				playerVars : {
+					controls:0,
+					disablekb:1,
+					modestbranding:1,
+					playsinline:1,
+					showinfo:0,
+					rel:0,
+					autoplay:0
+				},
+				events: {
+					'onReady': function(event) {
+						event.target.mute();
+						event.target.loadVideoById(videos[playerindex]);
+					},
+					'onStateChange': function(event) {
+						if ((event.data == 1 || event.data == -1) && !playingenabled) {
+							if (readycounter == players.length -1) {
+								readycounter = 0;
+								enablePlaying();
+								setInterval(playerinterval, 100);
+							} else {
+								readycounter += 1;
+							}
+							players[playerindex].playerobj.mute();
+							players[playerindex].playerobj.pauseVideo();
+						}
+					}
+				}
+			});	
+		})();
+	}
+}
+
+stage.addEventListener("scroll", function(e){
+	var scrollrange = e.target.scrollWidth-e.target.offsetWidth;
+	var ow = e.target.children[0].offsetWidth;
+	if (e.target.scrollLeft < scrollrange * 0.1) {
+		var maxw = -1;
+		var maxii = -1;
+		var maxel = null;
+		for (var ii = 0; ii < e.target.children.length; ii++) {
+			var c = e.target.children[ii];
+			if ((offsets[ii] + ii) * ow > maxw) {
+				maxw = (offsets[ii] + ii) * ow;
+				maxel = c;
+				maxii = ii;
+			}
+			offsets[ii] += 1;
+			c.style.transform = "translateX(" +(offsets[ii]*ow)+ "px)";
+		}
+
+		offsets[maxii] = - maxii;
+		maxel.style.transform  = "translateX(" +(offsets[maxii]*ow)+ "px)";
+		
+		e.target.scrollLeft += ow;
+	} else if (e.target.scrollLeft > scrollrange * 0.9) {
+		var minw = Infinity;
+		var minii = -1;
+		var minel = null;
+		for (var ii = 0; ii < e.target.children.length; ii++) {
+			var c = e.target.children[ii];
+			if ((offsets[ii] + ii) * ow < minw) {
+				minw = (offsets[ii] + ii) * ow;
+				minel = c;
+				minii = ii;
+			}
+			offsets[ii] -= 1;
+			c.style.transform = "translateX(" +(offsets[ii]*ow)+ "px)";
+		}
+
+		offsets[minii] = (e.target.children.length - minii - 1);
+		minel.style.transform  = "translateX(" +(offsets[minii]*ow)+ "px)";
+		
+		e.target.scrollLeft -= ow;
+	}
+}, false);
+
+
+// Thanks MDN!
+(function() {
+    var throttle = function(type, name, obj) {
+        obj = obj || window;
+        var running = false;
+        var func = function() {
+            if (running) { return; }
+            running = true;
+             requestAnimationFrame(function() {
+                obj.dispatchEvent(new CustomEvent(name));
+                running = false;
+            });
+        };
+        obj.addEventListener(type, func);
+    };
+
+    /* init - you can init any event */
+    throttle("resize", "optimizedResize");
+})();
+
+window.addEventListener("optimizedResize", function() {
+    var ow = stage.children[0].offsetWidth;
+    for (var ii = 0; ii < stage.children.length; ii++) {
+    	stage.children[ii].style.transform = "translateX(" +(offsets[ii]*ow)+ "px)";
+    }
+});
+	
+</script>
+
+</body>
+</html>

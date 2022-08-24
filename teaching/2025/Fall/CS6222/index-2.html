@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<title>CS6222: Foundations of Cryptography (Fall 2025)</title>
+<link rel='stylesheet' type='text/css' href='../../../system/css/main.css'/>
+<link rel='stylesheet' type='text/css' href='../../../system/css/styles/onecolumn.css'/>
+<script type='text/javascript' src='../../../system/js/articlemain.js'></script>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-GCYY1SD9GT"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-GCYY1SD9GT');
+</script>
+
+<script type='text/javascript'>
+class DualRangeInput {
+    /**
+     * @param {HTMLInputElement} minel - The range input element for the minimum value
+     * @param {HTMLInputElement} maxel - The range input element for the maximum value
+     * @param {number} [precision=3] - The number of decimal places to round the mid value to, defaults to 3
+     */
+    constructor(minel, maxel, precision = 3) {
+        this.updateFloor = () => this.update('floor');
+        this.updateCeil = () => this.update('ceil');
+        this.minel = minel;
+        this.maxel = maxel;
+        this.precision = precision;
+        this.minel.addEventListener('input', this.updateCeil);
+        this.maxel.addEventListener('input', this.updateFloor);
+        this.minel.addEventListener('focus', this.updateCeil);
+        this.maxel.addEventListener('focus', this.updateFloor);
+        // Unfortunately Safari doesn't trigger focus on mousedown or touchstart
+        // like other browsers do, so we have to listen for those events as well
+        this.minel.addEventListener('mousedown', this.updateCeil);
+        this.maxel.addEventListener('mousedown', this.updateFloor);
+        this.minel.addEventListener('touchstart', this.updateCeil);
+        this.maxel.addEventListener('touchstart', this.updateFloor);
+        this.update();
+        this.minel.dataset.ready = 'true';
+        this.maxel.dataset.ready = 'true';
+    }
+    update(method = 'ceil') {
+        const thumbWidthVar = 'var(--dri-thumb-width)';
+        const min = parseFloat(this.minel.min);
+        const max = parseFloat(this.maxel.max);
+        const step = parseFloat(this.minel.step) || 1;
+        const minValue = parseFloat(this.minel.value);
+        const maxValue = parseFloat(this.maxel.value);
+        const midValue = (maxValue - minValue) / 2;
+        const mid = minValue + Math[method](midValue / step) * step;
+        const range = max - min;
+        const leftWidth = (((mid - min) / range) * 100).toFixed(this.precision);
+        const rightWidth = (((max - mid) / range) * 100).toFixed(this.precision);
+        this.minel.style.flexBasis = `calc(${leftWidth}% + ${thumbWidthVar})`;
+        this.maxel.style.flexBasis = `calc(${rightWidth}% + ${thumbWidthVar})`;
+        this.minel.max = mid.toFixed(this.precision);
+        this.maxel.min = mid.toFixed(this.precision);
+        const minFill = (minValue - min) / (mid - min) || 0;
+        const maxFill = (maxValue - mid) / (max - mid) || 0;
+        const minFillPercentage = (minFill * 100).toFixed(this.precision);
+        const maxFillPercentage = (maxFill * 100).toFixed(this.precision);
+        const minFillThumb = (0.5 - minFill).toFixed(this.precision);
+        const maxFillThumb = (0.5 - maxFill).toFixed(this.precision);
+        this.minel.style.setProperty('--dri-gradient-position', `calc(${minFillPercentage}% + (${minFillThumb} * ${thumbWidthVar}))`);
+        this.maxel.style.setProperty('--dri-gradient-position', `calc(${maxFillPercentage}% + (${maxFillThumb} * ${thumbWidthVar}))`);
+    }
+    destroy() {
+        this.minel.removeEventListener('input', this.updateFloor);
+        this.maxel.removeEventListener('input', this.updateCeil);
+        this.minel.removeEventListener('focus', this.updateFloor);
+        this.maxel.removeEventListener('focus', this.updateCeil);
+        this.minel.removeEventListener('mousedown', this.updateCeil);
+        this.maxel.removeEventListener('mousedown', this.updateFloor);
+        this.minel.removeEventListener('touchstart', this.updateCeil);
+        this.maxel.removeEventListener('touchstart', this.updateFloor);
+    }
+}
+</script>
+
+<script type='text/javascript'>
+function setup(imnum){
+  const minel = document.querySelector('#min_'+imnum);
+  const maxel = document.querySelector('#max_'+imnum);
+
+  new DualRangeInput(minel, maxel);
+
+  maxel.addEventListener('input', () => {
+    compareel.style.setProperty("--mask-width-one", maxel.value + "%");
+  });
+
+  minel.addEventListener('input', () => {
+    compareel.style.setProperty("--mask-width-two", minel.value + "%");
+  });
+
+  const compareel = document.querySelector("#compare_"+imnum);
+
+  compareel.style.setProperty("--mask-width-one", maxel.value + "%");
+  compareel.style.setProperty("--mask-width-two", minel.value + "%");
+}
+
+function start(){
+  setup(1)
+  setup(2)
+  setup(3)
+  setup(4)
+}
+
+window.onload = start;
+</script>
+</head>
+<body>
+
+<div id='topmenu' class='header hideOnEmbed'>
+  <div id='leftlinks'><a href='/'>Home</a>&bull;<a href='../../../'>Teaching</a></div>
+  <div id='rightlinks'><a id='toplink' href='#title'>Top of Page</a></div>
+</div>
+
+<div id='menuspacer' class='hideOnEmbed'>&nbsp;</div>
+
+<div class='oneColumn pleasantReading'>
+
+<h1 id='title'>CS6222: Foundations of Cryptography (Fall 2025)</h1>
+
+<h2> Status </h2>
+
+<p>The late-assignment policy of this class has officially changed. You all now have 14 extension days that you may use as you choose (up to 7 for a single homework) with no penalty. This page was last updated on September 17, 2025. The previous version of the class policies is available <a href="index-1.html">here</a>.</p>
+
+<h2>Table of Contents</h2>
+
+<ol>
+  <li> <a href="#logistics">People, Places, Materials, Communication</a> </li>
+  <li> <a href="#preamble">Preamble</a> </li>
+  <li> <a href="#prereqscoursework">Prerequesites and Coursework</a></li>
+  <li> <a href="#syllabus">Syllabus</a> </li>
+  <li> <a href="#lectures">Lectures</a> </li>
+  <li> <a href="#policies">Policies</a> </li>
+  <li> <a href="#moreresources">Additional Resources</a> </li>
+</ol>
+
+<h2> <a name="logistics" class="nolinkanchor">People, Places, Materials, Communication</a> </h2>
+
+<ul>
+  <li> <b>Instructor:</b> <a href="https://jackdoerner.net">Jack Doerner</a>. <b>Email:</b> jhd3pa at virgina dot edu. <b>Office:</b> Rice Hall 106. <b>Office Hours:</b> Fr 2:00pm - 3:00pm and by appointment.</li>
+  <li> <b>TA:</b> <a href="https://jinye-he.github.io/" target="_blank">Jinye He (Clara)</a>. <b>Email:</b> qfn5bh at virginia dot edu. <b>Office Hours:</b> Mo 3:45pm - 4:45pm in Rice Hall 442.</li>
+  <li> <b>Lecture Location:</b> Rice Hall 340.</li>
+  <li> <b>Lecture Time:</b> TuTh 2:00pm - 3:15pm.</li>
+  <li> <b>Primary Course Materials:</b> <ul>
+    <li><a href="http://www.cs.cornell.edu/courses/cs4830/2010fa/lecnotes.pdf" target="_blank">A Course in Cryptography</a> by Rafael Pass and abhi shelat. Abbreviated [Ps] on this site.</li>
+    <li><a href="https://www.cs.umd.edu/~jkatz/imc.html" target="_blank">Introduction to Modern Cryptography</a> by Jonathan Katz and Yehuda Lindell. The UVa Library provies free <a href="https://search.lib.virginia.edu/sources/uva_library/items/u10203454" target="_blank">online access</a>. Abbreviated [KL] on this site.</li>
+  </ul></li>
+  <li> <b>Coursework Submissions:</b> <a href="https://canvas.its.virginia.edu/courses/146961" target="_blank">generally via Gradesope (on Canvas)</a>, except for Scribe Notes, which should be emailed to the instructor directly.</li>
+  <li> <b>Online Discussions:</b> <a href="https://piazza.com/class/meub4nnyqa07ce/" target="_blank">Piazza</a>.<!--<a href="https://canvas.its.virginia.edu/courses/146961" target="_blank">to be held on Canvas</a>.--></li>
+  <li> <b>Contact Email:</b> cs6222f25 at jackdoerner dot net. This email forwards to both the instructor and the TA, who will do their best to respond in a timely fashion. Please try to use descriptive subject lines, and include the assignment number for any email that concerns a specific assignment. Especially urgent messages can be marked as such.</li>
+</ul>
+
+<h2> <a name="preamble" class="nolinkanchor">Preamble</a> </h2>
+
+<p>Cryptography is the science of communicating and computing in the presence of an adversary. It uses computational problems that cannot be solved efficiently (or so we believe) as tools to reason about and <em>limit</em> the adversary's power in such interactions. Although cryptography in some guise has fascinated people since ancient times, it has only become a rigorous scientific discipline in the last few decades. Today, it is concerned like no other discipline with rearranging dynamics of (digital) power, and the modern world relies upon it extensively. It protects the most sensitive national secrets and the embarrassing memes you send your friends, yet even the most fundamental question about cryptography remains open: <em>does it exist at all?</em>
+</p>
+
+<p>This course begins by exploring what kind of security properties are achievable using only probability and information theory, without restricting the adversary's computational power. It then explores the notion of computational hardness and the relationships between a number of fundamental definitions. Finally, it demonstrates the construction of advanced cryptosystems such as fully homomorphic encryption and zero-knowledge proofs using well-studied computational hardness assumptions.</p>
+
+<p><b>New Professor Disclaimer:</b> This is the very first course I have ever taught, and it is based upon a <a href="https://weikailin.github.io/cs6222/" target="_blank">previous version</a> taught by <a href="https://weikailin.github.io" target="_blank">Wei-Kai Lin</a>. It is likely that the content and structure of this course will change in minor ways over the semester. Such changes will always be made for the benefit of the students, and I will do my best to make it clear when they occur. Prior versions of this website will be retained for your reference. I am eager to hear your concerns and suggestions, which you may communicate to me via email or office hours, or anonymously by sliding a note under my office door. I will do my best to take them into account as the course proceeds. Most importantly, remember that my goal is to impart to you the joy of cryptography. This will be a challenging course, no matter what, but my hope is that you will also have fun, meet interesting people, and in some small way become enlightened.</p>
+
+<h2> <a name="prereqscoursework" class="nolinkanchor">Prerequesites and Coursework</a> </h2>
+
+<h3>Prerequesites</h3>
+
+<p> This course assumes an understanding of basic notions from the theory of computation and complexity theory, such as reductions, decision problems, NP-completeness, computational models (e.g. Turing Machines). It will also be useful to have a basic understanding of probability theory. In the UVa undergraduate program, these prerequesites are provided by CS3120 and APMA3100. Students taking this course should be mathematically mature and comfortable both reading and writing formal proofs. Mathematical notation (including potentially new or unfamiliar notation) will be used extensively, and all student work-products will be created using the <a href="https://en.wikipedia.org/wiki/LaTeX" target="_blank">LaTeX</a> typesetting system, for which no in-class training will be given.</p>
+
+<h3>Coursework Overview and Grade Breakdown</h3>
+
+<ul>
+  <li> (50%) Homeworks (4ish). </li>
+  <li> (15%) Scribe notes (1-2 depending upon the number of students). </li>
+  <li> (20%) Final project (presentation and report). </li>
+  <li> (15%) Final exam. </li>
+  <li> (10%, bonus) Quizzes, misc. </li>
+</ul>
+
+See also the <a href="https://uvacsadvising.org/policies.html#cs-department-grading-guidelines" target="_blank">CS department grading guidelines</a>.
+
+<h3>Homework</h3>
+
+<p>Every student must <em>individually</em> write and submit solutions to the homework problems assigned. Students are encouraged to discuss problems with one another and work toward solutions in small groups of their choosing (although you should begin by thinking about the problems on your own). Such groups need not be consistent between different homeworks or even different problems within a homework, but whenever any two students discuss a problem in any substantive way, they <em>must</em> include a written acknowledgement in their homework submissions. While there is no hard limit on discussion group size, groups should generally not be bigger than 4-5 students. The point of homework discussions is to help you understand the material: it is not acceptable to simply swap solutions, and every student should be able to orally explain every solution they submit. It is also permitted to discuss homework problems with people who are not currently in the class, provided a similar acknowledgement is made, but please note that discussion with people <em>outside</em> of the class may deprive people <em>inside</em> the class of your collaboration: therefore, discussion among classmates should be prioritized. If you think that the instructor or TA would refuse to answer a particular question, then you should not seek an answer to that question from any external person (on the other hand, you are free to collaboratively find answers to such questions with other students currently in the class). It is forbidden to seek direct answers to the problems from any person.</p>
+
+<p>Students are also welcome to read published literature or textbooks (or blog posts, or wikipedia, etc...) beyond what is presented or referenced in class, or read lecture notes or watch lecture recordings from other courses, but if this is done in the context of solving specific homework problems, then the sources <em>must</em> be cited in the submitted homework. Lectures, lecture notes, and primary course materials for <em>this</em> course do not need to be cited, nor do discussions that occur during lectures or office hours. Again, the point is to help you understand the material: please do not attempt to find ready-made solutions to the problems online.</p>
+
+<p>For information on the use of AI tools, please see the <a href="#policies">policies</a> section, below.
+
+<p><b>Formatting:</b> Homeworks are to be typeset using LaTeX and submitted as compiled PDFs. For each homework, a LaTeX template will be provided below. </p>
+
+<table style="width:100%;border:1px solid black; padding:5px; margin:0.5em 0;">
+  <tr>
+    <td> # </td> <td>Topics</td> <td>Problems</td> <td>Answer Template Download</td> <td>Overleaf Project</td> <td>Date Due</td>
+  </tr><tr>
+    <td colspan="6"><hr/></td>
+  </tr><tr>
+    <td> 1 </td> <td>Prelims, Perfect Security, OTP</td> <td> <a href="resources/homework/hw1/CS6222F25_hw1.pdf"  target="_blank">PDF Download</a> </td> <td> <a href="resources/homework/hw1/CS6222F25_hw1_template.zip"  target="_blank">Zip Download</a> </td> <td> <a href="https://www.overleaf.com/read/nwpdbggrvqxd#9ccc60" target="_blank">Here</a></td> <td>09/18 1:59pm</td>
+  </tr>
+</table>
+
+<h3>Scribe Notes</h3>
+
+<p>Each lecture requires at least one and at most two students to serve as scribes, and all students are required to scribe at least one class. The notes these students (collaboratively) produce will be posted publicly on this website as reference material for the rest of the class. Scribe notes must be typeset using LaTeX, using the template provided below, and the source files must be submitted to the instructor within one lecture week (i.e. at most two lectures) of the date the material was presented. Students are responsible for collaboratively scheduling their own scribing on a first-come-first-served basis, using the google spreadsheet linked in the course's <a href="https://canvas.its.virginia.edu/courses/146961" target="_blank">Canvas site</a>. This includes finding another student to cover if a student misses a class they are scheduled to scribe (obviously this doesn't apply in the case of e.g. unforseen medical emergencies).</p>
+
+<p><b>Formatting:</b> Scribe Notes should be typeset using <a href="resources/scribe_notes_template/lecture1.tex">this LaTeX template</a>, which also requires <a href="resources/scribe_notes_template/preamble.tex">this preamble</a> in order to compile. When the template and the preamble are compiled correctly, the result should be <a href="resources/scribe_notes_template/lecture1.pdf">this PDF</a>. This template is also available as a read-only <a href="https://www.overleaf.com/read/rgrybtgksbsf#64a768" target="_blank">overleaf project</a>.</p>
+
+<h3>Quizzes</h3>
+
+<p>From time to time there will be a small number of in-class quizzes. These quizzes will be short, and will typically feature problems similar to previous homework problems, but the difficulty will be tuned to ensure that they can be finished in the allotted time. Quizzes are non-collaborative by default, but in specific cases collaboration might be allowed.</p>
+
+<h3>Project</h3>
+
+<p>Students will complete a final project in small groups (maximum size depending upon the number of students enrolled, likely 2-4). All members of each group will receive the same grade, so long as all members contribute fully to the project. The project comprises reading a research paper in the area of cryptography, writing a 2-page summary, and briefly presenting the paper to the class during the final lectures. Each group will propose their research paper mid-semester. More details, including a list of suggested papers, will be provided at a later date.</p> 
+
+<h3>Exam</h3>
+
+<p>There will be a written, in-person final exam, during which no collaboration will be permitted. Students may bring a one page (double-sided, letter-size) reference sheet, but no other external resources are permitted.</p>
+
+<h2> <a name="syllabus" class="nolinkanchor">Syllabus (Tentative)</a> </h2>
+
+<h3> Topics (Almost) Certainly Covered: </h3>
+
+<ul>
+  <li> Perfect Security, One-Time Pads</li>
+  <li> Computational Indistinguishability </li>
+  <li> One-Way Functions (weak and strong), Pseudorandom Generators, Pseudorandom Functions </li>
+  <li> Hard-Core Bits </li>
+  <li> Universal Hashing, Leftover Hash Lemma, Randomness Extractors </li>
+  <li> Cryptographic Hashing </li>
+  <li> Message Authentication Codes </li>
+  <li> Symmetric-Key Encryption </li>
+  <li> Digital Signatures </li>
+  <li> Public-Key Encryption </li>
+  <li> Zero-Knowledge proofs </li>
+</ul>
+
+<h3> Topics Possibly Covered (Somewhat Time Dependent): </h3>
+
+<ul>
+  <li>Learning with Errors, Factoring, Discrete Logarithm, Other Cryptographic Assumptions</li>
+  <li>Homomorphic Encryption, Fully Homomorphic Encryption</li>
+  <li>Oblivious Transfer, Secure Multi-party Computation, Garbling</li>
+  <li>Private Information Retrieval, Oblivious Random Access Memory</li>
+  <li>Simulation-Based Security</li>
+</ul>
+
+<h2> <a name="lectures" class="nolinkanchor">Lectures</a> </h2>
+
+There will be at least 24 and at most 28 lectures (excluding final project presentation days). The following table will track the content and materials for each, and will be updated regularly as lectures occur and scribe notes become available. Unless otherwise noted, it should be assumed that scribe notes have been reviewed and edited by the instructor.
+
+<table style="width:100%;border:1px solid black; padding:5px; margin:0.5em 0;">
+  <tr>
+    <td> Date </td> <td>Topics</td> <td>References</td> <td>Scribe Notes</td> <td>Assignments</td>
+  </tr><tr>
+    <td colspan="5"><hr/></td>
+  </tr><tr>
+    <td> 08/26 </td> <td>Introduction, Scope, Security Definitions</td> <td>[Ps 1.1-1.3], [KL 1.1,1.2,1.4,2.1]</td> <td><a href="resources/slides/CS6222F25_lecture1_slides.pdf" target="_blank">Intro Slides</a></td> <td></td>
+  </tr><tr>
+    <td> 08/28 </td> <td>Perfect Security, One-Time Pads and their Limitations</td> <td>[Ps 1.3], [KL 2.1-2.3]</td> <td><a href="resources/scribe_notes/CS6222F25_lecture2_notes.pdf" target="_blank">John Berberian, Jr.</a></td> <td></td>
+  </tr><tr>
+    <td> 09/02 </td> <td>Efficient Computation, Non-Uniformity, Computational Indistinguishability</td> <td>[Ps 2.1,3.1-3.2], [KL 3.1-3.3]</td> <td><a href="resources/scribe_notes/CS6222F25_lecture3_notes.pdf" target="_blank">Christopher Asuncion</a></td> <td>HW1 Out</td>
+  </tr><tr>
+    <td> 09/04 </td> <td>Lemmas about Computational Indistinguishability, Pseudorandom Generators</td> <td>[Ps 3.1-3.3], [KL 3.1-3.3]</td> <td><a href="resources/scribe_notes/CS6222F25_lecture4_notes.pdf" target="_blank">Sabrina Lopez</a></td> <td></td>
+  </tr><tr>
+    <td> 09/09 </td> <td>PRG Expansion</td> <td>[Ps 3.3], [KL 3.3]</td> <td></td> <td></td>
+  </tr><tr>
+    <td> 09/11 </td> <td>Pseudorandom Functions</td> <td>[Ps 3.7,3.8], [KL 3.5]</td> <td></td> <td></td>
+  </tr><tr>
+    <td> 09/16 </td> <td>Chosen Plaintext Attacks; CPA-Secure Encryption</td> <td>[Ps 3.9,7.1.1,7.1.2] [KL 3.2,3.4,3.5]</td> <td></td> <td></td>
+  </tr><tr>
+    <td> 09/18 </td> <td> PRFs from PRGs </td> <td>[Ps 3.8], [KL 8.5] </td> <td></td> <td> HW1 Due</td>
+  </tr><tr>
+    <td colspan="5"><hr/></td>
+  </tr><tr>
+    <td> 10/14 </td> <td>Reading Day. No Class.</td> <td> </td> <td></td> <td></td>
+  </tr><tr>
+    <td> 11/04 </td> <td>Election Day. No Class.</td> <td> </td> <td></td> <td></td>
+  </tr>
+  <tr>
+    <td> 11/27 </td> <td>Thanksgiving. No Class.</td> <td> </td> <td></td> <td></td>
+  </tr>
+</table>
+
+<h2> <a name="policies" class="nolinkanchor">Policies</a> </h2>
+
+<h3> Honor System </h3>
+
+<p>Students must adhere to <a href="https://honor.virginia.edu/academic-fraud" target="_blank">the UVa honor code</a>. It is considered a violation of the honor code if any of the following occur:</p>
+
+<ul>
+  <li>A student copies text directly from any source. This constitutes <a href="https://honor.virginia.edu/plagiarism-supplement" target="_blank">plagiarism</a>.</li>
+  <li>A student uses external materials in the context of a specific homework problem without citation, or discusses homework problems without acknowledgement (the instructor recognizes that it is sometimes difficult to draw the line with respect to what materials use or discussions are substantive, and expects nothing more or less than a good-faith effort to perform correct and thorough attribution).</li>
+  <li> A student submits work that they are unable to explain orally (the instructor recognizes that oral explanations may be difficult, especially without preparation, and perfection is not expected).</li>
+  <li> A student archives or publishes non-public course materials (e.g. exam questions) without explicit instructor permission.</li>
+</ul>
+
+<h3> Generative AI, LLMs, ChatGPT, etc. </h3>
+
+<p><em>It is always forbidden to input any substantive portion of any assignment into any kind of AI resource, and it is always fobidden to incorporate any substantive portion of an AI resources's output into your answers, even if you paraphrase it or rewrite it in your own words. Inappropriate use of AI is an honor violation, and if you are uncertain, do not use it!</em></p>
+
+<p>As a general principle, if you think that the instructor might refuse to perform a certain task for you or answer a certain question during office hours, then you should definitely not be asking an AI resource to perform the same task or answer the same question. Even if the instructor <em>would</em> answer a particular question, asking an AI might be a bad idea: for example, if you are stuck on a proof, an instructor might give you a hint or suggest a reading, whereas an AI might spit out a full proof (even if you ask it not to do that)!</p>
+
+<p>The above restriction is not an absolute ban on the use of AI resources. You may find them useful for helping you to learn LaTeX (but you should generally be writing the latex code yourself), helping you review the details of a proof you saw in class or understand a concept that we covered, helping you to find additional reading material, etc. In almost every case, it is preferable for you to attend office hours or talk to your peers. Beware of confidently incorrect AI resources! No partial credit will be given because an AI taught you wrong!</p>
+
+<p>In any case, if you use an AI resource in the context of solving a particular homework problem or completing the final project, you must acknowledge the usage as you would any other material and provide a link to the <em>exact</em> transcript it produced. If you cannot provide a transcript, then you may not use the AI tool. Simple search queries (e.g. searching for LaTeX commands or looking up the dictionary-definition of a word) are exempt from this rule. If you are unsure whether your query is exempt, then you should document it!</p>
+
+<h3> Recordings and Live Video Feeds </h3>
+
+<p>Lectures will not be recorded by default, nor will a live video feed be available by default. Students are expected to attend lectures in person whenever possible, although attendance will not be tracked. If a student wishes to record a lecture for their own benefit or the benefit of other students currently in the class, this will be considered on a case-by-case basis, but it always requires <em>explicit, advance permission</em>, and public posting of such videos is forbidden.</p>
+
+<h3> Accommodations and Illness </h3>
+
+<p>If a student feels that they need special accommodation (for religious, medical, family, academic travel, or other reasons) or support, they should reach out to the instructor. All good-faith, non-burdensome requests will be considered.</p>
+
+<p>If a student is sick, they are encouraged to stay home and rest, even on days when in-class quizzes are administered. Such absences will never be penalized. If a quiz or assignment is missed or delayed due to illness, the student should contact the instructor as soon as reasonably possible.</p>
+
+<p>In general, if unusual or extenuating circumstances affect a student's ability to participate according to the requirements and schedule laid out here, accomodations can be made. Please contact the instructor if such a situation occurs.</p>
+
+<h3> Late Assignments </h3>
+
+<em>This policy was updated on September 17, 2025. The previous version is available <a href="index-1.html" target="_blank">here</a>.</em>
+
+<p> The following policy applies to situations in which there are no extenuating circumstances and no specific alternative policy has been established.</p>
+
+<p> In general, homeworks will be due at the beginning of a particular class. Every student has 14 penalty-free extension days, of which at most 7 can be applied toward any particular assignment. Students can allocate these days as they choose without notifying the instructor in advance, and the total number expended will be calculated according to the time that homeworks are received. 7 days after each homework is due, solutions may be discussed in class by the instructor. If a particular problem is solved in class, then no points will be awarded for that problem afterward.
+Otherwise, homeworks turned in past the automatic extension limit will have their grades scaled by 50%.</p>
+
+<p> If a particular homework due date is excessively burdensome for a large number of students (this could be due to publication deadlines, for example), the instructor should be made aware of this fact in advance so that adjustments can be made.</p>
+
+<h3> Office Hours </h3>
+
+<p>If no students arrive within the first 15 minutes of a session, and no students email in advance to indicate they will arrive later in the scheduled timeframe, then the instructor and TA reserve the right to end office hours early and go home. If more students arrive than will comfortably fit in the room, students may be asked to wait outside and attend office hours in shifts. We ask in the latter case for both patience while you wait, and expedience once it is your turn.</p>
+
+<h2> <a name="moreresources" class="nolinkanchor">Additional Resources</a> </h2>
+
+<p>These extra materials might help you on your way. Note that there may be discrepancies in notation, ordering of concepts, and even definitions! Note that if you consult these in order to solve a specific homework problem, you should cite them.</p>
+
+<h3> Free Online Resources </h3>
+
+<ul>
+  <li> <a href="https://weikailin.github.io/cs6222/" target="_blank">Previous Course Website (Fall 2024)</a> by Wei-Kai Lin. </li>
+  <li> <a href="https://mit6875.github.io/" target="_blank">MIT Course Notes</a> by Vinod Vaikuntanathan. </li>
+  <li> <a href="https://intensecrypto.org/public/index.html" target="_blank">Harvard Course Notes</a> by Boaz Barak.</li>
+  <li> <a href="https://joyofcryptography.com/" target="_blank"> The Joy of Cryptography</a>, a textbook by Mike Rosulek.</li>
+  <li> <a href="https://toc.cryptobook.us/book.pdf" target="_blank">A Graduate Course in Applied Cryptography</a>, a textbook by Dan Boneh and Victor Shoup.</li>
+  <li> <a href="https://people.seas.harvard.edu/~salil/pseudorandomness/pseudorandomness-published-Dec12.pdf" target="_blank">Pseudorandomness</a>, a textbook by Salil Vadhan.</li>
+  <li> <a href="https://eprint.iacr.org/2016/046.pdf" target="_blank">How To Simulate It - A Tutorial on the Simulation Proof Technique</a>, by Yehuda Lindell.</li>
+  <li> <a href="https://www.cs.virginia.edu/~evans/pragmaticmpc/pragmaticmpc.pdf" target="_blank">A Pragmatic Introduction to Secure Multi-Party Computation</a>, a textbook by David Evans, Vladimir Kolesnikov, and Mike Rosulek.</li>
+  <li> <a href="https://bitbucket.org/jackdoerner/cryptonomicon/raw/master/cryptonomicon.pdf" target="_blank">The Cryptonomicon</a> by your instructor, Jack Doerner. This is an index of definitions and assumptions that I compiled when I took <em>my</em> first graduate cryptography class, long ago. While it is far from exhaustive, it contains many definitions not covered in this class, and includes citations wherever possible. Note that this document may very well contain errors (and if you find one, I would love to know about it). If you find something useful in this document, you should probably follow the citations to the original source. Also, another unnamed professor doubts how many of you read this whole web-page thoroughly. I believe in you. Let me know if you're reading this.
+</ul>
+
+<h3> Physical Textbooks (Available Online via UVa) </h3>
+
+<ul>
+  <li> <a href="https://www.wisdom.weizmann.ac.il/~oded/foc-book.html" target="_blank">Foundations of Cryptography</a> by Oded Goldreich. A very thorough work that takes no shortcuts, considered by many to be the standard among reference materials for cryptography. The UVa library provides online access to Volumes <a href="https://search.lib.virginia.edu/sources/uva_library/items/u8631726" target="_blank">One</a> and <a href="https://search.lib.virginia.edu/sources/uva_library/items/u8631685" target="_blank">Two</a>.</li>
+</ul>
+
+<h3> Interesting Readings of Debatable Relevance to this Course </h3>
+
+<ul>
+  <li> <a href="https://pages.cs.wisc.edu/~mkowalcz/628.pdf" target="_blank">How to Explain Zero Knowledge Protocols to Your Children</a>, by the Quisquater and Guillou families, and translated by Tom Berson. A mini-lesson for your inner child.</li>
+  <li> <a href="https://www.karlin.mff.cuni.cz/~krajicek/ri5svetu.pdf" target="_blank">A Personal View of Average-Case Complexity</a> by Russel Impagliazzo, which discusses implications of the existence or non-existence of fundamental cryptographic primitives.</li>
+  <li> <a href="https://en.wikipedia.org/wiki/Limits_of_computation" target="_blank">Some physical limits on how much computation we can do</a>.
+  <li> <a href="https://www.wisdom.weizmann.ac.il/~oded/essays.html" target="_blank">Goldreich's Essays</a> on various topics. Of particular note: <a href="https://www.wisdom.weizmann.ac.il/~oded/on-proofs.html" target="_blank">why you should learn to prove theorems in the age of AI theorem provers.</a> </li>
+  <li> <a href="https://www.youtube.com/live/Ygq9ci0GFhA" target="_blank"> Crypto for the People (video)</a>, a perspective on Cryptography by Seny Kamara.</li>
+  <li> <a href="https://eprint.iacr.org/2015/1162.pdf" target="_blank"> The Moral Character of Cryptographic Work</a>, an essay by Phillip Rogaway.</li>
+</ul>
+
+<h3> Additional Interesting Readings of Definite Irrelevance to this Course </h3>
+
+<ul>
+  <li> <a href="https://press.uchicago.edu/ucp/books/book/chicago/W/bo3616369.html" target="_blank"> Wittgenstein’s Lectures on the Foundations of Mathematics, Cambridge, 1939</a> by Cora Diamond. Philosophy is like unravelling a ball of wool.</li>
+  <li> Theoretical Computer Science Perspectives on <a href="https://arxiv.org/pdf/2011.09850" target="_blank">consciousness</a> and <a href="https://arxiv.org/pdf/2206.13942" target="_blank">free will</a> by the Blum family. In which Turing machines are cursed with feelings.</li>
+</ul>
+
+<h3> How to Find Current Research in Cryptography </h3>
+
+<p> Most current research in the field of cryptography is distributed for free online via the <a href="https://eprint.iacr.org/" target="_blank">IACR eprint server</a>. If a particular paper is available in multiple places, then the IACR eprint version will typically be the most complete and up-to-date. In the rare case that a paper is not available on eprint, it may be accessible via some other online archive, or failing that, you can email the authors directly and ask them for a copy.</p>
+
+</div>
+
+<div id='copyright'>&copy; 2025</div>
+</body>
+</html>
