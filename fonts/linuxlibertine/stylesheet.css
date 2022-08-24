@@ -1,0 +1,60 @@
+@font-face {
+    font-family: 'Linux Libertine';
+    src: url('linlibertine_r-webfont.eot');
+    src: url('linlibertine_r-webfont.eot?#iefix') format('embedded-opentype'),
+         url('linlibertine_r-webfont.woff2') format('woff2'),
+         url('linlibertine_r-webfont.woff') format('woff'),
+         url('linlibertine_r-webfont.ttf') format('truetype'),
+         url('linlibertine_r-webfont.svg#linux_libertine_oregular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+
+
+
+@font-face {
+    font-family: 'Linux Libertine';
+    src: url('linlibertine_rb-webfont.eot');
+    src: url('linlibertine_rb-webfont.eot?#iefix') format('embedded-opentype'),
+         url('linlibertine_rb-webfont.woff2') format('woff2'),
+         url('linlibertine_rb-webfont.woff') format('woff'),
+         url('linlibertine_rb-webfont.ttf') format('truetype'),
+         url('linlibertine_rb-webfont.svg#linux_libertine_obold') format('svg');
+    font-weight: bold;
+    font-style: normal;
+
+}
+
+
+
+
+@font-face {
+    font-family: 'Linux Libertine';
+    src: url('linlibertine_rbi-webfont.eot');
+    src: url('linlibertine_rbi-webfont.eot?#iefix') format('embedded-opentype'),
+         url('linlibertine_rbi-webfont.woff2') format('woff2'),
+         url('linlibertine_rbi-webfont.woff') format('woff'),
+         url('linlibertine_rbi-webfont.ttf') format('truetype'),
+         url('linlibertine_rbi-webfont.svg#linux_libertine_obold_italic') format('svg');
+    font-weight: bold;
+    font-style: italic;
+
+}
+
+
+
+
+@font-face {
+    font-family: 'Linux Libertine';
+    src: url('linlibertine_ri-webfont.eot');
+    src: url('linlibertine_ri-webfont.eot?#iefix') format('embedded-opentype'),
+         url('linlibertine_ri-webfont.woff2') format('woff2'),
+         url('linlibertine_ri-webfont.woff') format('woff'),
+         url('linlibertine_ri-webfont.ttf') format('truetype'),
+         url('linlibertine_ri-webfont.svg#linux_libertine_oitalic') format('svg');
+    font-weight: normal;
+    font-style: italic;
+
+}

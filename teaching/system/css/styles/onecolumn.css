@@ -1,0 +1,8 @@
+.oneColumn {
+	width:calc(100% - 20px);
+	max-width:1024px;
+	margin:0 auto;
+	border-spacing:0;
+	border-collapse: separate;
+	padding:0px 10px;
+}

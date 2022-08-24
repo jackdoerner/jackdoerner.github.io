@@ -1,0 +1,12 @@
+@font-face {
+    font-family: 'Linux Biolinum';
+    src: url('linbiolinum_rb-webfont.eot');
+    src: url('linbiolinum_rb-webfont.eot?#iefix') format('embedded-opentype'),
+         url('linbiolinum_rb-webfont.woff2') format('woff2'),
+         url('linbiolinum_rb-webfont.woff') format('woff'),
+         url('linbiolinum_rb-webfont.ttf') format('truetype'),
+         url('linbiolinum_rb-webfont.svg#linux_biolinum_obold') format('svg');
+    font-weight: bold;
+    font-style: normal;
+
+}

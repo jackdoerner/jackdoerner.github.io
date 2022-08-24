@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<title>Mixing Rodinal and Xtol</title>
+<link rel='stylesheet' type='text/css' href='../../../system/css/main.css'/>
+<link rel='stylesheet' type='text/css' href='../../../system/css/styles/onecolumn.css'/>
+<script type='text/javascript' src='../../../system/js/articlemain.js'></script>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-GCYY1SD9GT"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-GCYY1SD9GT');
+</script>
+
+
+<style>
+.dual-range-input {
+  --dri-height: 1.5rem;
+  --dri-thumb-width: 1.25rem;
+  --dri-thumb-height: 1.25rem;
+  --dri-thumb-color: #ddd;
+  --dri-thumb-hover-color: #a8d5ff;
+  --dri-thumb-active-color: #4eaaff;
+  --dri-thumb-border-color: rgba(0, 0, 0, 0.1);
+  --dri-thumb-border-hover-color: var(--dri-thumb-border-color);
+  --dri-thumb-border-active-color: var(--dri-thumb-border-color);
+  --dri-thumb-border-radius: 1rem;
+  --dri-thumb-border-width: 1px;
+  --dri-track-height: 0.25rem;
+  --dri-track-border-radius: 1rem;
+  --dri-track-color: #ccc;
+  --dri-track-filled-color: #0084ff;
+  display: flex;
+  height: var(--dri-height);
+  max-width: 100%;
+  width: 100%;
+  box-sizing: border-box;
+  padding-inline-end: calc(var(--dri-thumb-width) * 2);
+}
+.dual-range-input:has(input:focus-visible) {
+  outline: 2px solid var(--dri-thumb-active-color);
+  outline-offset: 4px;
+  border-radius: 2px;
+}
+.dual-range-input input {
+  -webkit-tap-highlight-color: transparent;
+  -webkit-appearance: none;
+  appearance: none;
+  background: none;
+  border-radius: 0;
+  flex-basis: calc(50% + var(--dri-thumb-width));
+  flex-shrink: 0;
+  font-size: inherit;
+  height: 100%;
+  margin: 0;
+  min-width: var(--dri-thumb-width);
+  outline: none;
+}
+.dual-range-input input::-moz-range-track {
+  background-color: var(--dri-track-color);
+  background-repeat: no-repeat;
+  box-sizing: border-box;
+  height: var(--dri-track-height);
+}
+.dual-range-input input:first-child::-moz-range-track {
+  border-start-start-radius: var(--dri-track-border-radius);
+  border-end-start-radius: var(--dri-track-border-radius);
+  background-image: linear-gradient(to right, var(--dri-track-color) var(--dri-gradient-position), var(--dri-track-filled-color) var(--dri-gradient-position));
+}
+[dir=rtl] .dual-range-input input:first-child::-moz-range-track {
+  background-image: linear-gradient(to left, var(--dri-track-color) var(--dri-gradient-position), var(--dri-track-filled-color) var(--dri-gradient-position));
+}
+.dual-range-input input:last-child::-moz-range-track {
+  border-start-end-radius: var(--dri-track-border-radius);
+  border-end-end-radius: var(--dri-track-border-radius);
+  background-image: linear-gradient(to right, var(--dri-track-filled-color) var(--dri-gradient-position), var(--dri-track-color) var(--dri-gradient-position));
+}
+[dir=rtl] .dual-range-input input:last-child::-moz-range-track {
+  background-image: linear-gradient(to left, var(--dri-track-filled-color) var(--dri-gradient-position), var(--dri-track-color) var(--dri-gradient-position));
+}
+.dual-range-input input::-moz-range-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  background-color: var(--dri-thumb-color);
+  border-radius: var(--dri-thumb-border-radius);
+  border: var(--dri-thumb-border-width) solid var(--dri-thumb-border-color);
+  box-shadow: none;
+  box-sizing: border-box;
+  height: var(--dri-thumb-height);
+  width: var(--dri-thumb-width);
+  max-width: 99.99%;
+}
+.dual-range-input input:not([data-ready=true])::-moz-range-thumb {
+  opacity: 0;
+}
+.dual-range-input input:hover::-moz-range-thumb {
+  background-color: var(--dri-thumb-hover-color);
+  border-color: var(--dri-thumb-border-hover-color);
+}
+.dual-range-input input:active::-moz-range-thumb {
+  background-color: var(--dri-thumb-active-color);
+  border-color: var(--dri-thumb-border-active-color);
+}
+.dual-range-input input:focus-visible::-moz-range-thumb {
+  background-color: var(--dri-thumb-active-color);
+  border-color: var(--dri-thumb-border-active-color);
+}
+.dual-range-input input::-webkit-slider-runnable-track {
+  background-color: var(--dri-track-color);
+  background-repeat: no-repeat;
+  box-sizing: border-box;
+  height: var(--dri-track-height);
+}
+.dual-range-input input:first-child::-webkit-slider-runnable-track {
+  border-start-start-radius: var(--dri-track-border-radius);
+  border-end-start-radius: var(--dri-track-border-radius);
+  background-image: linear-gradient(to right, var(--dri-track-color) var(--dri-gradient-position), var(--dri-track-filled-color) var(--dri-gradient-position));
+}
+[dir=rtl] .dual-range-input input:first-child::-webkit-slider-runnable-track {
+  background-image: linear-gradient(to left, var(--dri-track-color) var(--dri-gradient-position), var(--dri-track-filled-color) var(--dri-gradient-position));
+}
+.dual-range-input input:last-child::-webkit-slider-runnable-track {
+  border-start-end-radius: var(--dri-track-border-radius);
+  border-end-end-radius: var(--dri-track-border-radius);
+  background-image: linear-gradient(to right, var(--dri-track-filled-color) var(--dri-gradient-position), var(--dri-track-color) var(--dri-gradient-position));
+}
+[dir=rtl] .dual-range-input input:last-child::-webkit-slider-runnable-track {
+  background-image: linear-gradient(to left, var(--dri-track-filled-color) var(--dri-gradient-position), var(--dri-track-color) var(--dri-gradient-position));
+}
+.dual-range-input input::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  background-color: var(--dri-thumb-color);
+  border-radius: var(--dri-thumb-border-radius);
+  border: var(--dri-thumb-border-width) solid var(--dri-thumb-border-color);
+  box-shadow: none;
+  box-sizing: border-box;
+  height: var(--dri-thumb-height);
+  width: var(--dri-thumb-width);
+  margin-top: calc(var(--dri-track-height) / 2);
+  transform: translateY(-50%);
+}
+.dual-range-input input:not([data-ready=true])::-webkit-slider-thumb {
+  opacity: 0;
+}
+.dual-range-input input:hover::-webkit-slider-thumb {
+  background-color: var(--dri-thumb-hover-color);
+  border-color: var(--dri-thumb-border-hover-color);
+}
+.dual-range-input input:active::-webkit-slider-thumb {
+  background-color: var(--dri-thumb-active-color);
+  border-color: var(--dri-thumb-border-active-color);
+}
+.dual-range-input input:focus-visible::-webkit-slider-thumb {
+  background-color: var(--dri-thumb-active-color);
+  border-color: var(--dri-thumb-border-active-color);
+}
+</style>
+
+<style>
+.compare {
+  --mask-width-one: 50%;
+  --handle-size: 32px;
+
+  position: relative;
+  border: 1px solid rgb(0 0 0 / 0.05);
+  overflow:hidden;
+}
+
+.compare__image-one {
+  width: 100%;
+  display: block;
+}
+
+.compare__mask-one {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  z-index: 1;
+  background: white;
+  overflow: hidden;
+  width: var(--mask-width-one);
+}
+
+.compare .llabel {
+  position:absolute;
+  right:0px;
+  margin-right: 10px;
+  bottom:10px;
+  color:white;
+  text-shadow: 0px 0px 5px black;
+}
+
+.compare .mlabel {
+  position:absolute;
+  right: 0px;
+  margin-right:10px;
+  bottom:10px;
+  color:white;
+  text-shadow: 0px 0px 5px black;
+}
+
+.compare .rlabel {
+  position:absolute;
+  right:0px;
+  margin-right: 10px;
+  bottom:10px;
+  color:white;
+  text-shadow: 0px 0px 5px black;
+}
+
+.compare__image-two {
+  height: 100%;
+  width: auto;
+}
+
+.compare__mask-two {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  z-index: 1;
+  background: white;
+  overflow: hidden;
+  width: var(--mask-width-two);
+}
+
+.compare__image-three {
+  height: 100%;
+  width: auto;
+}
+
+.sbs {
+  text-align:justify;
+  overflow:hidden;
+}
+
+.sbs_three {
+  display:inline-block;
+  position:relative;
+  width:33%;
+}
+
+.sbs_three .label {
+  position:absolute;
+  bottom:10px;
+  right:10px;
+  color:white;
+  text-shadow: 0px 0px 5px black;
+}
+
+.sbs_three img {
+  width:100%;
+}
+</style>
+
+<script type='text/javascript'>
+class DualRangeInput {
+    /**
+     * @param {HTMLInputElement} minel - The range input element for the minimum value
+     * @param {HTMLInputElement} maxel - The range input element for the maximum value
+     * @param {number} [precision=3] - The number of decimal places to round the mid value to, defaults to 3
+     */
+    constructor(minel, maxel, precision = 3) {
+        this.updateFloor = () => this.update('floor');
+        this.updateCeil = () => this.update('ceil');
+        this.minel = minel;
+        this.maxel = maxel;
+        this.precision = precision;
+        this.minel.addEventListener('input', this.updateCeil);
+        this.maxel.addEventListener('input', this.updateFloor);
+        this.minel.addEventListener('focus', this.updateCeil);
+        this.maxel.addEventListener('focus', this.updateFloor);
+        // Unfortunately Safari doesn't trigger focus on mousedown or touchstart
+        // like other browsers do, so we have to listen for those events as well
+        this.minel.addEventListener('mousedown', this.updateCeil);
+        this.maxel.addEventListener('mousedown', this.updateFloor);
+        this.minel.addEventListener('touchstart', this.updateCeil);
+        this.maxel.addEventListener('touchstart', this.updateFloor);
+        this.update();
+        this.minel.dataset.ready = 'true';
+        this.maxel.dataset.ready = 'true';
+    }
+    update(method = 'ceil') {
+        const thumbWidthVar = 'var(--dri-thumb-width)';
+        const min = parseFloat(this.minel.min);
+        const max = parseFloat(this.maxel.max);
+        const step = parseFloat(this.minel.step) || 1;
+        const minValue = parseFloat(this.minel.value);
+        const maxValue = parseFloat(this.maxel.value);
+        const midValue = (maxValue - minValue) / 2;
+        const mid = minValue + Math[method](midValue / step) * step;
+        const range = max - min;
+        const leftWidth = (((mid - min) / range) * 100).toFixed(this.precision);
+        const rightWidth = (((max - mid) / range) * 100).toFixed(this.precision);
+        this.minel.style.flexBasis = `calc(${leftWidth}% + ${thumbWidthVar})`;
+        this.maxel.style.flexBasis = `calc(${rightWidth}% + ${thumbWidthVar})`;
+        this.minel.max = mid.toFixed(this.precision);
+        this.maxel.min = mid.toFixed(this.precision);
+        const minFill = (minValue - min) / (mid - min) || 0;
+        const maxFill = (maxValue - mid) / (max - mid) || 0;
+        const minFillPercentage = (minFill * 100).toFixed(this.precision);
+        const maxFillPercentage = (maxFill * 100).toFixed(this.precision);
+        const minFillThumb = (0.5 - minFill).toFixed(this.precision);
+        const maxFillThumb = (0.5 - maxFill).toFixed(this.precision);
+        this.minel.style.setProperty('--dri-gradient-position', `calc(${minFillPercentage}% + (${minFillThumb} * ${thumbWidthVar}))`);
+        this.maxel.style.setProperty('--dri-gradient-position', `calc(${maxFillPercentage}% + (${maxFillThumb} * ${thumbWidthVar}))`);
+    }
+    destroy() {
+        this.minel.removeEventListener('input', this.updateFloor);
+        this.maxel.removeEventListener('input', this.updateCeil);
+        this.minel.removeEventListener('focus', this.updateFloor);
+        this.maxel.removeEventListener('focus', this.updateCeil);
+        this.minel.removeEventListener('mousedown', this.updateCeil);
+        this.maxel.removeEventListener('mousedown', this.updateFloor);
+        this.minel.removeEventListener('touchstart', this.updateCeil);
+        this.maxel.removeEventListener('touchstart', this.updateFloor);
+    }
+}
+</script>
+
+<script type='text/javascript'>
+function setup(imnum){
+  const minel = document.querySelector('#min_'+imnum);
+  const maxel = document.querySelector('#max_'+imnum);
+
+  new DualRangeInput(minel, maxel);
+
+  maxel.addEventListener('input', () => {
+    compareel.style.setProperty("--mask-width-one", maxel.value + "%");
+  });
+
+  minel.addEventListener('input', () => {
+    compareel.style.setProperty("--mask-width-two", minel.value + "%");
+  });
+
+  const compareel = document.querySelector("#compare_"+imnum);
+
+  compareel.style.setProperty("--mask-width-one", maxel.value + "%");
+  compareel.style.setProperty("--mask-width-two", minel.value + "%");
+}
+
+function start(){
+  setup(1)
+  setup(2)
+  setup(3)
+  setup(4)
+}
+
+window.onload = start;
+</script>
+</head>
+<body>
+
+<div id='topmenu' class='header hideOnEmbed'>
+  <div id='leftlinks'><a href='/'>Home</a>&bull;<a href='../../../'>Exposition</a></div>
+  <div id='rightlinks'><a id='toplink' href='#title'>Top of Page</a></div>
+</div>
+
+<div id='menuspacer' class='hideOnEmbed'>&nbsp;</div>
+
+<div class='oneColumn pleasantReading'>
+
+<h1>Mixing Rodinal and Xtol</h1>
+
+<p>One can find on the internet many suggestions that mixing Kodak <a href="https://en.wikipedia.org/wiki/Xtol" target="_blank">Xtol</a> with Adox <a href="https://en.wikipedia.org/wiki/Rodinal" target="_blank">Rodinal</a> yields a film developer with the advantages of both. There are, however, few high-quality sample shots, and I was not able to find any direct comparisons of the three processes. This short article will supply such a comparison.</p>
+
+<p> Thanks to <a href="https://ethanrathbun.com/" target="_blank">Ethan Rathbun</a> for serving as a model. </p>
+
+<h2>Method</h2>
+
+<p>Using a single 24-shot roll of 35mm Kodak Tri-X 400, I shot three (nearly) identical sets of five pictures on a sunny evening. Each photograph was spot-metered at ISO 800, from the center of the captured frame. All were taken using a Leica Summilux-R 50mm mounted to a Leica R6, and the shutter was set consistently to 1/1000.</p>
+
+<p>Before developing, I cut the film into three strips of equal length (thereby separating the three sets of five shots each), and each strip was then developed in a separate tank. The dilutions and times for Rodinal and Xtol development were taken from the <a href="https://www.digitaltruth.com/devchart.php" target="_blank">Massive Dev Chart</a>, and all development was performed at 20C with normal agitation. The three developers were as follows:</p>
+
+<ul>
+  <li>Rodinal: 1:50, 16.5 minutes. Shots developed in Rodinal are presented on the left.</li>
+  <li>"RodinX" (Rodinal+Xtol): 1:25:75, 14 minutes. Shots developed in the mixed developer are presented in the middle.</li>
+  <li>Xtol: 1:3, 14 minutes. Shots developed in Xtol are presented on the right.</li>
+</ul>
+
+<p>After development, I scanned each strip of film using a Leica Elmar-R 100mm mounted to a Panasonic S1 and a Honeywell Universal Repronar. For all scans, the ISO was set to 100 and the aperture to f/11, and a two-stop ND filter was used. The scans were inverted and their white and black points were set so that each shot uses the full tonal range. This compensates somewhat for the variation in density produced by the three developers. Rodinal produced noticeably denser negatives than Xtol, and RodinX produced denser negatives than either of the others. No other editing was performed.</p>
+
+<h2>Results</h2>
+
+<div style="width:100%; margin-left:auto; margin-right:auto;">
+<div id="compare_1" class="compare">
+    <a href="images/1_xtol.jpg" target="_blank"><img class="compare__image-one" src="images/1_xtol.jpg"></a>
+    <div class="rlabel">Xtol 1:3</div>
+
+    <div class="compare__mask-one">
+      <a href="images/1_rodinx.jpg" target="_blank"><img class="compare__image-two" src="images/1_rodinx.jpg"></a>
+      <div class="mlabel">RodinX 1:25:75</div>
+    </div>
+
+    <div class="compare__mask-two">
+      <a href="images/1_rodinal.jpg" target="_blank"><img class="compare__image-three" src="images/1_rodinal.jpg"></a>
+      <div class="llabel">Rodinal 1:50</div>
+    </div>
+
+  </div>
+
+<div class="dual-range-input">
+  <input type="range" min="0" max="100" step="1" value="33" id="min_1" />
+  <input type="range" min="0" max="100" step="1" value="67" id="max_1" />
+</div>
+
+<br/>
+
+<div id="compare_2" class="compare">
+    <a href="images/2_xtol.jpg" target="_blank"><img class="compare__image-one" src="images/2_xtol.jpg"></a>
+    <div class="rlabel">Xtol 1:3</div>
+
+    <div class="compare__mask-one">
+      <a href="images/2_rodinx.jpg" target="_blank"><img class="compare__image-two" src="images/2_rodinx.jpg"></a>
+      <div class="mlabel">RodinX 1:25:75</div>
+    </div>
+
+    <div class="compare__mask-two">
+      <a href="images/2_rodinal.jpg" target="_blank"><img class="compare__image-three" src="images/2_rodinal.jpg"></a>
+      <div class="llabel">Rodinal 1:50</div>
+    </div>
+
+  </div>
+
+<div class="dual-range-input">
+  <input type="range" min="0" max="100" step="1" value="33" id="min_2" />
+  <input type="range" min="0" max="100" step="1" value="67" id="max_2" />
+</div>
+
+<br/>
+
+<div id="compare_3" class="compare">
+    <a href="images/3_xtol.jpg" target="_blank"><img class="compare__image-one" src="images/3_xtol.jpg"></a>
+    <div class="rlabel">Xtol 1:3</div>
+
+    <div class="compare__mask-one">
+      <a href="images/3_rodinx.jpg" target="_blank"><img class="compare__image-two" src="images/3_rodinx.jpg"></a>
+      <div class="mlabel">RodinX 1:25:75</div>
+    </div>
+
+    <div class="compare__mask-two">
+      <a href="images/3_rodinal.jpg" target="_blank"><img class="compare__image-three" src="images/3_rodinal.jpg"></a>
+      <div class="llabel">Rodinal 1:50</div>
+    </div>
+
+  </div>
+
+<div class="dual-range-input">
+  <input type="range" min="0" max="100" step="1" value="33" id="min_3" />
+  <input type="range" min="0" max="100" step="1" value="67" id="max_3" />
+</div>
+
+<br/>
+
+<div id="compare_4" class="compare">
+    <a href="images/4_xtol.jpg" target="_blank"><img class="compare__image-one" src="images/4_xtol.jpg"></a>
+    <div class="rlabel">Xtol 1:3</div>
+
+    <div class="compare__mask-one">
+      <a href="images/4_rodinx.jpg" target="_blank"><img class="compare__image-two" src="images/4_rodinx.jpg"></a>
+      <div class="mlabel">RodinX 1:25:75</div>
+    </div>
+
+    <div class="compare__mask-two">
+      <a href="images/4_rodinal.jpg" target="_blank"><img class="compare__image-three" src="images/4_rodinal.jpg"></a>
+      <div class="llabel">Rodinal 1:50</div>
+    </div>
+
+  </div>
+
+<div class="dual-range-input">
+  <input type="range" min="0" max="100" step="1" value="33" id="min_4" />
+  <input type="range" min="0" max="100" step="1" value="67" id="max_4" />
+</div>
+</div>
+
+<br/>
+
+<div id="sbs_5" class="sbs">
+  <div class="sbs_three"><a href="images/5_rodinal.jpg" target="_blank"><img class="compare__image-three" src="images/5_rodinal.jpg"></a><div class="label">Rodinal 1:50</div></div>
+
+  <div class="sbs_three"><a href="images/5_rodinx.jpg" target="_blank"><img class="compare__image-three" src="images/5_rodinx.jpg"></a><div class="label">RodinX 1:25:75</div></div>
+
+  <div class="sbs_three"><a href="images/5_xtol.jpg" target="_blank"><img class="compare__image-three" src="images/5_xtol.jpg"></a><div class="label">Xtol 1:3</div></div>
+</div>
+
+<h2>Conclusions</h2>
+
+<p>I will admit that the results above surprised me. The grain of the RodinX shots looks nearly the same as those developed in Rodinal. This runs against the folk wisdom that the combined developer can produce Rodinal's Acutance with Xtol's finer grain. To my eye, Rodinal yields somewhat muddy shadows, but higher acutance in the midtones and highlights than Xtol. Relative to Rodinal, the RodinX shots appear to have far better acutance in the shadows (whether there is truly more detail I cannot determine) and slightly brighter midtones. Relative to Xtol, the RodinX shots appear to have higher acutance overall, and far brighter midtones. On the whole, the look that this particular formulation of RodinX produces strikes me as being much more like Rodinal than Xtol, and I prefer it to either developer on its own. I conjecture that one could produce a look closer to Xtol's by using RodinX in a 1:50:50 ratio, with the timings for Xtol 1:1, but I have not yet tried this.</p>
+
+</div>
+
+<div id='copyright'>&copy; 2025</div>
+</body>
+</html>

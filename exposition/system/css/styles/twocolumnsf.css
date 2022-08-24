@@ -1,0 +1,79 @@
+.twoColumnSF {
+	width:100%;
+	max-width:1680px;
+	margin:0 auto;
+	border-spacing:0;
+	border-collapse: separate;
+	padding:0px 10px;
+}
+
+.twoColumnSF .leftColumn {
+	width:526px;
+	text-align:right;
+	vertical-align: top;
+	padding-left:20px;
+	padding-right:20px;
+	border-right:1px solid #EEEEEE;
+}
+
+.twoColumnSF .leftColumn a {
+	border:none;
+}
+
+.twoColumnSF .leftColumn .imgCaption {
+	display:inline-block;
+	font-style: italic;
+	text-align: right;
+	margin-right:40px;
+	max-width:384px;
+}
+
+.twoColumnSF .leftColumn img {
+	max-width:512px;
+	max-height: 512px;
+	border:none;
+	margin:7px;
+}
+
+.twoColumnSF .leftColumn a:hover {
+	border:none;
+}
+
+.twoColumnSF .leftColumn a > img {
+	border:1px solid #222222;
+	margin:1px;
+	padding:5px;
+}
+
+.twoColumnSF .leftColumn a > img:hover {
+	border:2px solid #222222;
+	margin:0px;
+	padding:5px;
+}
+
+.twoColumnSF .leftColumn img {
+	margin-top:1.5em;
+}
+
+.twoColumnSF .rightColumn {
+	padding-left:20px;
+	padding-right:20px;
+	vertical-align: top;
+	text-align:justify;
+}
+
+@media all and (max-width:1400px) {
+	.twoColumnSF .leftColumn {
+		width:270px;
+	}
+
+	.twoColumnSF .leftColumn img {
+		max-width:256px;
+		max-height:256px;
+	}
+
+	.twoColumnSF .leftColumn .imgCaption {
+		max-width:186px;
+		margin-right:10px;
+	}
+}
