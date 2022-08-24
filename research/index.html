@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel='stylesheet' type='text/css' href='../fonts/sofiaprolight/stylesheet.css' />
+<link rel='stylesheet' type='text/css' href='../fonts/linuxlibertine/stylesheet.css' />
+<link rel='stylesheet' type='text/css' href='../fonts/linuxbiolinum/stylesheet.css' />
+<title>Research | Jack Doerner</title>
+
+<style>
+
+a{ outline: none;}
+
+body, html {
+	background-color: #FFFFFF;
+	color:#000000;
+	font-family:"Linux Libertine", "Times", "Times New Roman", serif;
+	font-weight: 300;
+	font-size:12pt;
+	line-height: 1.2;
+	text-align: center;
+}
+
+em {
+	font-family:"Linux Libertine", "Times", "Times New Roman", serif;
+	display: inline-block;
+	height: 12pt;
+}
+
+em.serif {
+	font-family:"Linux Libertine", "Times", "Times New Roman", serif;
+}
+
+sup { line-height: 0; }
+
+.center {
+	text-align: center;
+}
+
+#main {
+	column-width:30em;
+	column-count:auto;
+	-moz-column-width:30em;
+	-moz-column-count:auto;
+	-webkit-column-width:30em;
+	-webkit-column-count:auto;
+	column-gap:2em;
+	-moz-column-gap:2em;
+	-webkit-column-gap:2em;
+	margin:60px auto 40px auto;
+	padding:0 2em;
+	text-align:left;
+}
+
+#main > div {
+	display:inline-block;
+	text-align: justify;
+	margin-bottom:2em;
+}
+
+#main a {
+	text-decoration: none;
+	color:#000000;
+	border-bottom:1px solid #222222;
+	outline:0;
+}
+
+#main a:hover, #main a.active {
+	text-decoration: none;
+	border-bottom:2px solid #222222;
+}
+
+.title {
+	font-size:26pt;
+	text-align: left;
+	font-family:"Linux Biolinum", "Times", "Times New Roman", serif;
+}
+
+.authors {
+	font-size:14pt;
+	margin-top:6pt;
+	font-family:"Linux Libertine", "Times", "Times New Roman", serif;
+}
+
+.pubinfo {
+	font-size:14pt;
+	font-style:italic;
+	font-family:"Linux Libertine", "Times", "Times New Roman", serif;
+	margin-top:12pt;
+}
+
+</style>
+
+<style>
+#topmenu {
+	position:fixed;
+	top:0px;
+	left:0px;
+	right:0px;
+	padding:10px;
+	text-align: left;
+	background-color: #FFFFFF;
+	font-family:'SofiaProLight','Helvetica','Arial',sans-serif;
+	color:#000000;
+	z-index:1000;
+	box-shadow:0 0 5px rgba(0,0,0,0.2);
+	border-bottom:1px solid #222222;
+	height:20px;
+	line-height: 20px;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+#menuspacer {
+	height:40px;
+}
+
+#topmenu a {
+	margin:0px 10px;
+	color:#888888;
+	text-decoration:none;
+}
+
+#topmenu a:first-child {
+	margin-left:0px;
+}
+
+#topmenu a:hover, #topmenu a.active {
+	color:#000000;
+	border-color: #000000;
+}
+
+#menuspacer {
+	height:40px;
+}
+
+div#copyright {
+		font-family:'SofiaProLight','Helvetica','Arial',sans-serif;
+		color:#000000;
+		position: fixed;
+		bottom:10px;
+		right:12px;
+		z-index:1000;
+	}
+</style>
+
+<script>
+	window.addEventListener('load', (event) => {
+	    if (typeof performance !== 'undefined' && typeof performance.getEntriesByType !== 'undefined'
+			&& performance.getEntriesByType("navigation").length > 0
+			&& typeof performance.getEntriesByType("navigation")[0].type !== 'undefined'
+			&& performance.getEntriesByType("navigation")[0].type == 'reload') {
+	    		var elements = document.querySelectorAll("#main div:not(.no_rot)");
+				for (ii = 0; ii < elements.length; ii ++) {
+					elements[ii].style.transform = "rotate(" + (1.5 * Math.random() - 0.75) + "deg)";
+				}
+		}
+	});
+</script>
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-GCYY1SD9GT"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-GCYY1SD9GT');
+</script>
+
+</head>
+<body>
+	
+	<div id='topmenu'><a href='../'>Home</a>&bull;<a href='../about'>About</a>&bull;<a href='../research' class='active'>Research</a>&bull;<a href='../teaching'>Teaching</a>&bull;<a href='../art'>Art &amp; Films</a>&bull;<a href='../exposition'>Exposition</a></div>
+
+	<div id='main'>
+
+		<div>
+			<div class='title'>An Unstoppable Ideal Functionality for Signatures and a Modular Analysis of the Dolev-Strong Broadcast</div>
+			<div class='authors'>Ran Cohen &bull; Jack Doerner &bull; Eysa Lee &bull; Anna Lysyanskaya &bull; Lawrence Roy</div>
+			<div class='pubinfo'>in IACR TCC 2025</div>
+			<div class='abstract'>
+					<p> Many foundational results in the literature of consensus follow the Dolev-Yao model (FOCS '81), which treats digital signatures as ideal objects with <em>perfect</em> correctness and unforgeability.  However, no work has yet formalized an ideal signature scheme that is both suitable for this methodology and possible to instantiate, or a composition theorem that ensures security when instantiating it cryptographically.</p>
+
+					<p>The Universal Composition (UC) framework would ensure composition if we could specify an ideal functionality for signatures and prove it UC-realizable. Unfortunately, <em>all</em> signature functionalities heretofore proposed are problematic when used to construct higher-level protocols: either the functionality internally computes a computationally secure signature, and therefore higher-level protocols must rely upon computational assumptions, or else the functionality introduces a <em>new</em> attack surface that does not exist when the functionality is realized. As a consequence, no consensus protocol has ever been analyzed in a modular way using existing ideal signature functionalities.</p>
+
+					<p>We propose a new <em>unstoppable</em> ideal functionality for signatures that is UC-realized exactly by the set of standard EUF-CMA signature schemes that are <em>consistent</em> and <em>linear time</em>. No adversary can prevent honest parties from obtaining perfectly ideal signature services from our functionality. We showcase its usefulness by presenting the first modular analysis of the Dolev-Strong broadcast protocol (SICOMP '83).  Our result can be interpreted as a step toward a sound realization of the Dolev-Yao methodology. We also generalize our result to the threshold setting.
+					</p>
+			</div>
+			<div class='links'><a href="https://eprint.iacr.org/2024/1807" target="_blank">Full Paper</a> &bull; <a href="https://dblp.uni-trier.de/rec/conf/tcc/CohenDLLR25.html" target="_blank">DBLP Record</a></div>
+		</div>
+
+		<div>
+			<div class='title'>Constant-Round Simulation-Secure Coin Tossing Extension with Guaranteed Output</div>
+			<div class='authors'>Damiano Abram &bull; Jack Doerner &bull; Yuval Ishai &bull; Varun Narayanan</div>
+			<div class='pubinfo'>in IACR Eurocrypt 2024</div>
+			<div class='abstract'>
+				<p>
+					Common randomness is an essential resource in many applications. However, Cleve (STOC 86) rules out the possibility of tossing a fair coin from scratch in the presence of a dishonest majority.
+					A second-best alternative is a <em>Coin Tossing Extension</em> (CTE) protocol, which uses an &ldquo;online&rdquo; oracle that produces a few common random bits to generate many common random-looking bits.
+					We initiate the systematic study of <em>fully-secure</em> CTE, which guarantees output even in the presence of malicious behavior. A fully-secure two-party statistical CTE protocol with black-box simulation was implicit in Hofheinz et al. (Eurocrypt 06), but its round complexity is nearly linear in its output length. The problem of constant-round CTE with superlogarithmic stretch remained open.
+				</p><p>
+					We prove that <em>statistical</em> CTE with full black-box security and superlogarithmic stretch must have superconstant rounds. In the <em>computational</em> setting we prove that with <em>N</em> parties and polynomial stretch:
+					<ul>
+						<li> <em>One round</em> suffices for CTE under subexponential LWE, even with Universally Composable security against adaptive corruptions.</li>
+					 	<li> One-round CTE is implied by DDH or the hidden subgroup assumption in class groups, with a short, reusable Uniform Random String, and by
+					 	DCR and QR, with a reusable <em>Structured</em> Reference String.</li>
+					 	<li> One-way functions imply CTE with <em>O(N)</em> rounds, and thus constant-round CTE for any constant number of parties.</li>
+					</ul>
+					Such results were not previously known even in the two-party setting with standalone, static security. We also extend one-round CTE to sample from <em>any</em> efficient distribution, via strong assumptions including IO.
+				</p><p>
+					Our one-round CTE protocols can be interpreted as  <em>explainable</em> variants of classical randomness extractors, wherein a (short) seed and a source instance can be efficiently reverse-sampled given a random output. Such explainable extractors may be of independent interest.
+				</p>
+			</div>
+			<div class='links'><a href="https://dblp.uni-trier.de/rec/conf/eurocrypt/AbramDIN24.html" target="_blank">DBLP Record</a></div>
+		</div>
+
+		<div>
+			<div class='title'>From OT to OLE with Subquadratic Communication</div>
+			<div class='authors'>Jack Doerner &bull; Iftach Haitner &bull; Yuval Ishai &bull; Nikolaos Makriyannis</div>
+			<div class='pubinfo'>in ACM CCS 2025 (distinguished paper)</div>
+			<div class='abstract'>
+				<p>
+				Oblivious Linear Evaluation (OLE) is an algebraic generalization of oblivious transfer (OT) that enables a pair of parties to securely evaluate a line <em>a</em>&middot;<em>X</em>+<em>b</em> mod <em>q</em> with secret coefficients known only to the sending party at a secret point known only to the party who receives the evaluation. Although OLE forms a critical part of a growing number of applications, the concrete efficiency of OLE protocols lags behind that of OT, particularly in the non-amortized case. Many prior works found OLE upon OT information-theoretically, an approach which ultimately yields security (including plausible post-quantum security) under a variety of concrete assumptions, and which is naturally advantageous in the non-amortized case. We revisit this approach and introduce the first OLE-to-OT reduction with bandwidth complexity subquadratic in the length k of the modulus <em>q</em>, while also improving concrete bandwidth costs over prior works, even in the case that just a single OLE instance is evaluated.
+				</p><p>
+				Our approach stems from the basic observation that the Chinese Remainder Theorem (CRT) can be applied to the baseline protocol of Gilboa (Crypto ’99) to reduce its communication complexity from <em>O</em>(<em>k</em><sup>2</sup>) to <em>&Otilde;</em>(<em>k</em>) bits. However, whereas Gilboa’s protocol is secure against a semi-honest sender and a malicious receiver, na&iuml;ve application of the CRT technique yields a protocol that tolerates only semi-honest corruption of either participant. We use number theoretic techniques to protect our new protocol against malicious receivers, while adding only a little concrete cost. Furthermore, we obtain a fully malicious OLE-to-OT reduction by applying either information-theoretic techniques with moderate overhead, or RSA-based cryptographic techniques with very low overhead.
+				</p><p>
+				We demonstrate the usefulness of our results in the context of OLE applications. In particular, we present a plausibly post-quantum oblivious pseudorandom function (OPRF) based on the power residue function. Our OPRF has security against a malicious client and a semi-honest server, and requires only 1.15 KB of communication assuming the pre-existence of random OT correlations. This improves over the use of Gilboa’s protocol by a factor of 16.
+				</p>
+			</div>
+			<div class='links'><a href="https://eprint.iacr.org/2025/1722" target="_blank">Full Paper</a> &bull; <a href="https://dblp.uni-trier.de/rec/conf/ccs/DoernerHIM25.html" target="_blank">DBLP Record</a></div>
+		</div>
+
+		<div>
+			<div class='title'>Guaranteed Output in <em>O</em>(&radic;<span style="text-decoration: overline; text-decoration-thickness: 0.05em; font-style: italic;">n</span>) Rounds for Round-Robin Sampling Protocols</div>
+			<div class='authors'>Ran Cohen &bull; Jack Doerner &bull; Yashvanth Kondi &bull; abhi shelat</div>
+			<div class='pubinfo'>in IACR Eurocrypt 2022 &bull; full version in Journal of Cryptology</div>
+			<div class='abstract'>
+				<p>
+					We introduce a notion of <em>round-robin</em> secure sampling that captures several protocols in the literature, such as the &ldquo;powers-of-tau&rdquo; setup protocol for pairing-based polynomial commitments and zk-SNARKs, and certain verifiable mixnets.
+				</p><p>
+					Due to their round-robin structure, protocols of this class inherently require <em>n</em> sequential broadcast rounds, where <em>n</em> is the number of participants.
+				</p><p>
+					We describe how to compile them generically into protocols that require only <em>O</em>(&radic;<span style="text-decoration: overline; text-decoration-thickness: 0.05em; font-style: italic;">n</span>) broadcast rounds. Our compiled protocols guarantee output delivery against <em>any</em> dishonest majority. This stands in contrast to prior techniques, which require  <em>&Omega;</em>(<em>n</em>) sequential broadcasts in most cases (and sometimes many more). Our compiled protocols permit a certain amount of adversarial bias in the output, as all sampling protocols with guaranteed output must, due to Cleve's impossibility result (STOC'86). We show that in the context of the aforementioned applications, this bias is harmless.
+				</p>
+			</div>
+			<div class='links'><a href="https://eprint.iacr.org/2022/257" target="_blank">Full Paper</a> &bull; <a href="https://youtube.com/watch?v=snM1b3PK7II" target="_blank">Video Presentation</a> &bull; <a href="https://dblp.uni-trier.de/rec/conf/eurocrypt/CohenDKS22.html" target="_blank">DBLP Record</a></div>
+		</div>
+
+		<div>
+			<div class='title'>Multiparty Generation of an RSA Modulus</div>
+			<div class='authors'>Megan Chen &bull; Ran Cohen &bull; Jack Doerner &bull; Yashvanth Kondi &bull; Eysa Lee &bull; Schuyler Rosefield &bull; abhi shelat</div>
+			<div class='pubinfo'>in IACR Crypto 2020 &bull; full version in Journal of Cryptology</div>
+			<div class='abstract'>
+				<p>
+					We present a new multiparty protocol for the distributed generation of biprime RSA moduli, with security against any subset of maliciously colluding parties assuming oblivious transfer and the hardness of factoring. 
+				</p>
+				<p>
+					Our protocol is highly modular, and its uppermost layer can be viewed as a template that generalizes the structure of prior works and leads to a simpler security proof. We introduce a combined sampling-and-sieving technique that eliminates both the inherent leakage in the approach of Frederiksen et al. (Crypto'18), and the dependence upon additively homomorphic encryption in the approach of Hazay et al. (JCrypt'19). We combine this technique with an efficient, privacy-free check to detect malicious behavior retroactively when a sampled candidate is not a biprime, and thereby overcome covert rejection-sampling attacks and achieve both asymptotic and concrete efficiency improvements over the previous state of the art. 
+				</p>
+			</div>
+			<div class='links'><a href="https://eprint.iacr.org/2020/370" target="_blank">Full Paper</a> &bull; <a href="https://www.youtube.com/watch?v=hcPvWqDeZwo" target="_blank">Video Presentation</a> &bull; <a href="https://dblp.uni-trier.de/rec/conf/crypto/ChenCDKLRS20.html" target="_blank">DBLP Record</a></div>
+		</div>
+
+		<div>
+			<div class='title'>Revisiting Square-Root ORAM</div>
+			<div class='authors'>Samee Zahur &bull; Xiao Wang &bull; Mariana Raykova &bull; Adri&agrave; Gasc&oacute;n &bull; Jack Doerner &bull; David Evans &bull; Jonathan Katz</div>
+			<div class='pubinfo'>in IEEE S&amp;P 2016</div>
+			<div class='abstract'>
+				<p>
+					Hiding memory access patterns is required for secure computation, but remains prohibitively expensive for many interesting applications. Prior work has either developed custom algorithms that minimize the need for data-dependant memory access, or proposed the use of Oblivious RAM (ORAM) to provide a general-purpose solution. However, most ORAMs are designed for client-server scenarios, and provide only asymptotic benefits in secure computation. Even the best prior schemes show concrete benefits over na&iuml;ve linear scan only for array sizes greater than 100. This immediately implies each ORAM access is 100 times slower than a single access at a known location. Even then, prior evaluations ignore the substantial initialization cost of existing schemes.
+				</p>
+				<p>
+					We show how the classical square-root ORAM of Goldreich and Ostrovsky can be modified to overcome these problems, even though it is asymptotically worse than the best known schemes. Specifically, we show a design that has over 100 times lower initialization cost, and provides benefits over linear scan for just 8 blocks of data. For all benchmark applications we tried, including Gale-Shapley stable matching and the scrypt key derivation function, our scheme outperforms alternate approaches across a wide range of parameters, often by several orders of magnitude.
+				</p>
+			</div>
+			<div class='links'><a href="http://jackdoerner.net/resources/pdf/revisiting_square_root_oram.pdf" target="_blank">Paper</a> &bull; <a href="https://github.com/samee/sqrtOram" target="_blank">Code</a> &bull; <a href="https://dblp.uni-trier.de/rec/conf/sp/ZahurW0GDEK16.html" target="_blank">DBLP Record</a></div>
+		</div>
+
+		<div>
+			<div class='title'>Scaling ORAM for Secure Computation</div>
+			<div class='authors'>Jack Doerner &bull; abhi shelat</div>
+			<div class='pubinfo'>in ACM CCS 2017 (best paper)</div>
+			<div class='abstract'>
+				<p>
+				We design and implement a Distributed Oblivious Random Access Memory (DORAM) data structure that is optimized for use in two-party secure computation protocols. We improve upon the access time of previous constructions by a factor of up to ten, their memory overhead by a factor of one hundred or more, and their initialization time by a factor of thousands. We are able to instantiate ORAMs that hold 2<sup>34</sup> bytes, and perform operations on them in seconds, which was not previously feasible with any implemented scheme.
+				</p><p>
+				Unlike prior ORAM constructions based on hierarchical hashing, permutation, or trees, our Distributed ORAM is derived from the new Function Secret Sharing scheme introduced by Boyle, Gilboa and Ishai. This significantly reduces the amount of secure computation required to implement an ORAM access, albeit at the cost of <em>O</em>(<em>n</em>) efficient <em>local</em> memory operations. 
+				</p><p>
+				We implement our construction and find that, despite its poor <em>O</em>(<em>n</em>) asymptotic complexity, it still outperforms the fastest previously known constructions, Circuit ORAM and Square-root ORAM, for datasets that are 32 KiB or larger, and outperforms prior work on applications such as <em>stable matching</em> or <em>binary search</em> by factors of two to ten.
+				</p>
+			</div>
+			<div class='links'><a href="https://eprint.iacr.org/2017/827" target="_blank">Full Paper</a> &bull; <a href="https://gitlab.com/neucrypt/floram" target="_blank">Code</a> &bull; <a href="https://dblp.uni-trier.de/rec/conf/ccs/DoernerS17.html" target="_blank">DBLP Record</a></div>
+		</div>
+
+		<div>
+			<div class='title'>Secure Multiparty Computation with Identifiable Abort from Vindicating Release</div>
+			<div class='authors'>Ran Cohen &bull; Jack Doerner &bull; Yashvanth Kondi &bull; abhi shelat</div>
+			<div class='pubinfo'>in IACR Crypto 2024</div>
+			<div class='abstract'>
+				<p>In the dishonest-majority setting, secure multiparty computation (MPC) with <em>identifiable abort</em> (IA) guarantees that honest parties can identify and agree upon at least one cheating party if the protocol does not produce an output. Known MPC constructions with IA rely on generic zero-knowledge proofs, adaptively secure oblivious transfer (OT) protocols, or homomorphic primitives, and thus incur a substantial penalty with respect to protocols that abort without identifiability.
+				</p>
+
+				<p>We introduce a new, weaker notion of IA called <em>input-revealing</em> IA (IRIA), which can be constructed through selective revealing of committed input values&mdash;a technique we call <em>vindicating release</em>.  We show that this weaker form of IA can be achieved with small concrete overheads for many interesting protocols in the literature, including the pre-processing protocols needed for several state-of-the-art MPC protocols.</p>
+
+				<p>We next show how to assemble these IRIA components into an MPC protocol for any functionality with <em>standard</em> IA. Such a realization differs minimally in terms of cost, techniques, and analysis from the equivalent realization that lacks identifiability, e.g., our total bandwidth overhead incurred is less than 2x, which is an asymptotic improvement over prior work on IA.</p>
+
+				<p>On a practical level, we apply our techniques to the problem of threshold ECDSA, and show that the resulting protocol with standard IA is concretely efficient. On a theoretical level, we present a compiler that transforms any secure protocol into one with standard IA assuming only a variant of statically-corruptable ideal OT.</p>
+			</div>
+			<div class='links'><a href="https://eprint.iacr.org/2023/1136" target="_blank">Full Paper</a> &bull; <a href="https://dblp.uni-trier.de/rec/conf/crypto/CohenDKS24.html" target="_blank">DBLP Record</a></div>
+		</div>
+
+		<div>
+			<div class='title'>Secure Stable Matching at Scale</div>
+			<div class='authors'>Jack Doerner &bull; David Evans &bull; abhi shelat</div>
+			<div class='pubinfo'>in ACM CCS 2016 &bull; poster in IEEE S&amp;P 2016</div>
+			<div class='abstract'>
+				<p>
+					When a group of individuals and organizations wish to compute a <em>stable matching</em>&mdash;for example, when medical students are matched to medical residency programs&mdash;they often outsource the computation to a trusted arbiter in order to preserve the privacy of participants' preferences.  Secure multi-party computation offers the possibility of private matching processes that do not rely on any common trusted third party.  However, stable matching algorithms have previously been considered infeasible for execution in a secure multi-party context on non-trivial inputs because they are computationally intensive and involve complex data-dependent memory access patterns.
+				</p>
+				<p> 
+					We adapt the classic Gale-Shapley algorithm for use in such a context, and show experimentally that our modifications yield a lower asymptotic complexity and more than an order of magnitude in practical cost improvement over previous techniques.  Our main improvements stem from designing new oblivious data structures that exploit the properties of the matching algorithms.  We apply a similar strategy to scale the Roth-Peranson instability chaining algorithm, currently in use by the National Resident Matching Program.  The resulting protocol is efficient enough to be useful at the scale required for matching medical residents nationwide, taking just over 18 hours to complete an execution simulating the 2016 national resident match with more than 35,000 participants and 30,000 residency slots.
+				</p>
+			</div>
+			<div class='links'><a href="https://eprint.iacr.org/2016/861" target="_blank">Paper</a> &bull; <a href="http://jackdoerner.net/resources/pdf/poster_secure_gale_shapley.pdf" target="_blank">Poster</a> &bull; <a href="https://gitlab.com/neucrypt/secure-stable-matching" target="_blank">Code</a> &bull; <a href="https://dblp.uni-trier.de/rec/conf/ccs/DoernerES16.html" target="_blank">DBLP Record</a></div>
+		</div>
+
+		<div>
+			<div class='title'>Secure Two-party Threshold ECDSA from ECDSA Assumptions</div>
+			<div class='authors'>Jack Doerner &bull; Yashvanth Kondi &bull; Eysa Lee &bull; abhi shelat</div>
+			<div class='pubinfo'>in IEEE S&amp;P 2018</div>
+			<div class='abstract'>
+				<p>
+					The Elliptic Curve Digital Signature Algorithm (ECDSA) is one of the most
+					widely used schemes in deployed cryptography. Through its applications in code
+					and binary authentication, web security, and cryptocurrency, it is likely one
+					of the few cryptographic algorithms encountered on a daily basis by the average
+					person. However, its design is such that executing multi-party or threshold
+					signatures in a secure manner is challenging: unlike other, less widespread
+					signature schemes, secure multi-party ECDSA requires custom protocols, which
+					has heretofore implied reliance upon additional cryptographic assumptions
+					and primitives such as the Paillier cryptosystem.
+				</p><p>
+					We propose new protocols for multi-party ECDSA key-generation and signing with
+					a threshold of two, which we prove secure against malicious adversaries in the
+					random oracle model using only the Computational Diffie-Hellman Assumption
+					and the assumptions already relied upon by ECDSA itself. Our scheme requires only two
+					messages, and via implementation we find that it outperforms the best prior results in
+					practice by a factor of 56 for key generation and 11
+					for signing, coming to within a factor of 18 of local signatures. Concretely, two
+					parties can jointly sign a message in just over three milliseconds.
+				</p>
+			</div>
+			<div class='links'><a href="https://eprint.iacr.org/2018/499" target="_blank">Full Paper</a> &bull; <a href="https://gitlab.com/neucrypt/mpecdsa" target="_blank">Code</a> &bull; <a href="https://dblp.uni-trier.de/rec/conf/sp/DoernerKLS18.html" target="_blank">DBLP Record</a> &bull; <a href="https://dkls.info" target="_blank">Website</a></div>
+		</div>
+
+		<div>
+			<div class='title'>Sometimes You Can't Distribute Random-Oracle-Based Proofs</div>
+			<div class='authors'>Jack Doerner &bull; Yashvanth Kondi &bull; Leah Namisa Rosenbloom</div>
+			<div class='pubinfo'>in IACR Crypto 2024</div>
+			<div class='abstract'>
+				<p>We investigate the conditions under which straight-line extractable NIZKs in the random oracle model (i.e. without a CRS) permit multiparty realizations that are black-box in the same random oracle. We show that even in the semi-honest setting, any MPC protocol to compute such a NIZK cannot make black-box use of the random oracle or a hash function instantiating it if security against all-but-one corruptions is desired, unless the number of queries made by the verifier to the oracle grows with the number of parties. This presents a fundamental barrier to constructing efficient protocols to securely distribute the computation of NIZKs (and signatures) based on MPC-in-the-head, PCPs/IOPs, and sigma protocols compiled with transformations due to Fischlin, Pass, or Unruh.</p>
+
+				<p>When the adversary is restricted to corrupt only a constant fraction of parties, we give a positive result by means of a tailored construction, which demonstrates that our impossibility does not extend to weaker corruptions models in general.</p>
+			</div>
+			<div class='links'><a href="https://eprint.iacr.org/2023/1381/" target="_blank">Full Paper</a> &bull; <a href="https://dblp.uni-trier.de/rec/conf/crypto/DoernerKR24.html" target="_blank">DBLP Record</a></div>
+		</div>
+
+		<div>
+			<div class='title'>Threshold BBS+ Signatures for Distributed Anonymous Credential Issuance</div>
+			<div class='authors'>Jack Doerner &bull; Yashvanth Kondi &bull; Eysa Lee &bull; abhi shelat &bull; LaKyah Tyner</div>
+			<div class='pubinfo'>in IEEE S&amp;P 2023</div>
+			<div class='abstract'>
+				<p>
+					We propose a secure multiparty signing protocol for the BBS+ signature scheme; in other words, an anonymous credential scheme with threshold issuance. We prove that due to the structure of the BBS+ signature, simply verifying the signature produced by an otherwise semi-honest protocol is sufficient to achieve composable security against a malicious adversary. Consequently, our protocol is extremely simple and efficient: it involves a single request from the client (who requires a signature) to the signing parties, two exchanges of messages among the signing parties, and finally a response to the client; in some deployment scenarios the concrete cost bottleneck may be the client's local verification of the signature that it receives. Furthermore, our protocol can be extended to support the strongest form of blind signing and to serve as a distributed evaluation protocol for the Dodis-Yampolskiy Oblivious VRF. We validate our efficiency claims by implementing and benchmarking our protocol.
+				</p>
+			</div>
+			<div class='links'><a href="https://eprint.iacr.org/2023/602" target="_blank">Full Paper</a> &bull; <a href="https://dblp.uni-trier.de/rec/conf/sp/DoernerKLST23.html" target="_blank">DBLP Record</a></div>
+		</div>
+
+		<div>
+			<div class='title'>Threshold ECDSA from ECDSA Assumptions: The Multiparty Case</div>
+			<div class='authors'>Jack Doerner &bull; Yashvanth Kondi &bull; Eysa Lee &bull; abhi shelat</div>
+			<div class='pubinfo'>in IEEE S&amp;P 2019</div>
+			<div class='abstract'>
+				<p>
+					Cryptocurrency applications have spurred a resurgence of interest in the computation of ECDSA signatures using threshold protocols&mdash;that is, protocols in which the signing key is secret-shared among <em>n</em> parties, of which any subset of size <em>t</em> must interact in order to compute a signature. Among the resulting works to date, that of Doerner et al. requires the most natural assumptions while also achieving the best practical signing speed. It is, however, limited to the setting in which the threshold is two. We propose an extension of their scheme to arbitrary thresholds, and prove it secure against a malicious adversary corrupting up to one party less than the threshold under only the Computational Diffie-Hellman assumption in the Random Oracle model, an assumption strictly weaker than those under which ECDSA is proven.
+				</p><p>
+					We implement our scheme and evaluate it among groups of up to 256 of co-located and geographically-distributed parties, and among small groups of embedded devices. We find that in the LAN setting, our scheme outperforms all prior works by orders of magnitude, and that it is efficient enough for use even on smartphones or hardware tokens. In the WAN setting we find that, despite its logarithmic round count, our protocol outperforms the best constant-round protocols in realistic scenarios.
+				</p>
+			</div>
+			<div class='links'><a href="https://eprint.iacr.org/2019/523" target="_blank">Full Paper</a> &bull; <a href="https://gitlab.com/neucrypt/mpecdsa" target="_blank">Code</a> &bull; <a href="https://dblp.uni-trier.de/rec/conf/sp/DoernerKLS19.html" target="_blank">DBLP Record</a> &bull; <a href="https://dkls.info" target="_blank">Website</a></div>
+		</div>
+
+		<div>
+			<div class='title'>Threshold ECDSA in Three Rounds</div>
+			<div class='authors'>Jack Doerner &bull; Yashvanth Kondi &bull; Eysa Lee &bull; abhi shelat</div>
+			<div class='pubinfo'>in IEEE S&amp;P 2024</div>
+			<div class='abstract'>
+				<p>
+					We present a three-round protocol for threshold ECDSA signing with malicious security against a dishonest majority, which information- theoretically UC-realizes a standard threshold signing functionality, as- suming only ideal commitment and two-party multiplication primitives. Our protocol combines an intermediate representation of ECDSA signa- tures that was recently introduced by Abram et al. (Eurocrypt'22) with an efficient statistical consistency check reminiscent of the ones used by the protocols of Doerner et al. (S&amp;P'18, S&amp;P'19).
+				</p>
+				<p>
+					We show that shared keys for our signing protocol can be generated using a simple commit- release-and-complain procedure, without any proofs of knowledge, and to compute the intermediate representation of each signature, we propose a two-round vectorized multiplication protocol based on oblivious transfer that outperforms all similar constructions.
+				</p>
+			</div>
+			<div class='links'><a href="https://eprint.iacr.org/2023/765" target="_blank">Full Paper</a> &bull; <a href="https://dblp.uni-trier.de/rec/conf/sp/DoernerKLS24.html" target="_blank">DBLP Record</a> &bull; <a href="https://dkls.info" target="_blank">Website</a></div>
+		</div>
+		
+	</div>
+
+	<div id='copyright'>&copy;&nbsp;2026</div>
+
+</body>
+</html>
