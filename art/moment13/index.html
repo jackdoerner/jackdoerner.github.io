@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Moment 13</title>
+<link href='system/main.css' rel='stylesheet' type='text/css' />
+<script type='text/javascript'>
+  var tag = document.createElement('script');
+
+  tag.src = "https://www.youtube.com/iframe_api";
+  var firstScriptTag = document.getElementsByTagName('script')[0];
+  firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+</script>
+<script type='text/javascript' src='system/main.js'></script>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-GCYY1SD9GT"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-GCYY1SD9GT');
+</script>
+</head>
+<body>
+<div id="main">
+	<div id="left" class='video'><div id='leftplayer'></div></div>
+	<div id="right" class='video'><div id='rightplayer'></div></div>
+</div>
+<audio autoplay='true' loop='true' src="audio.mp3"></audio>
+<div id='browserwarning'><div>
+	<a href='#' id='browserwarningclose'>&times;</a>
+	This software is only known to work in Chrome and Firefox<br/>
+	If you experience trouble, please try one of these browsers.
+</div></div>
+</body>
+</html>
