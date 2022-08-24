@@ -1,0 +1,264 @@
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{enumerate}
+\usepackage{tikz}
+\usetikzlibrary{positioning,chains,fit,shapes,calc}
+\usepackage[all]{xy}
+
+\newcommand{\coursename}{CS 6222 Graduate Cryptography}
+\newcommand{\semester}{Fall 2025}
+\newcommand{\webpage}{https://jackdoerner.net/teaching/2025/Fall/CS6222}
+\newcommand{\weblist}{http://???}
+
+\newcommand{\handout}[5]{
+   \renewcommand{\thepage}{Lecture #1, Page \arabic{page}}
+   \noindent
+   \begin{center}
+   \framebox{
+      \vbox{
+    \hbox to 5.78in { {\bf \coursename} \hfill #2 }
+       \vspace{4mm}
+       \hbox to 5.78in { {\Large \hfill #5  \hfill} }
+       \vspace{2mm}
+       \hbox to 5.78in { {\it #3 \hfill #4} }
+      }
+   }
+   \end{center}
+   \vspace*{4mm}
+}
+
+\newcommand{\myhand}[2]{\handout{#1}{\today}{Lecturer: Jack Doerner}{}{#2}}
+
+\newcommand{\hw}[2]{\handout{#1}{\today}{Lecturer: Jack Doerner}{Due: #2}{Problem Set #1}}
+
+\newcommand{\sol}[2]{\handout{#1}{\today}{Lecturer: Jack Doerner}{}{Solutions to Problem Set #1}}
+
+% if someone taking scribe notes
+\newcommand{\lecture}[4]{\handout{#1}{#3}{Lecturer: Jack Doerner}{Scribe: #4}{Lecture #1: #2}}
+%\newcommand{\lecture}[4]{\handout{#1}{#3}{Lecturer: Daniel Wichs}{Scribe: #4}{Lecture #1: #2}}
+%\newcommand{\lecture}[2]{\handout{Lecture #1, page}{#2}{Lecturer: Yevgeniy
+%Dodis}{\semester}{Lecture #1}}
+
+\newcommand{\definitionclose}{\hspace*{\fill}$\diamondsuit$}
+\newcounter{defcounter} \setcounter{defcounter}{0}
+\newenvironment{definition}{\medskip\noindent\refstepcounter{defcounter}{\sc
+Definition \thedefcounter}\hspace{1ex}}{\definitionclose \smallskip}
+
+%\newtheorem{definition}{Definition}
+\newtheorem{theorem}{Theorem}
+%\newtheorem{idef}[definition]{Informal Definition}
+\newtheorem{lemma}{Lemma}
+\newtheorem{corollary}[lemma]{Corollary}
+\newtheorem{proposition}[lemma]{Proposition}
+\newtheorem{question}{Question}
+\newtheorem{exercise}{Exercise}
+\newtheorem{quesject}{Quesject}
+\newtheorem{remark}[question]{Remark}
+\newtheorem{construction}{Construction}
+\newtheorem{conjecture}[theorem]{Conjecture}
+\newtheorem{assum}[theorem]{Assumption}
+\newtheorem{conclude}{Conclusion}
+\newtheorem{claim}{Claim}
+\newtheorem{observation}[theorem]{Observation}
+\newtheorem{assumption}[theorem]{Assumption}
+\newtheorem{example}{Example}
+\newtheorem{project}{Project}
+\newtheorem{note}{Note}
+
+
+%\newtheorem{theorem}{Theorem}
+%\newtheorem{corollary}[theorem]{Corollary}
+%\newtheorem{lemma}[theorem]{Lemma}
+%\newtheorem{observation}[theorem]{Observation}
+%\newtheorem{proposition}[theorem]{Proposition}
+%\newtheorem{definition}[theorem]{Definition}
+%\newtheorem{claim}[theorem]{Claim}
+\newtheorem{fact}[theorem]{Fact}
+%\newtheorem{remark}[theorem]{Remark}
+%\newtheorem{assumption}[theorem]{Assumption}
+
+\newcommand{\entropy}{\mathbf{H}}
+\newcommand{\hinf}{{{\mathbf{H}}_{\infty}}}
+\newcommand{\htwo}{{{\mathbf{H}}_{2}}}
+\newcommand{\hone}{{{\mathbf{H}}_{1}}}
+\newcommand{\hsha}{{{\mathbf{H}}_{sh}}}
+
+\newcommand{\Ext}{\mathsf{Ext}}
+\newcommand{\Cond}{\mathsf{Cond}}
+\newcommand{\Tag}{\mathsf{Tag}}
+\newcommand{\Pred}{\mathsf{Pred}}
+\renewcommand{\Col}{\mathsf{Col}}
+\newcommand{\Adv}{\mathsf{Adv}}
+\newcommand{\Pos}{\mathsf{Pos}}
+
+\def \eps {\varepsilon}
+\def \logeps {\log\left({1}/{\eps}\right)}
+\def \logdel {\log\left({1}/{\delta}\right)}
+
+\newcommand{\secref}[1]{Section~\ref{sec:#1}}
+\newcommand{\remref}[1]{Remark~\ref{rem:#1}}
+\newcommand{\appref}[1]{Appendix~\ref{sec:#1}}
+\newcommand{\corref}[1]{Corollary~\ref{cor:#1}}
+\newcommand{\claref}[1]{Claim~\ref{cla:#1}}
+\newcommand{\prpref}[1]{Proposition~\ref{prp:#1}}
+\newcommand{\thmref}[1]{Theorem~\ref{thm:#1}}
+\newcommand{\lemref}[1]{Lemma~\ref{lem:#1}}
+\newcommand{\conjref}[1]{Conjecture~\ref{conj:#1}}
+\newcommand{\defref}[1]{Definition~\ref{def:#1}}
+\renewcommand{\eqref}[1]{Equation~(\ref{eq:#1})}
+\newcommand{\figref}[1]{Figure~\ref{fig:#1}}
+\newcommand{\conref}[1]{Conclusion~\ref{thm:#1}}
+
+\renewcommand{\ni}{\noindent}
+\newcommand{\room}{\medskip\ni}
+\newcommand{\brak}[1]{\langle #1 \rangle}
+\newcommand{\bydef}{\stackrel{\rm def}{=}}
+\def\eqq{\stackrel{\mbox{{\tiny{?}}}}{=}}
+
+\newcommand{\nin}{\not\in}
+\newcommand{\set}[1]{\{#1\}}
+\newcommand{\bit}[1]{{\{0,1\}}^{#1}}
+\newcommand{\zo}{\{0,1\}}
+\newcommand{\ignore}[1]{}
+\newcommand{\minus}{\backslash}
+\renewcommand{\implies}{\Rightarrow}
+\newcommand{\bel}{\subseteq}
+\newcommand{\half}{\frac{1}{2}}
+
+\newcommand{\Bias}{\mathsf{Bias}}
+\newcommand{\Com}{\mathsf{Com}}
+\newcommand{\Share}{\mathsf{Share}}
+\newcommand{\Eve}{\mathsf{Eve}}
+\newcommand{\SV}{\mathsf{SV}}
+\newcommand{\eSV}{\mathsf{eSV}}
+\newcommand{\st}{\;|\;}
+\newcommand{\Sig}{\mathsf{Sig}}
+
+\newcommand{\mypar}[1]{{\vspace{.2cm}\noindent \sc #1}}
+
+\newcommand{\problem}[2]{%
+\par \noindent
+\makebox{}\\
+\makebox[3.5cm][r]{INPUT:} $\quad #1$ \\
+\makebox[3.5cm][r]{OUTPUT:}$\quad #2$ \\}
+
+%%%%%%%%%%%%%%%%%%%%% PROOFS and STUFF %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\qedsymb}{\hfill{\rule{2mm}{2mm}}}
+\def\squarebox#1{\hbox to #1{\hfill\vbox to #1{\vfill}}}
+\def\qed{\hspace*{\fill}
+        \vbox{\hrule\hbox{\vrule\squarebox{.667em}\vrule}\hrule}}
+%\def\qed{\mbox{ }\ \ \ $\Box$}
+\newenvironment{proof}{\begin{trivlist}\item[]{\bf Proof:}}
+                      {\qed \end{trivlist}}
+\newenvironment{proofsketch}{\begin{trivlist}\item[]{\bf Proof Sketch:}}
+                      {\qed \end{trivlist}}
+\newenvironment{solution}{\begin{trivlist}\item[]{\bf Solution:}}
+                      {\qed \end{trivlist}}
+\newenvironment{solsketch}{\begin{trivlist}\item[]{\bf Solution Sketch:}}
+                      {\qed \end{trivlist}}
+
+\newcommand{\cp}{\room {\bf Common Problems:}~~~}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%% COMMON MACROS %%%%%%%%%%%%%%%%%%%%%%%%%%%
+\def\al{\alpha}
+\def\bt{\beta}
+\def\l{\ell}
+\renewcommand{\phi}{\varphi}
+\def\eps{\varepsilon}
+\newcommand{\Z}{\mathbb Z}
+\newcommand{\group}{\mathbb G}
+
+\def\owf{{\sf OWF}}
+\def\owp{{\sf OWP}}
+\def\tdp{{\sf TDP}}
+\def\negl{{\sf negl}}
+\def\poly{{\sf poly}}
+\def\ppt{{\sf PPT}}
+\def\gen{{\sf Gen}}
+\def\Gen{{\sf Gen}}
+\def\eval{{\sf Eval}}
+\def\sample{{\sf Sample}}
+\def\invert{{\sf Invert}}
+\newcommand{\adv}{{\mathsf{Adv}}}
+
+\def\prg{{\sf PRG}}
+\def\prf{{\sf PRF}}
+\def\wprf{{\sf wPRF}}
+\def\peg{{\sf PEG}}
+\def\rsa{{\sf RSA}}
+\def\pke{{\sf PKE}}
+\def\kem{{\sf KEM}}
+\def\ske{{\sf SKE}}
+\def\ind{{\sf IND}}
+\def\dhp{{\sf DHP}}
+\def\cdh{{\sf CDH}}
+\def\ddh{{\sf DDH}}
+\def\cpa{{\sf CPA}}
+\def\cca{{\sf CCA}}
+\def\lsb{{\sf LSB}}
+\def\indcpa{{\sf IND-CPA}}
+\def\lor{{\sf LOR}}
+\def\pk{{{\sf PK}-only}}
+\def\ow{{\sf One-Way}}
+\def\keygen{{\sf KeyGen}}
+\def\Env{{\sf Env}}
+
+\def\prp{{\sf PRP}}
+\def\cbc{{\sf CBC}}
+
+\def\ctr{{\sf CTR}}
+\def\xor{{\sf XOR}}
+%\def\E{{\mathcal E}}
+\def\E{{\cal E}}
+\newcommand{\A}{{\cal A}}
+\newcommand{\G}{{\cal G}}
+\newcommand{\F}{{\cal F}}
+\renewcommand{\H}{{\cal H}}
+
+\def\cma{{\sf CMA}}
+
+\def\mac{{\sf MAC}}
+%\def\rpa{{\sf RPA}}
+
+\def\Tag{{\sf Tag}}
+\def\Ver{{\sf Ver}}
+\def\Auth{{\sf Auth}}
+\def\Rec{{\sf Rec}}
+
+\def\Sign{{\sf Sign}}
+\def\sig{{\sf SIG}}
+\def\otsig{\mbox{{\sf OT-SIG}}}
+\def\pks{{\sf PKS}}
+\def\uhf{{\sf wUHF}}
+\def\uowhf{{\sf UOWHF}}
+\def\crhf{{\sf CRHF}}
+\def\axu{{\sf AXU}}
+\def\degree{{\sf deg}}
+\def\SD{{\sf SD}}
+\def\CD{{\sf CD}}
+\def\RD{{\sf RD}}
+\def\SI{{\sf SI}}
+\def\RI{{\sf RI}}
+\def\Enc{{\sf Enc}}
+\def\Dec{{\sf Dec}}
+
+\DeclareMathOperator*{\expe}{\mathbb{E}}
+
+\newcommand{\M}{\mathcal{M}}
+\newcommand{\R}{\mathcal{R}}
+\def\Exp{{\mathbb{E}}}
+
+\newcommand{\prpfam}{\mathcal G}
+\newcommand{\prffam}{\mathcal F}
+\newcommand{\fn}{\mathcal H}
+
+\newcommand{\jac}[2]{\left(\frac{#1}{#2}\right)}
+\newcommand{\comput}{\approx}
+%\newcommand{\comput}{\cong_{c}}
+\newcommand{\randfrom}{\stackrel{r}{\leftarrow}}
+\newcommand{\randto}{\stackrel{r}{\rightarrow}}
+\renewcommand{\epsilon}{\varepsilon}
+\renewcommand{\eps}{\varepsilon}
+%\newcommand{\binset}{\{0,1\}}
+
+\newcommand{\md}{Merkle-Damga{\aa}rd}
